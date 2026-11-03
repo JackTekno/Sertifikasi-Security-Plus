@@ -1,6 +1,6 @@
 # Bank Soal CompTIA Security+ (SY0-701)
 
-**298 soal pilihan ganda (termasuk 12 multi-select) + 12 soal performa (PBQ), lengkap dengan pembahasan Bahasa Indonesia.**
+**300 soal pilihan ganda (termasuk 14 multi-select) + 12 soal performa (PBQ), lengkap dengan pembahasan Bahasa Indonesia.**
 
 Disusun: 03 November 2026 · Sumber soal: latihan mandiri, bukan soal resmi CompTIA.
 
@@ -24,11 +24,11 @@ Bank soal ini disusun dengan bantuan kecerdasan buatan (AI) DeepSeek, lalu ditin
 | Domain | Nama | Bobot | Jumlah soal di bank |
 |---|---|---|---|
 | 1 | General Security Concepts | 12% | 38 |
-| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 77 |
+| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 78 |
 | 3 | Security Architecture | 18% | 50 |
-| 4 | Security Operations | 28% | 81 |
+| 4 | Security Operations | 28% | 82 |
 | 5 | Security Program Management and Oversight | 20% | 52 |
-| | **Total** | **100%** | **298** |
+| | **Total** | **100%** | **300** |
 
 ---
 
@@ -522,19 +522,19 @@ Which TWO of the following are managerial (administrative) controls? (Select TWO
 
 Which TWO statements about cryptographic hashing are correct? (Select TWO.)
 
-- **A.** It is reversible with the correct private key
-- **B.** It produces an output of fixed length
-- **C.** It provides confidentiality without any encryption
-- **D.** It requires both parties to share a secret key
-- **E.** It is a one-way function
+- **A.** It produces an output of fixed length
+- **B.** It provides confidentiality without any encryption
+- **C.** It requires both parties to share a secret key
+- **D.** It is a one-way function
+- **E.** It is reversible with the correct private key
 
-**Jawaban: B, E**
+**Jawaban: A, D**
 
 > Hash bersifat **satu arah** dan menghasilkan panjang output tetap (misalnya SHA-256 selalu 256 bit). Hash tidak dapat dibalik, tidak memberi kerahasiaan, dan tidak memerlukan kunci bersama.
 
 # Domain 2 — Threats, Vulnerabilities, and Mitigations (22%)
 
-Objektif yang dicakup: **2.1** (8 soal), **2.2** (12 soal), **2.3** (17 soal), **2.4** (28 soal), **2.5** (12 soal).
+Objektif yang dicakup: **2.1** (8 soal), **2.2** (13 soal), **2.3** (17 soal), **2.4** (28 soal), **2.5** (12 soal).
 
 ## Soal 1 · Objektif 2.1 · Skenario
 
@@ -1502,13 +1502,13 @@ Sensitive cryptographic keys must be processed inside a CPU-protected area isola
 
 Which TWO are examples of injection vulnerabilities? (Select TWO.)
 
-- **A.** Cross-site scripting
-- **B.** Race condition
-- **C.** Buffer overflow
-- **D.** SQL injection
-- **E.** Directory traversal
+- **A.** Buffer overflow
+- **B.** SQL injection
+- **C.** Directory traversal
+- **D.** Cross-site scripting
+- **E.** Race condition
 
-**Jawaban: A, D**
+**Jawaban: B, D**
 
 > **SQL injection** menyuntikkan perintah SQL dan **XSS** menyuntikkan skrip ke halaman. Directory traversal memanipulasi path, race condition adalah masalah sinkronisasi, buffer overflow adalah kesalahan batas memori.
 
@@ -1516,13 +1516,13 @@ Which TWO are examples of injection vulnerabilities? (Select TWO.)
 
 Which TWO indicators MOST likely suggest that an account's credentials have been stolen? (Select TWO.)
 
-- **A.** High CPU usage on the user's workstation
-- **B.** A scheduled antivirus signature update
-- **C.** Successful sign-ins from two distant countries within minutes
-- **D.** Multiple active sessions for one account from different regions
-- **E.** A single failed login followed by a successful one
+- **A.** Multiple active sessions for one account from different regions
+- **B.** A single failed login followed by a successful one
+- **C.** High CPU usage on the user's workstation
+- **D.** A scheduled antivirus signature update
+- **E.** Successful sign-ins from two distant countries within minutes
 
-**Jawaban: C, D**
+**Jawaban: A, E**
 
 > **Impossible travel** dan **concurrent sessions** dari lokasi berbeda menunjukkan kredensial dipakai pihak lain. Satu login gagal adalah hal normal, CPU tinggi dan update antivirus tidak berkaitan dengan pencurian kredensial.
 
@@ -1539,6 +1539,20 @@ Which TWO controls BEST reduce the risk from an unsupported legacy system that c
 **Jawaban: A, B**
 
 > **Segmentasi** membatasi penyebaran jika sistem diserang, dan **decommissioning** menghilangkan risiko sepenuhnya. Enkripsi disk, rotasi password, dan timeout layar tidak menutup kerentanan yang tidak dapat dipatch.
+
+## Soal 78 · Objektif 2.2 · Multi-select
+
+Which THREE are message-based threat vectors? (Select THREE.)
+
+- **A.** SMS containing a credential-harvesting link
+- **B.** Instant messaging from an unknown contact
+- **C.** USB drive found in a parking lot
+- **D.** Compromised website that serves exploits
+- **E.** Email containing a malicious link
+
+**Jawaban: A, B, E**
+
+> Vektor **message-based** adalah kanal pesan: email, SMS, dan instant messaging. USB drive termasuk vektor removable media, sedangkan situs yang dikompromikan adalah watering hole (web-based).
 
 # Domain 3 — Security Architecture (18%)
 
@@ -2172,13 +2186,13 @@ A network architect needs to enforce that only domain-joined, patched devices ca
 
 Which TWO statements describe a fail-closed security device? (Select TWO.)
 
-- **A.** It prioritizes availability over security
-- **B.** It can cause an outage if the device fails
-- **C.** It allows all traffic during a failure
-- **D.** It is always deployed passively
-- **E.** It blocks traffic when the inspection engine fails
+- **A.** It allows all traffic during a failure
+- **B.** It is always deployed passively
+- **C.** It blocks traffic when the inspection engine fails
+- **D.** It prioritizes availability over security
+- **E.** It can cause an outage if the device fails
 
-**Jawaban: B, E**
+**Jawaban: C, E**
 
 > **Fail-closed** memblokir lalu lintas saat terjadi kegagalan sehingga kebijakan tetap terjaga, tetapi berisiko memutus layanan. Fail-open justru mengizinkan semua trafik dan mengutamakan ketersediaan.
 
@@ -2186,19 +2200,19 @@ Which TWO statements describe a fail-closed security device? (Select TWO.)
 
 Which TWO methods can render data unrecoverable before disposal? (Select TWO.)
 
-- **A.** Quick format
-- **B.** Moving files to the recycle bin
-- **C.** Deleting the partition table
-- **D.** Physical destruction
-- **E.** Cryptographic erase
+- **A.** Physical destruction
+- **B.** Cryptographic erase
+- **C.** Quick format
+- **D.** Moving files to the recycle bin
+- **E.** Deleting the partition table
 
-**Jawaban: D, E**
+**Jawaban: A, B**
 
 > **Physical destruction** dan **crypto-erase** (menghapus kunci enkripsi) membuat data tidak dapat dipulihkan. Quick format, recycle bin, dan hapus partisi hanya menghapus referensi, bukan isi media.
 
 # Domain 4 — Security Operations (28%)
 
-Objektif yang dicakup: **4.1** (9 soal), **4.2** (5 soal), **4.3** (10 soal), **4.4** (9 soal), **4.5** (10 soal), **4.6** (19 soal), **4.7** (4 soal), **4.8** (10 soal), **4.9** (5 soal).
+Objektif yang dicakup: **4.1** (9 soal), **4.2** (5 soal), **4.3** (11 soal), **4.4** (9 soal), **4.5** (10 soal), **4.6** (19 soal), **4.7** (4 soal), **4.8** (10 soal), **4.9** (5 soal).
 
 ## Soal 1 · Objektif 4.1 · Skenario
 
@@ -3232,13 +3246,13 @@ Which TWO are benefits of single sign-on (SSO)? (Select TWO.)
 
 Which TWO data sources BEST support detecting data exfiltration? (Select TWO.)
 
-- **A.** NetFlow volume anomalies
-- **B.** DLP alerts
-- **C.** DHCP lease logs
-- **D.** Asset inventory exports
-- **E.** Password policy compliance reports
+- **A.** DLP alerts
+- **B.** DHCP lease logs
+- **C.** Asset inventory exports
+- **D.** Password policy compliance reports
+- **E.** NetFlow volume anomalies
 
-**Jawaban: A, B**
+**Jawaban: A, E**
 
 > **NetFlow** memperlihatkan lonjakan volume keluar per host, dan **DLP** menandai data sensitif yang meninggalkan jaringan. DHCP lease dan inventaris aset tidak menunjukkan isi atau volume transfer.
 
@@ -3246,15 +3260,29 @@ Which TWO data sources BEST support detecting data exfiltration? (Select TWO.)
 
 Which TWO actions preserve volatile evidence on a compromised host? (Select TWO.)
 
-- **A.** Isolating the host from the network
-- **B.** Powering the host off immediately
-- **C.** Reimaging the disk
-- **D.** Deleting temporary files
-- **E.** Capturing memory before shutdown
+- **A.** Reimaging the disk
+- **B.** Deleting temporary files
+- **C.** Capturing memory before shutdown
+- **D.** Isolating the host from the network
+- **E.** Powering the host off immediately
 
-**Jawaban: A, E**
+**Jawaban: C, D**
 
 > **Capture memori** harus dilakukan sebelum daya hilang, dan **isolasi jaringan** menghentikan penyebaran tanpa menghapus bukti. Mematikan host, reimage, dan menghapus file justru merusak bukti.
+
+## Soal 82 · Objektif 4.3 · Multi-select
+
+Which THREE factors are MOST important when prioritizing vulnerability remediation? (Select THREE.)
+
+- **A.** The colour of the asset tag
+- **B.** The office location of the asset owner
+- **C.** CVSS severity of the vulnerability
+- **D.** Whether the affected asset is internet-facing
+- **E.** Availability of a working public exploit
+
+**Jawaban: C, D, E**
+
+> Prioritas mempertimbangkan **severity**, **eksposur**, dan **exploitability** — bukan atribut administratif seperti warna label atau lokasi kantor pemilik aset.
 
 # Domain 5 — Security Program Management and Oversight (20%)
 
@@ -3928,13 +3956,13 @@ Which TWO inputs are used in quantitative risk analysis? (Select TWO.)
 
 Which TWO are GDPR obligations for an organization processing EU personal data? (Select TWO.)
 
-- **A.** Retaining personal data indefinitely for audit purposes
-- **B.** Publishing the source code of internal applications
-- **C.** Responding to data subject access requests
-- **D.** Notifying the supervisory authority of qualifying breaches within 72 hours
-- **E.** Encrypting all data specifically with AES-256
+- **A.** Publishing the source code of internal applications
+- **B.** Responding to data subject access requests
+- **C.** Notifying the supervisory authority of qualifying breaches within 72 hours
+- **D.** Encrypting all data specifically with AES-256
+- **E.** Retaining personal data indefinitely for audit purposes
 
-**Jawaban: C, D**
+**Jawaban: B, C**
 
 > GDPR memberi **hak subjek data** (akses, koreksi, penghapusan) dan mewajibkan **notifikasi pelanggaran** ke otoritas dalam 72 jam bila memenuhi kriteria. GDPR tidak menetapkan algoritma tertentu dan melarang penyimpanan tanpa batas.
 

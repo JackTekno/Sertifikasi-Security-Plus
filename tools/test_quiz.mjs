@@ -144,6 +144,9 @@ if ($("fb").innerHTML.includes("Belum tepat")) {
 }
 assert($("fb").innerHTML.includes("<strong>"), "feedback renders bold markdown");
 assert(!$("fb").innerHTML.includes("**"), "feedback has no raw markdown stars");
+const firstDot = $("grid").children[0];
+assert(firstDot.classList.contains("ok") || firstDot.classList.contains("no"), "grid marks answered question as correct/wrong");
+assert($("liveScore").textContent.includes("✓"), "live score chip updates");
 
 // finish the 25-question session
 for (let i = 0; i < 40; i++) {
@@ -167,6 +170,8 @@ assert(ok + bad + skip === 25, "result counts add up to 25");
 const scaled = +$("scoreNum").textContent;
 assert(scaled >= 100 && scaled <= 900, "scaled score within 100-900 (" + scaled + ")");
 assert($("review").innerHTML.includes("Pembahasan") || $("review").innerHTML.includes("Tidak ada soal"), "review rendered");
+assert($("resultMap").children.length === 25, "result map has 25 dots");
+assert($("resultMap").children.some(d => d.classList.contains("ok") || d.classList.contains("no")), "result map shows correctness");
 
 // multi-select flow via objective drill (1.1 contains a multi-select item)
 $("homeBtn").click();

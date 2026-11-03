@@ -969,13 +969,13 @@ Domain dengan bobot terbesar kedua. Fokus pada **siapa penyerangnya**, **lewat m
 **Tipe:** Multi-select
 **Soal:** Which TWO are examples of injection vulnerabilities? (Select TWO.)
 
-- A. Cross-site scripting
-- B. Race condition
-- C. Buffer overflow
-- D. SQL injection
-- E. Directory traversal
+- A. Buffer overflow
+- B. SQL injection
+- C. Directory traversal
+- D. Cross-site scripting
+- E. Race condition
 
-**Jawaban:** A, D
+**Jawaban:** B, D
 **Pembahasan:** **SQL injection** menyuntikkan perintah SQL dan **XSS** menyuntikkan skrip ke halaman. Directory traversal memanipulasi path, race condition adalah masalah sinkronisasi, buffer overflow adalah kesalahan batas memori.
 
 ## Soal 76
@@ -983,13 +983,13 @@ Domain dengan bobot terbesar kedua. Fokus pada **siapa penyerangnya**, **lewat m
 **Tipe:** Multi-select
 **Soal:** Which TWO indicators MOST likely suggest that an account's credentials have been stolen? (Select TWO.)
 
-- A. High CPU usage on the user's workstation
-- B. A scheduled antivirus signature update
-- C. Successful sign-ins from two distant countries within minutes
-- D. Multiple active sessions for one account from different regions
-- E. A single failed login followed by a successful one
+- A. Multiple active sessions for one account from different regions
+- B. A single failed login followed by a successful one
+- C. High CPU usage on the user's workstation
+- D. A scheduled antivirus signature update
+- E. Successful sign-ins from two distant countries within minutes
 
-**Jawaban:** C, D
+**Jawaban:** A, E
 **Pembahasan:** **Impossible travel** dan **concurrent sessions** dari lokasi berbeda menunjukkan kredensial dipakai pihak lain. Satu login gagal adalah hal normal, CPU tinggi dan update antivirus tidak berkaitan dengan pencurian kredensial.
 
 ## Soal 77
@@ -1005,3 +1005,17 @@ Domain dengan bobot terbesar kedua. Fokus pada **siapa penyerangnya**, **lewat m
 
 **Jawaban:** A, B
 **Pembahasan:** **Segmentasi** membatasi penyebaran jika sistem diserang, dan **decommissioning** menghilangkan risiko sepenuhnya. Enkripsi disk, rotasi password, dan timeout layar tidak menutup kerentanan yang tidak dapat dipatch.
+
+## Soal 78
+**Objektif:** 2.2
+**Tipe:** Multi-select
+**Soal:** Which THREE are message-based threat vectors? (Select THREE.)
+
+- A. SMS containing a credential-harvesting link
+- B. Instant messaging from an unknown contact
+- C. USB drive found in a parking lot
+- D. Compromised website that serves exploits
+- E. Email containing a malicious link
+
+**Jawaban:** A, B, E
+**Pembahasan:** Vektor **message-based** adalah kanal pesan: email, SMS, dan instant messaging. USB drive termasuk vektor removable media, sedangkan situs yang dikompromikan adalah watering hole (web-based).

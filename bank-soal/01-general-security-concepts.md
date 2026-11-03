@@ -491,11 +491,11 @@ Domain ini menguji pemahaman Anda tentang **kontrol keamanan**, **konsep fundame
 **Tipe:** Multi-select
 **Soal:** Which TWO statements about cryptographic hashing are correct? (Select TWO.)
 
-- A. It is reversible with the correct private key
-- B. It produces an output of fixed length
-- C. It provides confidentiality without any encryption
-- D. It requires both parties to share a secret key
-- E. It is a one-way function
+- A. It produces an output of fixed length
+- B. It provides confidentiality without any encryption
+- C. It requires both parties to share a secret key
+- D. It is a one-way function
+- E. It is reversible with the correct private key
 
-**Jawaban:** B, E
+**Jawaban:** A, D
 **Pembahasan:** Hash bersifat **satu arah** dan menghasilkan panjang output tetap (misalnya SHA-256 selalu 256 bit). Hash tidak dapat dibalik, tidak memberi kerahasiaan, dan tidak memerlukan kunci bersama.

@@ -272,6 +272,31 @@ tr:last-child td{border-bottom:0}
 .dot.done{background:rgba(56,189,248,.18);color:var(--accent);border-color:rgba(56,189,248,.35)}
 .dot.flag{border-color:rgba(251,191,36,.65);color:var(--warn)}
 .dot.done.flag{background:rgba(251,191,36,.12)}
+.dot.ok{background:rgba(52,211,153,.2);border-color:rgba(52,211,153,.6);color:var(--ok)}
+.dot.no{background:rgba(251,113,133,.18);border-color:rgba(251,113,133,.6);color:var(--bad)}
+.dot.skip{border-style:dashed;opacity:.55}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid var(--line)}
+.legend i.ok{background:rgba(52,211,153,.35);border-color:var(--ok)}
+.legend i.no{background:rgba(251,113,133,.35);border-color:var(--bad)}
+.legend i.skip{background:transparent;border-style:dashed}
+.legend i.flag{border-color:var(--warn)}
+.mark{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;font-size:11px;flex:0 0 auto}
+.mark.ok{background:rgba(52,211,153,.2);color:var(--ok)}
+.mark.no{background:rgba(251,113,133,.2);color:var(--bad)}
+.mark.skip{background:var(--card2);color:var(--muted)}
+.chart{display:flex;align-items:flex-end;justify-content:center;gap:10px;height:150px;padding:8px 4px 0;border-bottom:1px solid var(--line);margin:8px 0 4px}
+.chart .bar{flex:0 0 54px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.chart .bar b{font-size:10.5px;color:var(--muted);font-weight:600}
+.chart .bar i{width:100%;max-width:40px;border-radius:6px 6px 0 0;min-height:3px;background:linear-gradient(180deg,var(--accent),#6366f1)}
+.chart .bar.pass i{background:linear-gradient(180deg,var(--ok),#0f766e)}
+.chart .bar.fail i{background:linear-gradient(180deg,var(--bad),#9f1239)}
+.chart .bar .lbl{font-size:10px;color:var(--muted)}
+.btn.on{border-color:var(--ok);color:var(--ok);background:rgba(52,211,153,.08)}
+.btn.on-no{border-color:var(--bad);color:var(--bad);background:rgba(251,113,133,.08)}
+.objrow2{display:flex;align-items:center;gap:8px}
+.objrow2 .btn{padding:5px 10px;font-size:12px}
 
 .score{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;
   background:conic-gradient(var(--accent) var(--deg,0deg),var(--card2) 0);position:relative;flex:0 0 auto}
@@ -324,7 +349,7 @@ tr:last-child td{border-bottom:0}
 .pbq-answer{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
 
 /* stats */
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
 .meter{height:9px;border-radius:99px;background:var(--card2);overflow:hidden;border:1px solid var(--line)}
 .meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent))}
 .weak{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
@@ -410,6 +435,11 @@ tr:last-child td{border-bottom:0}
     <div class="domlist" id="domlist"></div>
 
     <div class="panel">
+      <h3>Format ujian yang disimulasikan</h3>
+      <p><b>90 soal · 90 menit · skor 100–900 (lulus 750).</b> Pilihan ganda 4 opsi, multi-select 5 opsi (pilih 2–3 jawaban), dan PBQ bergaya simulasi. Tidak ada soal esai. PBQ di ujian asli muncul paling awal.</p>
+    </div>
+
+    <div class="panel">
       <h3>Latihan per objektif</h3>
       <p>Fokus ke satu sub-objektif, misalnya 4.6 Identity and Access Management atau 3.3 Data Protection.</p>
       <div class="objrow">
@@ -448,6 +478,7 @@ tr:last-child td{border-bottom:0}
       <div class="brand"><div class="logo" style="width:32px;height:32px;font-size:16px">🛡️</div>
         <div style="font-size:14px">SY0-701<small id="modeLabel">Latihan</small></div></div>
       <div style="display:flex;gap:8px;align-items:center">
+        <div class="chip hide" id="liveScore">✓ 0 · ✗ 0</div>
         <div class="chip" id="counter">1 / 1</div>
         <div class="timer" id="timer">—</div>
         <button class="btn ghost" id="quitBtn">Keluar</button>
@@ -476,11 +507,23 @@ tr:last-child td{border-bottom:0}
     </div>
 
     <div class="grid" id="grid"></div>
+    <div class="legend">
+      <span><i class="ok"></i>Benar</span>
+      <span><i class="no"></i>Salah</span>
+      <span><i class="skip"></i>Belum dijawab</span>
+      <span><i class="flag"></i>Ragu-ragu</span>
+      <span id="gridNote" class="note">Saat ujian, tanda benar/salah baru muncul setelah selesai.</span>
+    </div>
     <p class="note" style="margin-top:14px">Shortcut: <b>1–5</b> pilih/toggle jawaban · <b>←</b>/<b>→</b> navigasi · <b>F</b> ragu-ragu · <b>Enter</b> periksa/lanjut.</p>
   </section>
 
   <!-- RESULT -->
   <section id="result" class="hide">
+    <div class="quizhead" style="margin-bottom:12px">
+      <div class="brand"><div class="logo" style="width:32px;height:32px;font-size:16px">🛡️</div>
+        <div style="font-size:14px">Hasil sesi<small id="resMode">Latihan</small></div></div>
+      <button class="btn" id="homeBtnTop">← Beranda</button>
+    </div>
     <div class="card">
       <div class="reshead">
         <div class="score" id="scoreRing"><div class="in"><div class="num" id="scoreNum">0</div><div class="lbl">dari 900</div></div></div>
@@ -488,6 +531,7 @@ tr:last-child td{border-bottom:0}
           <h2 id="resTitle">Hasil</h2>
           <p id="resSub"></p>
           <p style="margin-top:8px"><span class="pill" id="resPill">—</span></p>
+          <p class="note" style="margin-top:6px">Ambang 750 setara ±81% jawaban benar. Skor ini simulasi, bukan penskoran resmi CompTIA.</p>
         </div>
       </div>
       <div class="kpis">
@@ -495,6 +539,21 @@ tr:last-child td{border-bottom:0}
         <div class="kpi bad"><div class="v" id="kBad">0</div><div class="l">Salah</div></div>
         <div class="kpi warn"><div class="v" id="kSkip">0</div><div class="l">Kosong</div></div>
         <div class="kpi"><div class="v" id="kTime">0:00</div><div class="l">Waktu</div></div>
+      </div>
+      <div class="panel" style="margin-top:18px">
+        <h3 style="margin:0 0 4px">Peta jawaban</h3>
+        <p class="note" style="margin:0 0 10px">Klik nomor untuk membuka pembahasan soal tersebut.</p>
+        <div class="grid" id="resultMap"></div>
+        <div class="legend">
+          <span><i class="ok"></i>Benar</span>
+          <span><i class="no"></i>Salah</span>
+          <span><i class="skip"></i>Kosong</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 style="margin:0 0 4px">Hasil per objektif</h3>
+        <p class="note" style="margin:0 0 10px">10 objektif dengan persentase terendah perlu diulang lebih dulu.</p>
+        <div id="objRes"></div>
       </div>
       <div class="domres" id="domres"></div>
       <div class="review" id="review"></div>
@@ -532,6 +591,7 @@ const LS_WRONG = "sp701_wrong_v1";
 const LS_HIST = "sp701_history_v1";
 const LS_RESULTS = "sp701_results_v1";
 const LS_PBQ = "sp701_pbq_v1";
+const LS_PBQ_STATUS = "sp701_pbq_status_v1";
 const LS_THEME = "sp701_theme";
 
 /* ---------- helpers ---------- */
@@ -652,6 +712,15 @@ function buildDomainList() {
 }
 
 /* ---------- stats ---------- */
+function calcStreak(hist) {
+  const days = new Set(hist.map(h => new Date(h.ts).toDateString()));
+  const d = new Date();
+  if (!days.has(d.toDateString())) d.setDate(d.getDate() - 1);
+  let n = 0;
+  while (days.has(d.toDateString())) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
 function renderStats() {
   const res = results();
   const answered = Object.keys(res).length;
@@ -661,6 +730,18 @@ function renderStats() {
   const best = hist.length ? Math.max(...hist.map(h => h.scaled)) : 0;
   const coverage = Math.round(answered / BANK.length * 100);
   const accuracy = attempts ? Math.round(rights / attempts * 100) : 0;
+  const streak = calcStreak(hist);
+  const timed = hist.filter(h => h.secs);
+  const avgTime = timed.length ? Math.round(timed.reduce((s, h) => s + h.secs, 0) / timed.length) : 0;
+  const pbqStatus = loadJSON(LS_PBQ_STATUS, {});
+  const pbqDone = Object.values(pbqStatus).filter(v => v === "ok").length;
+
+  const chart = hist.slice(-10).map(h => {
+    const px = Math.max(6, Math.round(h.scaled / 900 * 110));
+    const d = new Date(h.ts);
+    return `<div class="bar ${h.scaled >= PASS_SCALED ? "pass" : "fail"}" title="${h.mode} · ${h.total} soal · ${h.scaled}">
+      <b>${h.scaled}</b><i style="height:${px}px"></i><span class="lbl">${d.getDate()}/${d.getMonth() + 1}</span></div>`;
+  }).join("");
 
   const domRows = DOMAINS.map(d => {
     const qs = BANK.filter(q => q.d === d.id);
@@ -693,8 +774,15 @@ function renderStats() {
       <div class="kpi ${accuracy >= 75 ? "ok" : accuracy >= 50 ? "warn" : "bad"}"><div class="v">${accuracy}%</div><div class="l">Akurasi (${attempts} jawaban)</div></div>
       <div class="kpi ok"><div class="v">${best}</div><div class="l">Skor simulasi terbaik</div></div>
       <div class="kpi"><div class="v">${hist.length}</div><div class="l">Sesi selesai</div></div>
+      <div class="kpi warn"><div class="v">${streak}</div><div class="l">Streak hari</div></div>
+      <div class="kpi"><div class="v">${avgTime ? fmtTime(avgTime) : "–"}</div><div class="l">Rata-rata durasi sesi</div></div>
     </div>
     <div class="panel" style="margin-top:18px">
+      <h3>Perkembangan skor</h3>
+      <p>Sepuluh sesi terakhir. Hijau = lulus ambang 750, merah = belum.</p>
+      ${chart ? `<div class="chart">${chart}</div>` : '<p class="note">Belum ada sesi.</p>'}
+    </div>
+    <div class="panel">
       <h3>Penguasaan per domain</h3>
       <p>Persentase jawaban benar dari semua percobaan Anda.</p>
       <div class="domres">${domRows}</div>
@@ -702,16 +790,30 @@ function renderStats() {
     <div class="panel">
       <h3>Objektif yang perlu diulang</h3>
       <p>Objektif dengan akurasi di bawah 75% (minimal 3 jawaban).</p>
-      ${weak.length ? weak.map(x => `<div class="weak"><span><b>${x.o}</b> · ${x.n} jawaban</span><span style="color:var(--bad)">${x.pct}%</span></div>`).join("") : '<p class="note">Belum cukup data. Kerjakan latihan per objektif untuk mengisi statistik.</p>'}
+      ${weak.length ? weak.map(x => `<div class="weak">
+        <span><b>${x.o}</b> · ${x.n} jawaban · <span style="color:var(--bad)">${x.pct}%</span></span>
+        <span class="objrow2"><button class="btn" data-obj="${x.o}">Latih</button></span></div>`).join("") : '<p class="note">Belum cukup data. Kerjakan latihan per objektif untuk mengisi statistik.</p>'}
+    </div>
+    <div class="panel">
+      <h3>Latihan PBQ</h3>
+      <p>PBQ yang Anda tandai sudah dipahami: <b>${pbqDone}/${PBQ.length}</b></p>
+      <div class="meter"><i style="width:${(pbqDone / PBQ.length * 100).toFixed(1)}%"></i></div>
     </div>
     <div class="panel">
       <h3>Reset progres</h3>
-      <p>Menghapus riwayat sesi, daftar soal salah, dan statistik per soal di browser ini.</p>
+      <p>Menghapus riwayat sesi, daftar soal salah, statistik per soal, dan status PBQ di browser ini.</p>
       <button class="btn" id="resetStats">Hapus semua progres</button>
     </div>`;
+
+  $("statsBody").querySelectorAll("[data-obj]").forEach(b => b.addEventListener("click", () => {
+    const o = b.dataset.obj;
+    const pool = shuffle(BANK.filter(q => q.o === o));
+    if (pool.length) startSession("objective", pool.slice(0, Math.min(20, pool.length)));
+  }));
+
   $("resetStats").addEventListener("click", () => {
     if (!confirm("Hapus semua progres belajar di browser ini?")) return;
-    [LS_WRONG, LS_HIST, LS_RESULTS].forEach(k => { try { localStorage.removeItem(k); } catch {} });
+    [LS_WRONG, LS_HIST, LS_RESULTS, LS_PBQ_STATUS].forEach(k => { try { localStorage.removeItem(k); } catch {} });
     refreshHome(); renderStats();
   });
 }
@@ -773,12 +875,32 @@ function buildGrid() {
 }
 
 function paintGrid() {
+  const practice = S.mode !== "exam";
+  let good = 0, bad = 0;
   $("grid").querySelectorAll(".dot").forEach((b, i) => {
     const q = S.list[i];
+    const answered = hasAnswer(q);
+    const checked = practice && S.checked.has(q.id) && answered;
+    const ok = checked && isCorrect(q);
     b.classList.toggle("cur", i === S.idx);
-    b.classList.toggle("done", hasAnswer(q));
+    b.classList.toggle("done", answered);
     b.classList.toggle("flag", S.flags.has(q.id));
+    b.classList.toggle("ok", ok);
+    b.classList.toggle("no", checked && !ok);
+    b.classList.toggle("skip", !answered);
+    if (checked && ok) good++;
+    if (checked && !ok) bad++;
   });
+  const ls = $("liveScore");
+  if (practice) {
+    ls.classList.remove("hide");
+    ls.textContent = "✓ " + good + " · ✗ " + bad;
+  } else {
+    ls.classList.add("hide");
+  }
+  $("gridNote").textContent = practice
+    ? "Hijau = benar, merah = salah, putus-putus = belum dijawab."
+    : "Saat ujian, tanda benar/salah baru muncul setelah selesai.";
 }
 
 function render() {
@@ -937,6 +1059,7 @@ function finish() {
   $("scoreRing").style.setProperty("--deg", (scaled / 900 * 360) + "deg");
   $("resTitle").textContent = pass ? "Lulus ambang batas 🎉" : "Belum mencapai ambang batas";
   $("resSub").textContent = `${ok} dari ${total} soal benar (${pct}%) · ${S.mode === "exam" ? "ujian simulasi" : "latihan"}`;
+  $("resMode").textContent = S.mode === "exam" ? "Ujian simulasi" : "Latihan";
   const pill = $("resPill");
   pill.className = "pill " + (pass ? "pass" : "fail");
   pill.textContent = pass ? "LULUS (≥750)" : "BELUM LULUS (<750)";
@@ -953,19 +1076,54 @@ function finish() {
       <span class="track"><i style="width:${r}%;background:${col}"></i></span></div>`;
   }).join("");
 
+  $("resultMap").innerHTML = S.list.map((q, i) => {
+    const answered = hasAnswer(q);
+    const cls = !answered ? "skip" : isCorrect(q) ? "ok" : "no";
+    return `<button class="dot ${cls}${S.flags.has(q.id) ? " flag" : ""}" data-i="${i}" title="Soal ${i + 1}">${i + 1}</button>`;
+  }).join("");
+  $("resultMap").querySelectorAll(".dot").forEach(b => b.addEventListener("click", () => {
+    const el = $("rev-" + b.dataset.i);
+    if (el) { el.open = true; el.scrollIntoView({ behavior: "smooth", block: "center" }); }
+  }));
+
+  const perObj = {};
+  S.list.forEach(q => {
+    const o = perObj[q.o] = perObj[q.o] || { ok: 0, total: 0 };
+    o.total++;
+    if (hasAnswer(q) && isCorrect(q)) o.ok++;
+  });
+  const objRows = Object.entries(perObj)
+    .sort((a, b) => a[1].ok / a[1].total - b[1].ok / b[1].total)
+    .slice(0, 10)
+    .map(([o, v]) => {
+      const r = Math.round(v.ok / v.total * 100);
+      const col = r >= 75 ? "var(--ok)" : r >= 50 ? "var(--warn)" : "var(--bad)";
+      return `<div class="dombar">
+        <span class="name">Objektif ${o}</span>
+        <span class="val">${v.ok}/${v.total} · ${r}%</span>
+        <span class="track"><i style="width:${r}%;background:${col}"></i></span></div>`;
+    }).join("");
+  $("objRes").innerHTML = objRows || '<p class="note">Tidak ada data.</p>';
+
   const miss = S.list.filter(q => !isCorrect(q));
-  $("review").innerHTML = miss.length ? `<h3>Pembahasan soal yang belum benar (${miss.length})</h3>` +
-    miss.map((q, i) => `<details class="ritem">
-      <summary><span>${i + 1}.</span><span>${escapeHtml(q.q)}</span></summary>
+  $("review").innerHTML = `<h3>Pembahasan semua soal (${miss.length} belum benar dari ${total})</h3>` +
+    S.list.map((q, i) => {
+      const answered = hasAnswer(q);
+      const good = answered && isCorrect(q);
+      const mark = good ? "✓" : answered ? "✗" : "–";
+      const cls = good ? "ok" : answered ? "no" : "skip";
+      return `<details class="ritem" id="rev-${i}">
+      <summary><span class="mark ${cls}">${mark}</span><span>${i + 1}. ${escapeHtml(q.q)}</span></summary>
       <div class="body">
         ${q.opts.map(o => `<div class="o ${q.a.includes(o.k) ? "a" : ""} ${(S.sel[q.id] || []).includes(o.k) && !q.a.includes(o.k) ? "mine" : ""}">
           <b>${o.k}.</b> ${escapeHtml(o.v)}</div>`).join("")}
         <p class="note">Jawaban Anda: <b>${(S.sel[q.id] || []).join(", ") || "kosong"}</b> · Jawaban benar: <b>${q.a.join(", ")}</b> · Objektif ${q.o}</p>
         <p>${md(q.e)}</p>
-      </div></details>`).join("") : `<h3>Tidak ada soal yang salah 🎯</h3><p class="note">Semua jawaban benar. Coba mode ujian simulasi untuk mengukur kesiapan.</p>`;
+      </div></details>`;
+    }).join("");
 
   const hist = loadJSON(LS_HIST, []);
-  hist.push({ ts: Date.now(), mode: S.mode === "exam" ? "Simulasi" : "Latihan", total, ok, comp: pct, scaled });
+  hist.push({ ts: Date.now(), mode: S.mode === "exam" ? "Simulasi" : "Latihan", total, ok, comp: pct, scaled, secs });
   saveJSON(LS_HIST, hist.slice(-50));
 
   $("retryWrongBtn").classList.toggle("hide", !miss.length);
@@ -1012,11 +1170,13 @@ $("quitBtn").addEventListener("click", () => {
     refreshHome();
   }
 });
-$("homeBtn").addEventListener("click", () => {
+function goHome() {
   $("result").classList.add("hide");
   $("tabbar").classList.remove("hide");
   showTab("practice");
-});
+}
+$("homeBtn").addEventListener("click", goHome);
+$("homeBtnTop").addEventListener("click", goHome);
 $("againBtn").addEventListener("click", () => {
   if (S.mode === "exam") return startSession("exam", pickExam());
   if (S.mode === "domain" && S.domain) {
@@ -1060,6 +1220,7 @@ document.addEventListener("keydown", (e) => {
 /* ---------- PBQ ---------- */
 function renderPBQ() {
   const notes = loadJSON(LS_PBQ, {});
+  const st = loadJSON(LS_PBQ_STATUS, {});
   $("pbqList").innerHTML = PBQ.map(p => `
     <article class="pbq" data-id="${p.id}">
       <div class="pbq-head"><span class="badge gold">${p.id}</span><h3>${escapeHtml(p.title)}</h3></div>
@@ -1067,7 +1228,8 @@ function renderPBQ() {
       <textarea data-note="${p.id}" placeholder="Tulis jawaban Anda di sini (tersimpan otomatis)...">${escapeHtml(notes[p.id] || "")}</textarea>
       <div class="pbq-actions">
         <button class="btn" data-reveal="${p.id}">Lihat jawaban model</button>
-        <span class="note">Kerjakan dulu, baru buka kunci.</span>
+        <button class="btn ${st[p.id] === "ok" ? "on" : ""}" data-status="ok" data-id="${p.id}">✓ Paham</button>
+        <button class="btn ${st[p.id] === "no" ? "on-no" : ""}" data-status="no" data-id="${p.id}">✗ Belum paham</button>
       </div>
       <div class="md pbq-answer hide" data-answer="${p.id}">${p.answer}</div>
     </article>`).join("");
@@ -1082,6 +1244,23 @@ function renderPBQ() {
     const hidden = ans.classList.toggle("hide");
     b.textContent = hidden ? "Lihat jawaban model" : "Sembunyikan jawaban";
   }));
+  $("pbqList").querySelectorAll("[data-status]").forEach(b => b.addEventListener("click", () => {
+    const st2 = loadJSON(LS_PBQ_STATUS, {});
+    const id = b.dataset.id, v = b.dataset.status;
+    if (st2[id] === v) delete st2[id]; else st2[id] = v;
+    saveJSON(LS_PBQ_STATUS, st2);
+    paintPbqStatus();
+  }));
+  paintPbqStatus();
+}
+
+function paintPbqStatus() {
+  const st = loadJSON(LS_PBQ_STATUS, {});
+  $("pbqList").querySelectorAll("[data-status]").forEach(b => {
+    const on = st[b.dataset.id] === b.dataset.status;
+    b.classList.toggle("on", on && b.dataset.status === "ok");
+    b.classList.toggle("on-no", on && b.dataset.status === "no");
+  });
 }
 
 /* ---------- boot ---------- */

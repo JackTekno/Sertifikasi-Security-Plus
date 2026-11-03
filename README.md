@@ -1,6 +1,6 @@
 # CompTIA Security+ (SY0-701) — Bank Soal & Latihan
 
-**298 soal pilihan ganda + 12 soal performa (PBQ)**, semuanya dengan pembahasan Bahasa Indonesia. Soal disusun mengikuti lima domain resmi SY0-701, bukan salinan soal ujian.
+**300 soal pilihan ganda + 12 soal performa (PBQ)**, semuanya dengan pembahasan Bahasa Indonesia. Soal disusun mengikuti lima domain resmi SY0-701, bukan salinan soal ujian.
 
 > **Tentang pembuatan:** seluruh bank soal, pembahasan, dan aplikasi latihan ini **disusun dengan bantuan kecerdasan buatan (AI) DeepSeek**. Materi tetap perlu diverifikasi ke objektif resmi CompTIA; gunakan sebagai latihan, bukan sumber kebenaran tunggal.
 
@@ -15,6 +15,10 @@
 
 ![Tampilan latihan soal](docs/screenshot-quiz.png)
 
+![Peta jawaban dan hasil per objektif](docs/screenshot-result.png)
+
+![Statistik belajar](docs/screenshot-stats.png)
+
 ![Latihan PBQ](docs/screenshot-pbq.png)
 
 ## Format ujian SY0-701
@@ -25,6 +29,7 @@
 | Waktu | **90 menit** |
 | Skor | **100–900**, lulus **750** |
 | Tipe soal | pilihan ganda satu jawaban, sesekali **multi-select** (pilih dua/tiga), dan **3–5 PBQ** (simulasi) |
+| Opsi jawaban | **4 opsi** untuk pilihan tunggal, **5 opsi** untuk multi-select |
 | Esai | **tidak ada** |
 | PBQ | muncul di awal ujian, berbentuk drag-and-drop/konfigurasi/analisis, dan dapat diberi nilai parsial |
 
@@ -37,13 +42,13 @@ PBQ yang umum: menempatkan perangkat di zona jaringan, menyusun aturan firewall/
 | Domain | Materi | Bobot ujian | Soal | Termasuk multi-select |
 |---|---|---|---|---|
 | 1 | General Security Concepts | 12% | 38 | 2 |
-| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 77 | 3 |
+| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 78 | 4 |
 | 3 | Security Architecture | 18% | 50 | 2 |
-| 4 | Security Operations | 28% | 81 | 3 |
+| 4 | Security Operations | 28% | 82 | 4 |
 | 5 | Security Program Management and Oversight | 20% | 52 | 2 |
 | — | Performance-based questions (PBQ) | — | 12 | — |
 
-Total **298 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/C/D (±72 each) supaya tidak bisa ditebak polanya; jawaban multi-select juga divariasikan.
+Total **300 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/C/D (±75 each) supaya tidak bisa ditebak polanya; jawaban multi-select juga divariasikan.
 
 ## Fitur `quiz.html`
 
@@ -53,8 +58,12 @@ Total **298 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/
 - **Ulangi yang Salah** — soal yang pernah salah disimpan di browser dan hilang otomatis setelah dijawab benar.
 - **Latihan per Objektif** — fokus ke sub-objektif tertentu, misalnya `4.6` IAM atau `3.3` Data Protection.
 - **Tab PBQ** — 12 PBQ dengan kotak jawaban (tersimpan otomatis) dan tombol buka jawaban model.
-- **Tab Statistik** — cakupan bank, akurasi, penguasaan per domain, daftar objektif terlemah, dan riwayat sesi.
+- **Tab Statistik** — cakupan bank, akurasi, penguasaan per domain, grafik 10 sesi terakhir, streak hari, objektif terlemah (dengan tombol *Latih*), dan status PBQ.
 - **Multi-select** — soal "pilih dua/tiga" memakai tombol *Periksa jawaban*; penilaian harus tepat semua.
+- **Penanda di peta soal** — benar hijau, salah merah, belum dijawab putus-putus, ragu-ragu kuning; saat ujian benar/salah disembunyikan sampai selesai.
+- **Peta jawaban & hasil per objektif** — setelah selesai, klik nomor di peta untuk membuka pembahasan soal tersebut; objektif terlemah diurutkan paling atas.
+- **Live score** — jumlah benar/salah langsung terlihat selama latihan (tidak saat ujian).
+- **Penilaian PBQ mandiri** — tandai *Paham* / *Belum paham* per PBQ, tercatat di statistik.
 - **Tema terang/gelap**, navigasi grid soal, tanda ragu-ragu, shortcut keyboard (`1`–`5`, `←`/`→`, `F`, `Enter`).
 
 > Skor 100–900 adalah simulasi sederhana (persentase benar dipetakan ke skala), bukan penskoran resmi CompTIA. Anggap ≥750 sebagai indikasi siap, bukan jaminan.

@@ -631,13 +631,13 @@ Domain ini menguji kemampuan memilih **arsitektur dan kontrol yang tepat** untuk
 **Tipe:** Multi-select
 **Soal:** Which TWO statements describe a fail-closed security device? (Select TWO.)
 
-- A. It prioritizes availability over security
-- B. It can cause an outage if the device fails
-- C. It allows all traffic during a failure
-- D. It is always deployed passively
-- E. It blocks traffic when the inspection engine fails
+- A. It allows all traffic during a failure
+- B. It is always deployed passively
+- C. It blocks traffic when the inspection engine fails
+- D. It prioritizes availability over security
+- E. It can cause an outage if the device fails
 
-**Jawaban:** B, E
+**Jawaban:** C, E
 **Pembahasan:** **Fail-closed** memblokir lalu lintas saat terjadi kegagalan sehingga kebijakan tetap terjaga, tetapi berisiko memutus layanan. Fail-open justru mengizinkan semua trafik dan mengutamakan ketersediaan.
 
 ## Soal 50
@@ -645,11 +645,11 @@ Domain ini menguji kemampuan memilih **arsitektur dan kontrol yang tepat** untuk
 **Tipe:** Multi-select
 **Soal:** Which TWO methods can render data unrecoverable before disposal? (Select TWO.)
 
-- A. Quick format
-- B. Moving files to the recycle bin
-- C. Deleting the partition table
-- D. Physical destruction
-- E. Cryptographic erase
+- A. Physical destruction
+- B. Cryptographic erase
+- C. Quick format
+- D. Moving files to the recycle bin
+- E. Deleting the partition table
 
-**Jawaban:** D, E
+**Jawaban:** A, B
 **Pembahasan:** **Physical destruction** dan **crypto-erase** (menghapus kunci enkripsi) membuat data tidak dapat dipulihkan. Quick format, recycle bin, dan hapus partisi hanya menghapus referensi, bukan isi media.

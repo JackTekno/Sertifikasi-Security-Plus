@@ -671,11 +671,11 @@ Domain ini menguji **tata kelola**, **manajemen risiko**, **risiko pihak ketiga*
 **Tipe:** Multi-select
 **Soal:** Which TWO are GDPR obligations for an organization processing EU personal data? (Select TWO.)
 
-- A. Retaining personal data indefinitely for audit purposes
-- B. Publishing the source code of internal applications
-- C. Responding to data subject access requests
-- D. Notifying the supervisory authority of qualifying breaches within 72 hours
-- E. Encrypting all data specifically with AES-256
+- A. Publishing the source code of internal applications
+- B. Responding to data subject access requests
+- C. Notifying the supervisory authority of qualifying breaches within 72 hours
+- D. Encrypting all data specifically with AES-256
+- E. Retaining personal data indefinitely for audit purposes
 
-**Jawaban:** C, D
+**Jawaban:** B, C
 **Pembahasan:** GDPR memberi **hak subjek data** (akses, koreksi, penghapusan) dan mewajibkan **notifikasi pelanggaran** ke otoritas dalam 72 jam bila memenuhi kriteria. GDPR tidak menetapkan algoritma tertentu dan melarang penyimpanan tanpa batas.

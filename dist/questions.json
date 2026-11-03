@@ -1169,30 +1169,30 @@
      "options": [
       {
        "key": "A",
-       "text": "It is reversible with the correct private key"
-      },
-      {
-       "key": "B",
        "text": "It produces an output of fixed length"
       },
       {
-       "key": "C",
+       "key": "B",
        "text": "It provides confidentiality without any encryption"
       },
       {
-       "key": "D",
+       "key": "C",
        "text": "It requires both parties to share a secret key"
       },
       {
-       "key": "E",
+       "key": "D",
        "text": "It is a one-way function"
+      },
+      {
+       "key": "E",
+       "text": "It is reversible with the correct private key"
       }
      ],
      "answers": [
-      "B",
-      "E"
+      "A",
+      "D"
      ],
-     "answer": "B, E",
+     "answer": "A, D",
      "explanation": "Hash bersifat **satu arah** dan menghasilkan panjang output tetap (misalnya SHA-256 selalu 256 bit). Hash tidak dapat dibalik, tidak memberi kerahasiaan, dan tidak memerlukan kunci bersama."
     }
    ]
@@ -3506,30 +3506,30 @@
      "options": [
       {
        "key": "A",
-       "text": "Cross-site scripting"
-      },
-      {
-       "key": "B",
-       "text": "Race condition"
-      },
-      {
-       "key": "C",
        "text": "Buffer overflow"
       },
       {
-       "key": "D",
+       "key": "B",
        "text": "SQL injection"
       },
       {
-       "key": "E",
+       "key": "C",
        "text": "Directory traversal"
+      },
+      {
+       "key": "D",
+       "text": "Cross-site scripting"
+      },
+      {
+       "key": "E",
+       "text": "Race condition"
       }
      ],
      "answers": [
-      "A",
+      "B",
       "D"
      ],
-     "answer": "A, D",
+     "answer": "B, D",
      "explanation": "**SQL injection** menyuntikkan perintah SQL dan **XSS** menyuntikkan skrip ke halaman. Directory traversal memanipulasi path, race condition adalah masalah sinkronisasi, buffer overflow adalah kesalahan batas memori."
     },
     {
@@ -3542,30 +3542,30 @@
      "options": [
       {
        "key": "A",
-       "text": "High CPU usage on the user's workstation"
-      },
-      {
-       "key": "B",
-       "text": "A scheduled antivirus signature update"
-      },
-      {
-       "key": "C",
-       "text": "Successful sign-ins from two distant countries within minutes"
-      },
-      {
-       "key": "D",
        "text": "Multiple active sessions for one account from different regions"
       },
       {
-       "key": "E",
+       "key": "B",
        "text": "A single failed login followed by a successful one"
+      },
+      {
+       "key": "C",
+       "text": "High CPU usage on the user's workstation"
+      },
+      {
+       "key": "D",
+       "text": "A scheduled antivirus signature update"
+      },
+      {
+       "key": "E",
+       "text": "Successful sign-ins from two distant countries within minutes"
       }
      ],
      "answers": [
-      "C",
-      "D"
+      "A",
+      "E"
      ],
-     "answer": "C, D",
+     "answer": "A, E",
      "explanation": "**Impossible travel** dan **concurrent sessions** dari lokasi berbeda menunjukkan kredensial dipakai pihak lain. Satu login gagal adalah hal normal, CPU tinggi dan update antivirus tidak berkaitan dengan pencurian kredensial."
     },
     {
@@ -3603,6 +3603,43 @@
      ],
      "answer": "A, B",
      "explanation": "**Segmentasi** membatasi penyebaran jika sistem diserang, dan **decommissioning** menghilangkan risiko sepenuhnya. Enkripsi disk, rotasi password, dan timeout layar tidak menutup kerentanan yang tidak dapat dipatch."
+    },
+    {
+     "id": "D2-78",
+     "number": 78,
+     "domain": 2,
+     "objective": "2.2",
+     "type": "Multi-select",
+     "stem": "Which THREE are message-based threat vectors? (Select THREE.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "SMS containing a credential-harvesting link"
+      },
+      {
+       "key": "B",
+       "text": "Instant messaging from an unknown contact"
+      },
+      {
+       "key": "C",
+       "text": "USB drive found in a parking lot"
+      },
+      {
+       "key": "D",
+       "text": "Compromised website that serves exploits"
+      },
+      {
+       "key": "E",
+       "text": "Email containing a malicious link"
+      }
+     ],
+     "answers": [
+      "A",
+      "B",
+      "E"
+     ],
+     "answer": "A, B, E",
+     "explanation": "Vektor **message-based** adalah kanal pesan: email, SMS, dan instant messaging. USB drive termasuk vektor removable media, sedangkan situs yang dikompromikan adalah watering hole (web-based)."
     }
    ]
   },
@@ -5109,30 +5146,30 @@
      "options": [
       {
        "key": "A",
-       "text": "It prioritizes availability over security"
-      },
-      {
-       "key": "B",
-       "text": "It can cause an outage if the device fails"
-      },
-      {
-       "key": "C",
        "text": "It allows all traffic during a failure"
       },
       {
-       "key": "D",
+       "key": "B",
        "text": "It is always deployed passively"
       },
       {
-       "key": "E",
+       "key": "C",
        "text": "It blocks traffic when the inspection engine fails"
+      },
+      {
+       "key": "D",
+       "text": "It prioritizes availability over security"
+      },
+      {
+       "key": "E",
+       "text": "It can cause an outage if the device fails"
       }
      ],
      "answers": [
-      "B",
+      "C",
       "E"
      ],
-     "answer": "B, E",
+     "answer": "C, E",
      "explanation": "**Fail-closed** memblokir lalu lintas saat terjadi kegagalan sehingga kebijakan tetap terjaga, tetapi berisiko memutus layanan. Fail-open justru mengizinkan semua trafik dan mengutamakan ketersediaan."
     },
     {
@@ -5145,30 +5182,30 @@
      "options": [
       {
        "key": "A",
-       "text": "Quick format"
-      },
-      {
-       "key": "B",
-       "text": "Moving files to the recycle bin"
-      },
-      {
-       "key": "C",
-       "text": "Deleting the partition table"
-      },
-      {
-       "key": "D",
        "text": "Physical destruction"
       },
       {
-       "key": "E",
+       "key": "B",
        "text": "Cryptographic erase"
+      },
+      {
+       "key": "C",
+       "text": "Quick format"
+      },
+      {
+       "key": "D",
+       "text": "Moving files to the recycle bin"
+      },
+      {
+       "key": "E",
+       "text": "Deleting the partition table"
       }
      ],
      "answers": [
-      "D",
-      "E"
+      "A",
+      "B"
      ],
-     "answer": "D, E",
+     "answer": "A, B",
      "explanation": "**Physical destruction** dan **crypto-erase** (menghapus kunci enkripsi) membuat data tidak dapat dipulihkan. Quick format, recycle bin, dan hapus partisi hanya menghapus referensi, bukan isi media."
     }
    ]
@@ -7642,30 +7679,30 @@
      "options": [
       {
        "key": "A",
-       "text": "NetFlow volume anomalies"
-      },
-      {
-       "key": "B",
        "text": "DLP alerts"
       },
       {
-       "key": "C",
+       "key": "B",
        "text": "DHCP lease logs"
       },
       {
-       "key": "D",
+       "key": "C",
        "text": "Asset inventory exports"
       },
       {
-       "key": "E",
+       "key": "D",
        "text": "Password policy compliance reports"
+      },
+      {
+       "key": "E",
+       "text": "NetFlow volume anomalies"
       }
      ],
      "answers": [
       "A",
-      "B"
+      "E"
      ],
-     "answer": "A, B",
+     "answer": "A, E",
      "explanation": "**NetFlow** memperlihatkan lonjakan volume keluar per host, dan **DLP** menandai data sensitif yang meninggalkan jaringan. DHCP lease dan inventaris aset tidak menunjukkan isi atau volume transfer."
     },
     {
@@ -7678,31 +7715,68 @@
      "options": [
       {
        "key": "A",
-       "text": "Isolating the host from the network"
-      },
-      {
-       "key": "B",
-       "text": "Powering the host off immediately"
-      },
-      {
-       "key": "C",
        "text": "Reimaging the disk"
       },
       {
-       "key": "D",
+       "key": "B",
        "text": "Deleting temporary files"
       },
       {
-       "key": "E",
+       "key": "C",
        "text": "Capturing memory before shutdown"
+      },
+      {
+       "key": "D",
+       "text": "Isolating the host from the network"
+      },
+      {
+       "key": "E",
+       "text": "Powering the host off immediately"
       }
      ],
      "answers": [
-      "A",
+      "C",
+      "D"
+     ],
+     "answer": "C, D",
+     "explanation": "**Capture memori** harus dilakukan sebelum daya hilang, dan **isolasi jaringan** menghentikan penyebaran tanpa menghapus bukti. Mematikan host, reimage, dan menghapus file justru merusak bukti."
+    },
+    {
+     "id": "D4-82",
+     "number": 82,
+     "domain": 4,
+     "objective": "4.3",
+     "type": "Multi-select",
+     "stem": "Which THREE factors are MOST important when prioritizing vulnerability remediation? (Select THREE.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "The colour of the asset tag"
+      },
+      {
+       "key": "B",
+       "text": "The office location of the asset owner"
+      },
+      {
+       "key": "C",
+       "text": "CVSS severity of the vulnerability"
+      },
+      {
+       "key": "D",
+       "text": "Whether the affected asset is internet-facing"
+      },
+      {
+       "key": "E",
+       "text": "Availability of a working public exploit"
+      }
+     ],
+     "answers": [
+      "C",
+      "D",
       "E"
      ],
-     "answer": "A, E",
-     "explanation": "**Capture memori** harus dilakukan sebelum daya hilang, dan **isolasi jaringan** menghentikan penyebaran tanpa menghapus bukti. Mematikan host, reimage, dan menghapus file justru merusak bukti."
+     "answer": "C, D, E",
+     "explanation": "Prioritas mempertimbangkan **severity**, **eksposur**, dan **exploitability** — bukan atribut administratif seperti warna label atau lokasi kantor pemilik aset."
     }
    ]
   },
@@ -9307,30 +9381,30 @@
      "options": [
       {
        "key": "A",
-       "text": "Retaining personal data indefinitely for audit purposes"
-      },
-      {
-       "key": "B",
        "text": "Publishing the source code of internal applications"
       },
       {
-       "key": "C",
+       "key": "B",
        "text": "Responding to data subject access requests"
       },
       {
-       "key": "D",
+       "key": "C",
        "text": "Notifying the supervisory authority of qualifying breaches within 72 hours"
       },
       {
-       "key": "E",
+       "key": "D",
        "text": "Encrypting all data specifically with AES-256"
+      },
+      {
+       "key": "E",
+       "text": "Retaining personal data indefinitely for audit purposes"
       }
      ],
      "answers": [
-      "C",
-      "D"
+      "B",
+      "C"
      ],
-     "answer": "C, D",
+     "answer": "B, C",
      "explanation": "GDPR memberi **hak subjek data** (akses, koreksi, penghapusan) dan mewajibkan **notifikasi pelanggaran** ke otoritas dalam 72 jam bila memenuhi kriteria. GDPR tidak menetapkan algoritma tertentu dan melarang penyimpanan tanpa batas."
     }
    ]

@@ -1035,13 +1035,13 @@ Domain terbesar dalam ujian. Mencakup **hardening**, **manajemen aset**, **vulne
 **Tipe:** Multi-select
 **Soal:** Which TWO data sources BEST support detecting data exfiltration? (Select TWO.)
 
-- A. NetFlow volume anomalies
-- B. DLP alerts
-- C. DHCP lease logs
-- D. Asset inventory exports
-- E. Password policy compliance reports
+- A. DLP alerts
+- B. DHCP lease logs
+- C. Asset inventory exports
+- D. Password policy compliance reports
+- E. NetFlow volume anomalies
 
-**Jawaban:** A, B
+**Jawaban:** A, E
 **Pembahasan:** **NetFlow** memperlihatkan lonjakan volume keluar per host, dan **DLP** menandai data sensitif yang meninggalkan jaringan. DHCP lease dan inventaris aset tidak menunjukkan isi atau volume transfer.
 
 ## Soal 81
@@ -1049,12 +1049,26 @@ Domain terbesar dalam ujian. Mencakup **hardening**, **manajemen aset**, **vulne
 **Tipe:** Multi-select
 **Soal:** Which TWO actions preserve volatile evidence on a compromised host? (Select TWO.)
 
-- A. Isolating the host from the network
-- B. Powering the host off immediately
-- C. Reimaging the disk
-- D. Deleting temporary files
-- E. Capturing memory before shutdown
+- A. Reimaging the disk
+- B. Deleting temporary files
+- C. Capturing memory before shutdown
+- D. Isolating the host from the network
+- E. Powering the host off immediately
 
-**Jawaban:** A, E
+**Jawaban:** C, D
 **Pembahasan:** **Capture memori** harus dilakukan sebelum daya hilang, dan **isolasi jaringan** menghentikan penyebaran tanpa menghapus bukti. Mematikan host, reimage, dan menghapus file justru merusak bukti.
+
+## Soal 82
+**Objektif:** 4.3
+**Tipe:** Multi-select
+**Soal:** Which THREE factors are MOST important when prioritizing vulnerability remediation? (Select THREE.)
+
+- A. The colour of the asset tag
+- B. The office location of the asset owner
+- C. CVSS severity of the vulnerability
+- D. Whether the affected asset is internet-facing
+- E. Availability of a working public exploit
+
+**Jawaban:** C, D, E
+**Pembahasan:** Prioritas mempertimbangkan **severity**, **eksposur**, dan **exploitability** — bukan atribut administratif seperti warna label atau lokasi kantor pemilik aset.
 
