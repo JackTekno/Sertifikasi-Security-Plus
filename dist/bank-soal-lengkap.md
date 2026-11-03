@@ -1,8 +1,16 @@
 # Bank Soal CompTIA Security+ (SY0-701)
 
-**286 soal pilihan ganda + 12 soal performa (PBQ), lengkap dengan pembahasan Bahasa Indonesia.**
+**298 soal pilihan ganda (termasuk 12 multi-select) + 12 soal performa (PBQ), lengkap dengan pembahasan Bahasa Indonesia.**
 
 Disusun: 03 November 2026 · Sumber soal: latihan mandiri, bukan soal resmi CompTIA.
+
+Bank soal ini disusun dengan bantuan kecerdasan buatan (AI) DeepSeek, lalu ditinjau untuk konsistensi.
+
+## Format ujian
+
+- Maksimal **90 soal**, **90 menit**, skor **100–900**, lulus **750**.
+- Tipe soal: pilihan ganda, sesekali **multi-select**, dan **3–5 PBQ** (simulasi). Tidak ada esai.
+- PBQ muncul di awal dan dapat bernilai parsial — tandai, lanjut, kembali bila ada waktu.
 
 ## Cara pakai
 
@@ -15,18 +23,18 @@ Disusun: 03 November 2026 · Sumber soal: latihan mandiri, bukan soal resmi Comp
 
 | Domain | Nama | Bobot | Jumlah soal di bank |
 |---|---|---|---|
-| 1 | General Security Concepts | 12% | 36 |
-| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 74 |
-| 3 | Security Architecture | 18% | 48 |
-| 4 | Security Operations | 28% | 78 |
-| 5 | Security Program Management and Oversight | 20% | 50 |
-| | **Total** | **100%** | **286** |
+| 1 | General Security Concepts | 12% | 38 |
+| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 77 |
+| 3 | Security Architecture | 18% | 50 |
+| 4 | Security Operations | 28% | 81 |
+| 5 | Security Program Management and Oversight | 20% | 52 |
+| | **Total** | **100%** | **298** |
 
 ---
 
 # Domain 1 — General Security Concepts (12%)
 
-Objektif yang dicakup: **1.1** (6 soal), **1.2** (10 soal), **1.3** (4 soal), **1.4** (16 soal).
+Objektif yang dicakup: **1.1** (7 soal), **1.2** (10 soal), **1.3** (4 soal), **1.4** (17 soal).
 
 ## Soal 1 · Objektif 1.1 · Konsep
 
@@ -496,9 +504,37 @@ Which document provides the step-by-step tasks, responsible roles, and verificat
 
 > **SOP** merinci langkah operasional, peran, dan verifikasi sehingga perubahan konsisten dan dapat diaudit. Kebijakan AUP mengatur perilaku pengguna; BIA dan risk register bukan instruksi teknis.
 
+## Soal 37 · Objektif 1.1 · Multi-select
+
+Which TWO of the following are managerial (administrative) controls? (Select TWO.)
+
+- **A.** Acceptable use policy
+- **B.** Security guard stationed in the lobby
+- **C.** Annual risk assessment
+- **D.** Motion sensor that triggers an alarm
+- **E.** Web application firewall
+
+**Jawaban: A, C**
+
+> Kebijakan AUP dan risk assessment adalah kontrol **managerial** karena berbentuk aturan dan proses tata kelola. Penjaga dan sensor gerak bersifat physical, WAF bersifat technical.
+
+## Soal 38 · Objektif 1.4 · Multi-select
+
+Which TWO statements about cryptographic hashing are correct? (Select TWO.)
+
+- **A.** It is reversible with the correct private key
+- **B.** It produces an output of fixed length
+- **C.** It provides confidentiality without any encryption
+- **D.** It requires both parties to share a secret key
+- **E.** It is a one-way function
+
+**Jawaban: B, E**
+
+> Hash bersifat **satu arah** dan menghasilkan panjang output tetap (misalnya SHA-256 selalu 256 bit). Hash tidak dapat dibalik, tidak memberi kerahasiaan, dan tidak memerlukan kunci bersama.
+
 # Domain 2 — Threats, Vulnerabilities, and Mitigations (22%)
 
-Objektif yang dicakup: **2.1** (8 soal), **2.2** (12 soal), **2.3** (16 soal), **2.4** (27 soal), **2.5** (11 soal).
+Objektif yang dicakup: **2.1** (8 soal), **2.2** (12 soal), **2.3** (17 soal), **2.4** (28 soal), **2.5** (12 soal).
 
 ## Soal 1 · Objektif 2.1 · Skenario
 
@@ -1462,9 +1498,51 @@ Sensitive cryptographic keys must be processed inside a CPU-protected area isola
 
 > **Secure enclave** adalah area terisolasi di dalam prosesor yang melindungi kode dan kunci dari OS utama. TPM adalah chip terpisah untuk menyimpan kunci/measurement, HSM adalah perangkat eksternal.
 
+## Soal 75 · Objektif 2.3 · Multi-select
+
+Which TWO are examples of injection vulnerabilities? (Select TWO.)
+
+- **A.** Cross-site scripting
+- **B.** Race condition
+- **C.** Buffer overflow
+- **D.** SQL injection
+- **E.** Directory traversal
+
+**Jawaban: A, D**
+
+> **SQL injection** menyuntikkan perintah SQL dan **XSS** menyuntikkan skrip ke halaman. Directory traversal memanipulasi path, race condition adalah masalah sinkronisasi, buffer overflow adalah kesalahan batas memori.
+
+## Soal 76 · Objektif 2.4 · Multi-select
+
+Which TWO indicators MOST likely suggest that an account's credentials have been stolen? (Select TWO.)
+
+- **A.** High CPU usage on the user's workstation
+- **B.** A scheduled antivirus signature update
+- **C.** Successful sign-ins from two distant countries within minutes
+- **D.** Multiple active sessions for one account from different regions
+- **E.** A single failed login followed by a successful one
+
+**Jawaban: C, D**
+
+> **Impossible travel** dan **concurrent sessions** dari lokasi berbeda menunjukkan kredensial dipakai pihak lain. Satu login gagal adalah hal normal, CPU tinggi dan update antivirus tidak berkaitan dengan pencurian kredensial.
+
+## Soal 77 · Objektif 2.5 · Multi-select
+
+Which TWO controls BEST reduce the risk from an unsupported legacy system that cannot be patched? (Select TWO.)
+
+- **A.** Network segmentation
+- **B.** Decommissioning the system when possible
+- **C.** Full-disk encryption
+- **D.** Quarterly password rotation
+- **E.** Longer screen-lock timeout
+
+**Jawaban: A, B**
+
+> **Segmentasi** membatasi penyebaran jika sistem diserang, dan **decommissioning** menghilangkan risiko sepenuhnya. Enkripsi disk, rotasi password, dan timeout layar tidak menutup kerentanan yang tidak dapat dipatch.
+
 # Domain 3 — Security Architecture (18%)
 
-Objektif yang dicakup: **3.1** (13 soal), **3.2** (13 soal), **3.3** (10 soal), **3.4** (12 soal).
+Objektif yang dicakup: **3.1** (13 soal), **3.2** (14 soal), **3.3** (11 soal), **3.4** (12 soal).
 
 ## Soal 1 · Objektif 3.1 · Skenario
 
@@ -2090,9 +2168,37 @@ A network architect needs to enforce that only domain-joined, patched devices ca
 
 > **802.1X + NAC** memeriksa identitas perangkat dan postur (domain join, patch) sebelum menempatkannya di VLAN yang tepat. MAC allow list mudah dipalsukan dan tidak memeriksa postur.
 
+## Soal 49 · Objektif 3.2 · Multi-select
+
+Which TWO statements describe a fail-closed security device? (Select TWO.)
+
+- **A.** It prioritizes availability over security
+- **B.** It can cause an outage if the device fails
+- **C.** It allows all traffic during a failure
+- **D.** It is always deployed passively
+- **E.** It blocks traffic when the inspection engine fails
+
+**Jawaban: B, E**
+
+> **Fail-closed** memblokir lalu lintas saat terjadi kegagalan sehingga kebijakan tetap terjaga, tetapi berisiko memutus layanan. Fail-open justru mengizinkan semua trafik dan mengutamakan ketersediaan.
+
+## Soal 50 · Objektif 3.3 · Multi-select
+
+Which TWO methods can render data unrecoverable before disposal? (Select TWO.)
+
+- **A.** Quick format
+- **B.** Moving files to the recycle bin
+- **C.** Deleting the partition table
+- **D.** Physical destruction
+- **E.** Cryptographic erase
+
+**Jawaban: D, E**
+
+> **Physical destruction** dan **crypto-erase** (menghapus kunci enkripsi) membuat data tidak dapat dipulihkan. Quick format, recycle bin, dan hapus partisi hanya menghapus referensi, bukan isi media.
+
 # Domain 4 — Security Operations (28%)
 
-Objektif yang dicakup: **4.1** (9 soal), **4.2** (5 soal), **4.3** (10 soal), **4.4** (8 soal), **4.5** (10 soal), **4.6** (18 soal), **4.7** (4 soal), **4.8** (9 soal), **4.9** (5 soal).
+Objektif yang dicakup: **4.1** (9 soal), **4.2** (5 soal), **4.3** (10 soal), **4.4** (9 soal), **4.5** (10 soal), **4.6** (19 soal), **4.7** (4 soal), **4.8** (10 soal), **4.9** (5 soal).
 
 ## Soal 1 · Objektif 4.1 · Skenario
 
@@ -3108,9 +3214,51 @@ During an incident, the team blocks the attacker's IP at the firewall, disables 
 
 > **Containment** membatasi dampak dan menghentikan penyebaran. Eradication menghilangkan akar masalah (malware, backdoor), recovery mengembalikan layanan normal.
 
+## Soal 79 · Objektif 4.6 · Multi-select
+
+Which TWO are benefits of single sign-on (SSO)? (Select TWO.)
+
+- **A.** Limits the blast radius of a stolen credential
+- **B.** Removes the need for authorization
+- **C.** Fewer credentials for users to manage
+- **D.** Centralized authentication logging
+- **E.** Eliminates the need for MFA
+
+**Jawaban: C, D**
+
+> SSO mengurangi jumlah password dan memusatkan log autentikasi. Namun SSO memperbesar **blast radius** jika kredensial dicuri, tidak menghapus kebutuhan MFA, dan tidak menggantikan otorisasi.
+
+## Soal 80 · Objektif 4.4 · Multi-select
+
+Which TWO data sources BEST support detecting data exfiltration? (Select TWO.)
+
+- **A.** NetFlow volume anomalies
+- **B.** DLP alerts
+- **C.** DHCP lease logs
+- **D.** Asset inventory exports
+- **E.** Password policy compliance reports
+
+**Jawaban: A, B**
+
+> **NetFlow** memperlihatkan lonjakan volume keluar per host, dan **DLP** menandai data sensitif yang meninggalkan jaringan. DHCP lease dan inventaris aset tidak menunjukkan isi atau volume transfer.
+
+## Soal 81 · Objektif 4.8 · Multi-select
+
+Which TWO actions preserve volatile evidence on a compromised host? (Select TWO.)
+
+- **A.** Isolating the host from the network
+- **B.** Powering the host off immediately
+- **C.** Reimaging the disk
+- **D.** Deleting temporary files
+- **E.** Capturing memory before shutdown
+
+**Jawaban: A, E**
+
+> **Capture memori** harus dilakukan sebelum daya hilang, dan **isolasi jaringan** menghentikan penyebaran tanpa menghapus bukti. Mematikan host, reimage, dan menghapus file justru merusak bukti.
+
 # Domain 5 — Security Program Management and Oversight (20%)
 
-Objektif yang dicakup: **5.1** (10 soal), **5.2** (11 soal), **5.3** (9 soal), **5.4** (8 soal), **5.5** (3 soal), **5.6** (9 soal).
+Objektif yang dicakup: **5.1** (10 soal), **5.2** (12 soal), **5.3** (9 soal), **5.4** (9 soal), **5.5** (3 soal), **5.6** (9 soal).
 
 ## Soal 1 · Objektif 5.1 · Perbandingan
 
@@ -3761,6 +3909,34 @@ Which document would a company use to define expected performance and availabili
 **Jawaban: B**
 
 > **SLA** menetapkan tingkat layanan terukur (uptime, waktu respons, sanksi). MOU menyatakan niat, NDA kerahasiaan, AUP penggunaan yang dapat diterima.
+
+## Soal 51 · Objektif 5.2 · Multi-select
+
+Which TWO inputs are used in quantitative risk analysis? (Select TWO.)
+
+- **A.** Red/amber/green risk ratings
+- **B.** Delphi expert consensus
+- **C.** Risk matrix colour bands
+- **D.** Single loss expectancy (SLE)
+- **E.** Annualized rate of occurrence (ARO)
+
+**Jawaban: D, E**
+
+> Analisis **kuantitatif** memakai angka moneter seperti **SLE** dan **ARO** (ALE = SLE × ARO). Skala RAG, Delphi, dan matriks warna adalah teknik kualitatif.
+
+## Soal 52 · Objektif 5.4 · Multi-select
+
+Which TWO are GDPR obligations for an organization processing EU personal data? (Select TWO.)
+
+- **A.** Retaining personal data indefinitely for audit purposes
+- **B.** Publishing the source code of internal applications
+- **C.** Responding to data subject access requests
+- **D.** Notifying the supervisory authority of qualifying breaches within 72 hours
+- **E.** Encrypting all data specifically with AES-256
+
+**Jawaban: C, D**
+
+> GDPR memberi **hak subjek data** (akses, koreksi, penghapusan) dan mewajibkan **notifikasi pelanggaran** ke otoritas dalam 72 jam bila memenuhi kriteria. GDPR tidak menetapkan algoritma tertentu dan melarang penyimpanan tanpa batas.
 
 ---
 

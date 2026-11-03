@@ -651,3 +651,31 @@ Domain ini menguji **tata kelola**, **manajemen risiko**, **risiko pihak ketiga*
 
 **Jawaban:** B
 **Pembahasan:** **SLA** menetapkan tingkat layanan terukur (uptime, waktu respons, sanksi). MOU menyatakan niat, NDA kerahasiaan, AUP penggunaan yang dapat diterima.
+
+## Soal 51
+**Objektif:** 5.2
+**Tipe:** Multi-select
+**Soal:** Which TWO inputs are used in quantitative risk analysis? (Select TWO.)
+
+- A. Red/amber/green risk ratings
+- B. Delphi expert consensus
+- C. Risk matrix colour bands
+- D. Single loss expectancy (SLE)
+- E. Annualized rate of occurrence (ARO)
+
+**Jawaban:** D, E
+**Pembahasan:** Analisis **kuantitatif** memakai angka moneter seperti **SLE** dan **ARO** (ALE = SLE × ARO). Skala RAG, Delphi, dan matriks warna adalah teknik kualitatif.
+
+## Soal 52
+**Objektif:** 5.4
+**Tipe:** Multi-select
+**Soal:** Which TWO are GDPR obligations for an organization processing EU personal data? (Select TWO.)
+
+- A. Retaining personal data indefinitely for audit purposes
+- B. Publishing the source code of internal applications
+- C. Responding to data subject access requests
+- D. Notifying the supervisory authority of qualifying breaches within 72 hours
+- E. Encrypting all data specifically with AES-256
+
+**Jawaban:** C, D
+**Pembahasan:** GDPR memberi **hak subjek data** (akses, koreksi, penghapusan) dan mewajibkan **notifikasi pelanggaran** ke otoritas dalam 72 jam bila memenuhi kriteria. GDPR tidak menetapkan algoritma tertentu dan melarang penyimpanan tanpa batas.

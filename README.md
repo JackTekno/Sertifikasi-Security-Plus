@@ -1,37 +1,61 @@
 # CompTIA Security+ (SY0-701) — Bank Soal & Latihan
 
-**286 soal pilihan ganda + 12 soal performa (PBQ)**, semuanya dengan pembahasan Bahasa Indonesia. Soal ditulis mengikuti struktur resmi lima domain SY0-701, bukan salinan soal ujian.
+**298 soal pilihan ganda + 12 soal performa (PBQ)**, semuanya dengan pembahasan Bahasa Indonesia. Soal disusun mengikuti lima domain resmi SY0-701, bukan salinan soal ujian.
+
+> **Tentang pembuatan:** seluruh bank soal, pembahasan, dan aplikasi latihan ini **disusun dengan bantuan kecerdasan buatan (AI) DeepSeek**. Materi tetap perlu diverifikasi ke objektif resmi CompTIA; gunakan sebagai latihan, bukan sumber kebenaran tunggal.
 
 ## Mulai cepat
 
 | Kalau Anda ingin… | Buka |
 |---|---|
-| Latihan interaktif dengan timer dan skor | **[`dist/quiz.html`](dist/quiz.html)** — klik dua kali, jalan offline di browser |
+| Latihan interaktif: simulasi ujian, PBQ, statistik | **[`dist/quiz.html`](dist/quiz.html)** — klik dua kali, jalan offline di browser |
 | Membaca semua soal + pembahasan | [`dist/bank-soal-lengkap.md`](dist/bank-soal-lengkap.md) |
 | Cetak / belajar dari HP | [`dist/Security-Plus-SY0-701-Bank-Soal.pdf`](dist/Security-Plus-SY0-701-Bank-Soal.pdf) |
 | Mengedit atau menambah soal | [`bank-soal/`](bank-soal/) |
 
+![Tampilan latihan soal](docs/screenshot-quiz.png)
+
+![Latihan PBQ](docs/screenshot-pbq.png)
+
+## Format ujian SY0-701
+
+| Item | Keterangan |
+|---|---|
+| Jumlah soal | maksimal **90** |
+| Waktu | **90 menit** |
+| Skor | **100–900**, lulus **750** |
+| Tipe soal | pilihan ganda satu jawaban, sesekali **multi-select** (pilih dua/tiga), dan **3–5 PBQ** (simulasi) |
+| Esai | **tidak ada** |
+| PBQ | muncul di awal ujian, berbentuk drag-and-drop/konfigurasi/analisis, dan dapat diberi nilai parsial |
+
+PBQ yang umum: menempatkan perangkat di zona jaringan, menyusun aturan firewall/ACL, membaca log, hardening endpoint, mengatur IAM least privilege, memilih algoritma kriptografi, konfigurasi SSID Wi-Fi, dan memprioritaskan kerentanan.
+
+> CompTIA tidak mengumumkan jumlah pasti PBQ per versi ujian; laporan kandidat menyebut 3–5. Versi SY0-701 dijadwalkan pensiun **11 Juni 2027**, dan penerus SY0-801 diperkirakan hadir sekitar **November 2026** — cek [halaman resmi CompTIA](https://www.comptia.org/certifications/security) sebelum membeli voucher. Rincian format di atas juga merujuk pada [ringkasan format SY0-701](https://mindsetcyber.com.au/guides/comptia-security-plus-exam-objectives-sy0-701/).
+
 ## Isi bank soal
 
-| Domain | Materi | Bobot ujian | Soal | Objektif yang dicakup |
+| Domain | Materi | Bobot ujian | Soal | Termasuk multi-select |
 |---|---|---|---|---|
-| 1 | General Security Concepts | 12% | 36 | 1.1 – 1.4 |
-| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 74 | 2.1 – 2.5 |
-| 3 | Security Architecture | 18% | 48 | 3.1 – 3.4 |
-| 4 | Security Operations | 28% | 78 | 4.1 – 4.9 |
-| 5 | Security Program Management and Oversight | 20% | 50 | 5.1 – 5.6 |
-| — | Performance-based questions (PBQ) | — | 12 | konfigurasi, matching, urutan, analisis |
+| 1 | General Security Concepts | 12% | 38 | 2 |
+| 2 | Threats, Vulnerabilities, and Mitigations | 22% | 77 | 3 |
+| 3 | Security Architecture | 18% | 50 | 2 |
+| 4 | Security Operations | 28% | 81 | 3 |
+| 5 | Security Program Management and Oversight | 20% | 52 | 2 |
+| — | Performance-based questions (PBQ) | — | 12 | — |
 
-Total **286 MCQ + 12 PBQ**. Kunci jawaban tersebar merata di A/B/C/D (72/72/71/71) supaya tidak bisa ditebak polanya.
+Total **298 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/C/D (±72 each) supaya tidak bisa ditebak polanya; jawaban multi-select juga divariasikan.
 
-## Mode di `quiz.html`
+## Fitur `quiz.html`
 
-- **Ujian Simulasi** — 90 soal, 90 menit, komposisi domain sesuai bobot resmi (11/20/16/25/18), skor akhir 100–900 dengan ambang lulus 750.
-- **Latihan per Domain** — 20 soal acak dari satu domain, pembahasan langsung muncul setelah menjawab.
+- **Ujian Simulasi** — 90 soal, 90 menit, komposisi domain sesuai bobot resmi, skor 100–900 dengan ambang 750. Sebelum selesai, muncul ringkasan soal kosong dan yang ditandai.
+- **Latihan per Domain** — 20 soal acak dari satu domain, pembahasan langsung muncul.
 - **Latihan Cepat** — 25 soal acak lintas domain tanpa timer.
 - **Ulangi yang Salah** — soal yang pernah salah disimpan di browser dan hilang otomatis setelah dijawab benar.
-
-Fitur lain: navigasi grid soal, tanda ragu-ragu, shortcut keyboard (`1`–`4`, `←`/`→`, `F`), rincian skor per domain, pembahasan semua jawaban yang salah, dan riwayat sesi.
+- **Latihan per Objektif** — fokus ke sub-objektif tertentu, misalnya `4.6` IAM atau `3.3` Data Protection.
+- **Tab PBQ** — 12 PBQ dengan kotak jawaban (tersimpan otomatis) dan tombol buka jawaban model.
+- **Tab Statistik** — cakupan bank, akurasi, penguasaan per domain, daftar objektif terlemah, dan riwayat sesi.
+- **Multi-select** — soal "pilih dua/tiga" memakai tombol *Periksa jawaban*; penilaian harus tepat semua.
+- **Tema terang/gelap**, navigasi grid soal, tanda ragu-ragu, shortcut keyboard (`1`–`5`, `←`/`→`, `F`, `Enter`).
 
 > Skor 100–900 adalah simulasi sederhana (persentase benar dipetakan ke skala), bukan penskoran resmi CompTIA. Anggap ≥750 sebagai indikasi siap, bukan jaminan.
 
@@ -42,15 +66,16 @@ Fitur lain: navigasi grid soal, tanda ragu-ragu, shortcut keyboard (`1`–`4`, `
 | 1 | Domain 1 + 2 (kontrol, kriptografi, threat actor, vektor, kerentanan) | 25 soal + baca ulang pembahasan yang salah |
 | 2 | Domain 3 (arsitektur, cloud, data, resiliensi) | 25 soal + ringkas tabel perbandingan |
 | 3 | Domain 4 (hardening, vuln mgmt, monitoring, IAM, IR) | 30 soal, bagi per sub-objektif |
-| 4 | Domain 5 + simulasi penuh | 2× Ujian Simulasi + ulangi semua soal salah |
+| 4 | Domain 5 + PBQ + simulasi penuh | 2× Ujian Simulasi + ulangi semua soal salah |
 
 Aturan belajar yang penting:
 
 1. **Jawab dulu, baru buka kunci.** Untuk PDF, kerjakan satu domain lalu periksa bagian kunci.
 2. **Baca pembahasan soal yang benar juga** bila jawaban Anda hasil tebakan.
 3. **Catat pola salah**, bukan hanya materinya: salah baca kata kunci (`BEST`, `MOST`, `FIRST`, `MINIMAL`), tertukar istilah mirip (IDS/IPS, RADIUS/TACACS+, RTO/RPO), atau tidak hafal angka (CVSS, port, masa retensi).
-4. **Ulangi soal salah setelah 2–3 hari.** Di quiz.html gunakan mode *Ulangi yang Salah*.
-5. **Seminggu terakhir**: satu simulasi 90 menit setiap 2 hari, lalu bedah soal yang salah.
+4. **Ulangi soal salah setelah 2–3 hari.** Gunakan mode *Ulangi yang Salah* dan cek *Statistik* untuk melihat objektif terlemah.
+5. **Latih PBQ secara terpisah.** Tulis jawaban di tab PBQ sebelum membuka jawaban model.
+6. **Seminggu terakhir**: satu simulasi 90 menit setiap 2 hari, lalu bedah soal yang salah.
 
 ## Materi yang sering keluar dan sering tertukar
 
@@ -78,8 +103,8 @@ bank-soal/                    sumber soal (Markdown, mudah diedit)
   06-performance-based.md     PBQ
 tools/
   parse_bank.py               Markdown -> dist/questions.json (validasi format)
-  balance_options.py          meratakan posisi jawaban A-D
-  build_html.py               membuat quiz.html mandiri
+  balance_options.py          meratakan posisi jawaban
+  build_html.py               membuat quiz.html (termasuk PBQ + statistik)
   build_md.py                 menggabungkan semua soal + pembahasan
   build_docx.py               membuat DOCX (soal, kunci, PBQ)
   test_quiz.mjs               smoke test logika kuis (Node, tanpa browser)
@@ -121,8 +146,14 @@ Format soal yang dipakai `parse_bank.py`:
 **Pembahasan:** Penjelasan dalam Bahasa Indonesia.
 ```
 
+Untuk soal multi-select, gunakan lima opsi dan tulis jawaban dipisah koma:
+
+```markdown
+**Jawaban:** A, C
+```
+
 ## Catatan
 
-- Soal dibuat untuk latihan mandiri dan **bukan** soal resmi CompTIA, bukan brain dump, dan tidak berafiliasi dengan CompTIA, Inc.
+- Soal dibuat dengan bantuan **AI DeepSeek** untuk latihan mandiri, **bukan** soal resmi CompTIA, bukan brain dump, dan tidak berafiliasi dengan CompTIA, Inc.
 - Materi mengacu pada objektif SY0-701 v1.0. Selalu cek [situs resmi CompTIA](https://www.comptia.org/certifications/security) untuk detail ujian terbaru (harga, jumlah soal, kebijakan).
-- Ujian asli: maksimal 90 soal, 90 menit, skor 100–900, lulus **750**. PBQ muncul di awal ujian.
+- Ujian asli: maksimal 90 soal, 90 menit, skor 100–900, lulus **750**; PBQ muncul di awal ujian.

@@ -625,3 +625,31 @@ Domain ini menguji kemampuan memilih **arsitektur dan kontrol yang tepat** untuk
 
 **Jawaban:** B
 **Pembahasan:** **802.1X + NAC** memeriksa identitas perangkat dan postur (domain join, patch) sebelum menempatkannya di VLAN yang tepat. MAC allow list mudah dipalsukan dan tidak memeriksa postur.
+
+## Soal 49
+**Objektif:** 3.2
+**Tipe:** Multi-select
+**Soal:** Which TWO statements describe a fail-closed security device? (Select TWO.)
+
+- A. It prioritizes availability over security
+- B. It can cause an outage if the device fails
+- C. It allows all traffic during a failure
+- D. It is always deployed passively
+- E. It blocks traffic when the inspection engine fails
+
+**Jawaban:** B, E
+**Pembahasan:** **Fail-closed** memblokir lalu lintas saat terjadi kegagalan sehingga kebijakan tetap terjaga, tetapi berisiko memutus layanan. Fail-open justru mengizinkan semua trafik dan mengutamakan ketersediaan.
+
+## Soal 50
+**Objektif:** 3.3
+**Tipe:** Multi-select
+**Soal:** Which TWO methods can render data unrecoverable before disposal? (Select TWO.)
+
+- A. Quick format
+- B. Moving files to the recycle bin
+- C. Deleting the partition table
+- D. Physical destruction
+- E. Cryptographic erase
+
+**Jawaban:** D, E
+**Pembahasan:** **Physical destruction** dan **crypto-erase** (menghapus kunci enkripsi) membuat data tidak dapat dipulihkan. Quick format, recycle bin, dan hapus partisi hanya menghapus referensi, bukan isi media.

@@ -963,3 +963,45 @@ Domain dengan bobot terbesar kedua. Fokus pada **siapa penyerangnya**, **lewat m
 
 **Jawaban:** C
 **Pembahasan:** **Secure enclave** adalah area terisolasi di dalam prosesor yang melindungi kode dan kunci dari OS utama. TPM adalah chip terpisah untuk menyimpan kunci/measurement, HSM adalah perangkat eksternal.
+
+## Soal 75
+**Objektif:** 2.3
+**Tipe:** Multi-select
+**Soal:** Which TWO are examples of injection vulnerabilities? (Select TWO.)
+
+- A. Cross-site scripting
+- B. Race condition
+- C. Buffer overflow
+- D. SQL injection
+- E. Directory traversal
+
+**Jawaban:** A, D
+**Pembahasan:** **SQL injection** menyuntikkan perintah SQL dan **XSS** menyuntikkan skrip ke halaman. Directory traversal memanipulasi path, race condition adalah masalah sinkronisasi, buffer overflow adalah kesalahan batas memori.
+
+## Soal 76
+**Objektif:** 2.4
+**Tipe:** Multi-select
+**Soal:** Which TWO indicators MOST likely suggest that an account's credentials have been stolen? (Select TWO.)
+
+- A. High CPU usage on the user's workstation
+- B. A scheduled antivirus signature update
+- C. Successful sign-ins from two distant countries within minutes
+- D. Multiple active sessions for one account from different regions
+- E. A single failed login followed by a successful one
+
+**Jawaban:** C, D
+**Pembahasan:** **Impossible travel** dan **concurrent sessions** dari lokasi berbeda menunjukkan kredensial dipakai pihak lain. Satu login gagal adalah hal normal, CPU tinggi dan update antivirus tidak berkaitan dengan pencurian kredensial.
+
+## Soal 77
+**Objektif:** 2.5
+**Tipe:** Multi-select
+**Soal:** Which TWO controls BEST reduce the risk from an unsupported legacy system that cannot be patched? (Select TWO.)
+
+- A. Network segmentation
+- B. Decommissioning the system when possible
+- C. Full-disk encryption
+- D. Quarterly password rotation
+- E. Longer screen-lock timeout
+
+**Jawaban:** A, B
+**Pembahasan:** **Segmentasi** membatasi penyebaran jika sistem diserang, dan **decommissioning** menghilangkan risiko sepenuhnya. Enkripsi disk, rotasi password, dan timeout layar tidak menutup kerentanan yang tidak dapat dipatch.

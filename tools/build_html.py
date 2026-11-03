@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Build a self-contained interactive quiz (dist/quiz.html) from dist/questions.json."""
+"""Build a self-contained interactive study app (dist/quiz.html) from dist/questions.json."""
 from __future__ import annotations
 
+import html as html_lib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
+BANK = ROOT / "bank-soal"
 
 DOMAINS = [
     {"id": 1, "name": "General Security Concepts", "weight": 12},
@@ -16,8 +19,115 @@ DOMAINS = [
     {"id": 5, "name": "Security Program Management and Oversight", "weight": 20},
 ]
 
+PBQ_RE = re.compile(r"(?ms)^## PBQ (\d+) — (.+?)\s*$(.*?)(?=^## PBQ \d+ — |\Z)")
+
+
+def inline_md(text: str) -> str:
+    text = html_lib.escape(text)
+    text = re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
+    text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+    return text
+
+
+def md_html(text: str) -> str:
+    """Small Markdown subset -> HTML for the PBQ section."""
+    lines = text.splitlines()
+    out: list[str] = []
+    list_open: str | None = None
+
+    def close_list() -> None:
+        nonlocal list_open
+        if list_open:
+            out.append(f"</{list_open}>")
+            list_open = None
+
+    i = 0
+    while i < len(lines):
+        line = lines[i].rstrip()
+        if not line.strip():
+            close_list()
+            i += 1
+            continue
+        if line.startswith("|") and i + 1 < len(lines):
+            sep = lines[i + 1].replace("|", "").strip()
+            if sep and set(sep) <= set("-: "):
+                close_list()
+                rows = []
+                while i < len(lines) and lines[i].startswith("|"):
+                    rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
+                    i += 1
+                rows = [r for r in rows if not (r and set("".join(r)) <= set("-: "))]
+                if rows:
+                    head, *body = rows
+                    out.append('<table class="tbl"><thead><tr>')
+                    out.extend(f"<th>{inline_md(c)}</th>" for c in head)
+                    out.append("</tr></thead><tbody>")
+                    for r in body:
+                        out.append("<tr>" + "".join(f"<td>{inline_md(c)}</td>" for c in r) + "</tr>")
+                    out.append("</tbody></table>")
+                continue
+        if line.startswith("- "):
+            if list_open != "ul":
+                close_list()
+                out.append("<ul>")
+                list_open = "ul"
+            out.append(f"<li>{inline_md(line[2:])}</li>")
+            i += 1
+            continue
+        if re.match(r"^\d+\.\s", line):
+            if list_open != "ol":
+                close_list()
+                out.append("<ol>")
+                list_open = "ol"
+            out.append(f"<li>{inline_md(re.sub(r'^\d+\.\s', '', line))}</li>")
+            i += 1
+            continue
+        if line.startswith("### "):
+            close_list()
+            out.append(f"<h4>{inline_md(line[4:])}</h4>")
+            i += 1
+            continue
+        if line.startswith("## "):
+            close_list()
+            out.append(f"<h3>{inline_md(line[3:])}</h3>")
+            i += 1
+            continue
+        if line.startswith("> "):
+            close_list()
+            out.append(f"<blockquote>{inline_md(line[2:])}</blockquote>")
+            i += 1
+            continue
+        close_list()
+        out.append(f"<p>{inline_md(line)}</p>")
+        i += 1
+    close_list()
+    return "\n".join(out)
+
+
+def parse_pbq() -> list[dict]:
+    text = (BANK / "06-performance-based.md").read_text(encoding="utf-8")
+    items = []
+    for m in PBQ_RE.finditer(text):
+        num, title, body = m.group(1), m.group(2), m.group(3)
+        marker = re.search(r"\*\*Jawaban model:\*\*", body)
+        if marker:
+            prompt = body[: marker.start()]
+            answer = body[marker.start():].replace("**Jawaban model:**", "", 1)
+        else:
+            prompt, answer = body, ""
+        items.append(
+            {
+                "id": f"PBQ {num}",
+                "title": title.strip(),
+                "prompt": md_html(prompt.strip()),
+                "answer": md_html(answer.strip()),
+            }
+        )
+    return items
+
+
 TEMPLATE = r"""<!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,6 +139,12 @@ TEMPLATE = r"""<!DOCTYPE html>
   --accent:#38bdf8; --accent2:#22d3ee; --ok:#34d399; --bad:#fb7185; --warn:#fbbf24;
   --shadow:0 18px 50px rgba(0,0,0,.45);
 }
+html[data-theme="light"]{
+  --bg:#f4f7fc; --bg2:#e9eff8; --card:#ffffff; --card2:#f1f5fb;
+  --line:#d5dfee; --txt:#12213a; --muted:#5a6b88;
+  --accent:#0b74d1; --accent2:#0891b2; --ok:#0e7c5a; --bad:#c02c45; --warn:#a16207;
+  --shadow:0 18px 40px rgba(20,40,80,.12);
+}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
@@ -39,75 +155,94 @@ body{
   font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
   min-height:100vh; line-height:1.55;
 }
-.wrap{max-width:980px;margin:0 auto;padding:24px 18px 64px}
+html[data-theme="light"] body{
+  background:radial-gradient(1000px 600px at 10% -10%,#dbeafe 0%,transparent 55%),
+             radial-gradient(800px 500px at 100% 0%,#e0e7ff 0%,transparent 50%),
+             var(--bg);
+}
+.wrap{max-width:1000px;margin:0 auto;padding:22px 18px 70px}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.2px}
 .logo{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
   background:linear-gradient(135deg,var(--accent),#6366f1);color:#04121f;font-size:19px}
 .brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;letter-spacing:.3px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
-.hero{margin:18px 0 26px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.tools{display:flex;gap:8px;align-items:center}
+.hero{margin:6px 0 22px}
 .hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 8px;line-height:1.2}
 .hero p{color:var(--muted);margin:0;max-width:720px}
 .hero .hl{color:var(--accent)}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 6px}
 .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
   padding:6px 12px;font-size:12.5px;color:var(--muted)}
 .chip b{color:var(--txt)}
-.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px}
+.tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);
+  padding:5px;border-radius:14px;margin:0 0 20px;width:max-content;max-width:100%}
+.tab{background:transparent;border:0;color:var(--muted);padding:8px 16px;border-radius:10px;
+  cursor:pointer;font:inherit;font-size:14px;font-weight:600}
+.tab.active{background:var(--card2);color:var(--txt);box-shadow:inset 0 0 0 1px var(--line)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
 .mode{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
   border-radius:16px;padding:18px;cursor:pointer;transition:.18s transform,.18s border-color,.18s box-shadow;
   display:flex;flex-direction:column;gap:6px;text-align:left;color:inherit;font:inherit}
-.mode:hover{transform:translateY(-2px);border-color:#3d5a85;box-shadow:var(--shadow)}
+.mode:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow)}
 .mode .ic{font-size:22px}
 .mode h3{margin:2px 0 0;font-size:16px}
 .mode p{margin:0;color:var(--muted);font-size:13px}
 .mode .tag{margin-top:6px;font-size:12px;color:var(--accent)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:18px}
+.panel h3{margin:0 0 4px;font-size:15px}
+.panel p{margin:0 0 10px;color:var(--muted);font-size:13px}
+.objrow{display:flex;gap:10px;flex-wrap:wrap}
+select{background:var(--card2);color:var(--txt);border:1px solid var(--line);
+  border-radius:10px;padding:9px 12px;font:inherit;font-size:13.5px;min-width:260px;flex:1}
 .domlist{display:none;gap:8px;flex-wrap:wrap;margin-top:14px}
 .domlist.show{display:flex}
 .dombtn{background:var(--card2);border:1px solid var(--line);color:var(--txt);
   padding:8px 12px;border-radius:10px;cursor:pointer;font-size:13px;text-align:left}
 .dombtn:hover{border-color:var(--accent)}
-.hist{margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.hist{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
 .hist h3{margin:0 0 8px;font-size:15px}
-.hist table{width:100%;border-collapse:collapse;font-size:13px}
-.hist td,.hist th{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);color:var(--muted)}
-.hist th{color:var(--txt);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
-.hist tr:last-child td{border-bottom:0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);color:var(--muted)}
+th{color:var(--txt);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+tr:last-child td{border-bottom:0}
 .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700}
 .pill.pass{background:rgba(52,211,153,.14);color:var(--ok)}
 .pill.fail{background:rgba(251,113,133,.14);color:var(--bad)}
 .hide{display:none !important}
 
-/* quiz */
-.quizhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-.timer{font-variant-numeric:tabular-nums;background:var(--card);border:1px solid var(--line);
-  padding:7px 13px;border-radius:11px;font-weight:700;letter-spacing:.4px}
-.timer.low{color:var(--bad);border-color:rgba(251,113,133,.5)}
 .btn{background:var(--card2);border:1px solid var(--line);color:var(--txt);padding:9px 15px;
   border-radius:11px;cursor:pointer;font:inherit;font-size:13.5px;transition:.15s}
-.btn:hover{border-color:#3d5a85}
+.btn:hover{border-color:var(--accent)}
 .btn.primary{background:linear-gradient(135deg,var(--accent),#6366f1);color:#05121f;font-weight:700;border:0}
 .btn.primary:hover{filter:brightness(1.07)}
 .btn.ghost{background:transparent}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn.warn{border-color:rgba(251,191,36,.45);color:var(--warn)}
 .btn.flag-on{border-color:rgba(251,191,36,.7);color:var(--warn);background:rgba(251,191,36,.08)}
-.pbar{height:7px;background:#0c1626;border-radius:99px;overflow:hidden;border:1px solid #1b2a42;margin-bottom:18px}
+.quizhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.timer{font-variant-numeric:tabular-nums;background:var(--card);border:1px solid var(--line);
+  padding:7px 13px;border-radius:11px;font-weight:700;letter-spacing:.4px}
+.timer.low{color:var(--bad);border-color:rgba(251,113,133,.5)}
+.pbar{height:7px;background:var(--card2);border-radius:99px;overflow:hidden;border:1px solid var(--line);margin-bottom:18px}
 .pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .25s}
-.card{background:linear-gradient(180deg,var(--card),#0f1a2c);border:1px solid var(--line);
+.card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
   border-radius:18px;padding:24px;box-shadow:var(--shadow)}
 .meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
 .badge{background:rgba(56,189,248,.12);color:var(--accent);border:1px solid rgba(56,189,248,.25);
   padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:600;letter-spacing:.3px}
 .badge.ghost{background:transparent;color:var(--muted);border-color:var(--line)}
-.stem{font-size:clamp(17px,2.2vw,20px);line-height:1.55;margin:0 0 20px;font-weight:600}
+.badge.gold{background:rgba(251,191,36,.12);color:var(--warn);border-color:rgba(251,191,36,.3)}
+.stem{font-size:clamp(17px,2.2vw,20px);line-height:1.55;margin:0 0 8px;font-weight:600}
+.hint{color:var(--muted);font-size:12.5px;margin:0 0 16px}
 .opts{display:grid;gap:10px}
-.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:#0e192b;
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--card2);
   border:1px solid var(--line);border-radius:13px;padding:13px 15px;cursor:pointer;color:inherit;
   font:inherit;font-size:15px;transition:.14s}
-.opt:hover:not(:disabled){border-color:#3d5a85;background:#122036}
+.opt:hover:not(:disabled){border-color:var(--accent)}
 .opt .k{flex:0 0 28px;height:28px;border-radius:9px;display:grid;place-items:center;
-  background:#182742;border:1px solid #2b3f61;font-weight:700;font-size:13px;color:var(--accent)}
+  background:var(--bg2);border:1px solid var(--line);font-weight:700;font-size:13px;color:var(--accent)}
+.opts.multi .opt .k{border-radius:6px}
 .opt.sel{border-color:var(--accent);background:rgba(56,189,248,.09)}
 .opt.sel .k{background:rgba(56,189,248,.22);border-color:rgba(56,189,248,.5);color:var(--accent)}
 .opt.correct{border-color:rgba(52,211,153,.65);background:rgba(52,211,153,.09)}
@@ -115,8 +250,9 @@ body{
 .opt.wrong{border-color:rgba(251,113,133,.6);background:rgba(251,113,133,.08)}
 .opt.wrong .k{background:rgba(251,113,133,.2);border-color:rgba(251,113,133,.5);color:var(--bad)}
 .opt:disabled{cursor:default;opacity:1}
-.opt.dim{opacity:.55}
-.fb{margin-top:18px;border-radius:13px;padding:14px 16px;border:1px solid var(--line);background:#0d1728;display:none}
+.opt.dim{opacity:.5}
+.checkrow{margin-top:14px;display:flex;justify-content:flex-end}
+.fb{margin-top:18px;border-radius:13px;padding:14px 16px;border:1px solid var(--line);background:var(--card2);display:none}
 .fb.show{display:block;animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .fb .verdict{font-weight:700;margin-bottom:6px;display:flex;gap:8px;align-items:center}
@@ -125,80 +261,122 @@ body{
 .fb.bad{border-color:rgba(251,113,133,.4)}
 .fb.bad .verdict{color:var(--bad)}
 .fb .ans{color:var(--muted);font-size:13px;margin-bottom:6px}
-.fb p{margin:0;font-size:14.5px;color:#d6e2f7}
+.fb p{margin:0;font-size:14.5px;color:var(--txt)}
+.fb code,.pbq code{background:var(--bg2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.9em}
 .nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
 .nav .right{display:flex;gap:10px;margin-left:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px;margin-top:18px}
-.dot{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:#0d1728;color:var(--muted);
+.dot{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--muted);
   font-size:12px;cursor:pointer;display:grid;place-items:center}
 .dot.cur{outline:2px solid var(--accent);color:var(--txt)}
 .dot.done{background:rgba(56,189,248,.18);color:var(--accent);border-color:rgba(56,189,248,.35)}
 .dot.flag{border-color:rgba(251,191,36,.65);color:var(--warn)}
 .dot.done.flag{background:rgba(251,191,36,.12)}
 
-/* result */
-.reshead{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
 .score{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;
-  background:conic-gradient(var(--accent) var(--deg,0deg),#16243a 0);position:relative;flex:0 0 auto}
-.score::after{content:"";position:absolute;inset:9px;border-radius:50%;background:#0d1728}
+  background:conic-gradient(var(--accent) var(--deg,0deg),var(--card2) 0);position:relative;flex:0 0 auto}
+.score::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--card)}
 .score .in{position:relative;z-index:1;text-align:center}
 .score .num{font-size:34px;font-weight:800;line-height:1}
 .score .lbl{font-size:11px;color:var(--muted);letter-spacing:.6px;text-transform:uppercase}
+.reshead{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
 .resmeta h2{margin:0 0 4px;font-size:23px}
 .resmeta p{margin:0;color:var(--muted);font-size:14px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:18px 0 4px}
-.kpi{background:#0e192b;border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+.kpi{background:var(--card2);border:1px solid var(--line);border-radius:13px;padding:12px 14px}
 .kpi .v{font-size:20px;font-weight:800}
 .kpi .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
 .kpi.ok .v{color:var(--ok)} .kpi.bad .v{color:var(--bad)} .kpi.warn .v{color:var(--warn)}
-.domres{margin-top:22px;display:grid;gap:10px}
+.domres{margin-top:22px;display:grid;gap:12px}
 .dombar{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}
 .dombar .name{font-size:13.5px}
 .dombar .val{font-size:12.5px;color:var(--muted)}
-.dombar .track{grid-column:1/-1;height:8px;border-radius:99px;background:#0c1626;overflow:hidden}
+.dombar .track{grid-column:1/-1;height:8px;border-radius:99px;background:var(--card2);overflow:hidden}
 .dombar .track i{display:block;height:100%;border-radius:99px}
 .review{margin-top:26px}
 .review h3{margin:0 0 10px;font-size:16px}
-.ritem{border:1px solid var(--line);border-radius:13px;margin-bottom:10px;overflow:hidden;background:#0e192b}
+.ritem{border:1px solid var(--line);border-radius:13px;margin-bottom:10px;overflow:hidden;background:var(--card2)}
 .ritem summary{cursor:pointer;padding:13px 15px;font-size:14px;font-weight:600;list-style:none;display:flex;gap:9px;align-items:flex-start}
 .ritem summary::-webkit-details-marker{display:none}
-.ritem .body{padding:0 15px 15px;font-size:14px;color:#cfdcf2}
-.ritem .body .opts{display:grid;gap:5px;margin:8px 0}
-.ritem .body .o{padding:7px 10px;border-radius:8px;background:#0b1524;border:1px solid var(--line);font-size:13.5px}
+.ritem .body{padding:0 15px 15px;font-size:14px;color:var(--txt)}
+.ritem .body .o{padding:7px 10px;border-radius:8px;background:var(--card);border:1px solid var(--line);font-size:13.5px;margin:5px 0}
 .ritem .body .o.a{border-color:rgba(52,211,153,.45)}
 .ritem .body .o.mine{border-color:rgba(251,113,133,.45)}
 .note{color:var(--muted);font-size:13px}
-.footer{margin-top:34px;color:#5b6b88;font-size:12px;text-align:center}
+.footer{margin-top:34px;color:var(--muted);font-size:12px;text-align:center;opacity:.8}
+
+/* PBQ */
+.pbq{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:16px}
+.pbq-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.pbq-head h3{margin:0;font-size:17px}
+.pbq .md{font-size:14.5px}
+.pbq .md p{margin:8px 0}
+.pbq .md ul,.pbq .md ol{margin:8px 0 8px 20px;padding:0}
+.pbq .md li{margin:3px 0}
+.pbq .md blockquote{margin:10px 0;padding:8px 12px;border-left:3px solid var(--accent);
+  background:var(--card2);border-radius:0 8px 8px 0;color:var(--muted)}
+.pbq .md table{margin:10px 0;font-size:13px}
+.pbq .md th,.pbq .md td{border:1px solid var(--line);padding:6px 8px;color:var(--txt)}
+.pbq .md th{background:var(--card2)}
+.pbq textarea{width:100%;min-height:90px;margin-top:12px;background:var(--card2);color:var(--txt);
+  border:1px solid var(--line);border-radius:11px;padding:11px 13px;font:inherit;font-size:14px;resize:vertical}
+.pbq-actions{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.pbq-answer{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+
+/* stats */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.meter{height:9px;border-radius:99px;background:var(--card2);overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent))}
+.weak{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.weak:last-child{border-bottom:0}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(3,10,22,.65);display:grid;place-items:center;z-index:50;padding:18px}
+.modal-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;max-width:440px;width:100%;box-shadow:var(--shadow)}
+.modal-card h3{margin:0 0 8px}
+.modal-card p{color:var(--muted);font-size:14px;margin:0 0 16px}
+
 @media (max-width:560px){
   .card{padding:18px}
   .score{width:120px;height:120px}
   .score .num{font-size:27px}
   .nav .right{width:100%;margin-left:0}
   .nav .right .btn{flex:1}
+  .tabs{width:100%;justify-content:space-between}
+  .tab{flex:1;padding:8px 6px}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="topbar">
+  <div class="topbar" id="topbar">
     <div class="brand">
       <div class="logo">🛡️</div>
       <div>Security+ SY0-701<small>Latihan soal interaktif · Bahasa Indonesia</small></div>
     </div>
-    <div class="chip"><b id="bankCount">0</b> soal di bank</div>
+    <div class="tools">
+      <span class="chip"><b id="bankCount">0</b> soal</span>
+      <button class="btn ghost" id="themeBtn" title="Ganti tema">🌙</button>
+    </div>
   </div>
 
-  <!-- HOME -->
-  <section id="home">
+  <nav class="tabs" id="tabbar">
+    <button class="tab active" data-tab="practice">Latihan</button>
+    <button class="tab" data-tab="pbq">PBQ</button>
+    <button class="tab" data-tab="stats">Statistik</button>
+  </nav>
+
+  <!-- PRACTICE -->
+  <section id="tab-practice">
     <div class="hero">
       <h1>Latihan <span class="hl">SY0-701</span>, siap hadapi ujian Security+</h1>
-      <p>Kerjakan soal bergaya ujian dengan pembahasan Bahasa Indonesia. Mode simulasi memakai komposisi domain sesuai bobot resmi dan batas waktu 90 menit.</p>
+      <p>Soal bergaya ujian dengan pembahasan Bahasa Indonesia. Simulasi memakai komposisi domain sesuai bobot resmi, campuran pilihan tunggal dan multi-select, ditambah latihan PBQ dan pelacakan progres.</p>
       <div class="stats">
         <span class="chip">5 domain</span>
-        <span class="chip">Passing score <b>750/900</b></span>
+        <span class="chip">Passing <b>750/900</b></span>
         <span class="chip">Pembahasan tiap soal</span>
-        <span class="chip">Progres tersimpan di browser</span>
+        <span class="chip">Progres tersimpan</span>
       </div>
     </div>
 
@@ -206,35 +384,62 @@ body{
       <button class="mode" data-mode="exam">
         <span class="ic">⏱️</span>
         <h3>Ujian Simulasi</h3>
-        <p>90 soal campuran sesuai bobot domain, 90 menit, nilai akhir seperti ujian asli.</p>
+        <p>90 soal campuran sesuai bobot domain, 90 menit, skor 100–900 seperti ujian asli.</p>
         <span class="tag">Mulai ujian →</span>
       </button>
       <button class="mode" data-mode="domain">
         <span class="ic">📚</span>
         <h3>Latihan per Domain</h3>
-        <p>Pilih salah satu dari 5 domain. 20 soal acak, pembahasan langsung muncul.</p>
+        <p>Pilih satu dari 5 domain. 20 soal acak, pembahasan langsung muncul.</p>
         <span class="tag">Pilih domain →</span>
       </button>
       <button class="mode" data-mode="quick">
         <span class="ic">⚡</span>
         <h3>Latihan Cepat</h3>
-        <p>25 soal acak dari semua domain, tanpa timer. Cocok untuk sesi 20 menit.</p>
+        <p>25 soal acak dari semua domain, tanpa timer. Cocok untuk sesi singkat.</p>
         <span class="tag">Mulai latihan →</span>
       </button>
       <button class="mode" data-mode="wrong">
         <span class="ic">🔁</span>
         <h3>Ulangi yang Salah</h3>
-        <p>Kerjakan kembali soal yang pernah Anda jawab salah. Hilang otomatis saat benar.</p>
+        <p>Kerjakan kembali soal yang pernah salah. Hilang otomatis saat dijawab benar.</p>
         <span class="tag" id="wrongTag">Belum ada data →</span>
       </button>
     </div>
 
     <div class="domlist" id="domlist"></div>
 
+    <div class="panel">
+      <h3>Latihan per objektif</h3>
+      <p>Fokus ke satu sub-objektif, misalnya 4.6 Identity and Access Management atau 3.3 Data Protection.</p>
+      <div class="objrow">
+        <select id="objSelect"></select>
+        <button class="btn primary" id="objStart">Mulai objektif</button>
+      </div>
+    </div>
+
     <div class="hist" id="histBox">
       <h3>Riwayat latihan</h3>
       <div id="histBody" class="note">Belum ada riwayat. Selesaikan satu sesi untuk melihat statistik.</div>
     </div>
+  </section>
+
+  <!-- PBQ -->
+  <section id="tab-pbq" class="hide">
+    <div class="hero">
+      <h1>Soal Performa <span class="hl">(PBQ)</span></h1>
+      <p>Di ujian asli, 3–5 PBQ muncul paling awal. Tulis jawaban Anda dulu, lalu buka jawaban model. Catatan tersimpan otomatis di browser.</p>
+    </div>
+    <div id="pbqList"></div>
+  </section>
+
+  <!-- STATS -->
+  <section id="tab-stats" class="hide">
+    <div class="hero">
+      <h1>Statistik <span class="hl">belajar</span></h1>
+      <p>Dihitung dari jawaban yang Anda kerjakan di browser ini. Gunakan untuk menemukan domain dan objektif terlemah.</p>
+    </div>
+    <div id="statsBody"></div>
   </section>
 
   <!-- QUIZ -->
@@ -257,7 +462,9 @@ body{
         <span class="badge ghost" id="qType">Tipe</span>
       </div>
       <h2 class="stem" id="stem"></h2>
+      <p class="hint" id="hint"></p>
       <div class="opts" id="opts"></div>
+      <div class="checkrow"><button class="btn primary hide" id="checkBtn">Periksa jawaban</button></div>
       <div class="fb" id="fb"></div>
       <div class="nav">
         <button class="btn" id="prevBtn">← Sebelumnya</button>
@@ -269,7 +476,7 @@ body{
     </div>
 
     <div class="grid" id="grid"></div>
-    <p class="note" style="margin-top:14px">Shortcut: <b>1–4</b> pilih jawaban · <b>←</b>/<b>→</b> navigasi · <b>F</b> tandai ragu-ragu.</p>
+    <p class="note" style="margin-top:14px">Shortcut: <b>1–5</b> pilih/toggle jawaban · <b>←</b>/<b>→</b> navigasi · <b>F</b> ragu-ragu · <b>Enter</b> periksa/lanjut.</p>
   </section>
 
   <!-- RESULT -->
@@ -301,19 +508,38 @@ body{
     </div>
   </section>
 
-  <div class="footer">Bank soal latihan independen · bukan produk resmi CompTIA · dibuat untuk belajar mandiri</div>
+  <div class="footer">Latihan mandiri · bukan produk resmi CompTIA · disusun dengan bantuan AI DeepSeek</div>
+</div>
+
+<div class="modal hide" id="modal">
+  <div class="modal-card">
+    <h3>Selesaikan sesi?</h3>
+    <p id="modalText"></p>
+    <div class="nav">
+      <button class="btn" id="modalBack">Kembali</button>
+      <div class="right"><button class="btn primary" id="modalSubmit">Selesai</button></div>
+    </div>
+  </div>
 </div>
 
 <script>
 const BANK = __QUESTIONS__;
+const PBQ = __PBQ__;
 const DOMAINS = __DOMAINS__;
 const EXAM_PLAN = __PLAN__;
 const PASS_SCALED = 750;
 const LS_WRONG = "sp701_wrong_v1";
 const LS_HIST = "sp701_history_v1";
+const LS_RESULTS = "sp701_results_v1";
+const LS_PBQ = "sp701_pbq_v1";
+const LS_THEME = "sp701_theme";
 
 /* ---------- helpers ---------- */
 const $ = (id) => document.getElementById(id);
+const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const md = (s) => escapeHtml(s)
+  .replace(/`([^`]+)`/g, "<code>$1</code>")
+  .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 const shuffle = (arr) => {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -322,23 +548,58 @@ const shuffle = (arr) => {
   }
   return a;
 };
-const loadJSON = (k, fb) => { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch { return fb; } };
+const loadJSON = (k, fb) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } };
 const saveJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 const fmtTime = (s) => {
   s = Math.max(0, Math.floor(s));
-  const m = Math.floor(s / 60), r = s % 60;
-  return m + ":" + String(r).padStart(2, "0");
+  return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
 };
 const domName = (id) => (DOMAINS.find(d => d.id === id) || {}).name || "";
+const hasAnswer = (q) => (S.sel[q.id] || []).length > 0;
+const isCorrect = (q) => {
+  const sel = (S.sel[q.id] || []).slice().sort();
+  const ans = q.a.slice().sort();
+  return sel.length === ans.length && sel.every((v, i) => v === ans[i]);
+};
 
 /* ---------- state ---------- */
 const S = {
-  mode: null, domain: null, list: [], idx: 0, answers: {}, flags: new Set(),
-  start: 0, remain: 0, timer: null, finished: false, locked: new Set()
+  mode: null, domain: null, list: [], idx: 0, sel: {}, flags: new Set(),
+  start: 0, remain: 0, timer: null, finished: false, locked: new Set(), checked: new Set()
 };
 
-/* ---------- home ---------- */
+/* ---------- tabs ---------- */
+function showTab(name) {
+  $("topbar").classList.remove("hide");
+  ["practice", "pbq", "stats"].forEach(t => $("tab-" + t).classList.toggle("hide", t !== name));
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+  if (name === "stats") renderStats();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+/* ---------- theme ---------- */
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  $("themeBtn").textContent = t === "dark" ? "🌙" : "☀️";
+  try { localStorage.setItem(LS_THEME, t); } catch {}
+}
+$("themeBtn").addEventListener("click", () => {
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+});
+
+/* ---------- persistence ---------- */
 function wrongIds() { return loadJSON(LS_WRONG, []); }
+function results() { return loadJSON(LS_RESULTS, {}); }
+function recordResult(id, ok) {
+  const r = results();
+  const cur = r[id] || { r: 0, w: 0 };
+  if (ok) cur.r += 1; else cur.w += 1;
+  r[id] = cur;
+  saveJSON(LS_RESULTS, r);
+}
+
+/* ---------- home ---------- */
 function refreshHome() {
   $("bankCount").textContent = BANK.length;
   const w = wrongIds().length;
@@ -370,18 +631,106 @@ function refreshHome() {
     <tbody>${rows}</tbody></table>`;
 }
 
+function buildObjectiveSelect() {
+  const map = {};
+  BANK.forEach(q => { (map[q.o] = map[q.o] || []).push(q); });
+  const opts = Object.keys(map).sort().map(o =>
+    `<option value="${o}">${o} · ${map[o].length} soal</option>`).join("");
+  $("objSelect").innerHTML = opts;
+}
+
+function buildDomainList() {
+  $("domlist").innerHTML = DOMAINS.map(d => {
+    const n = BANK.filter(q => q.d === d.id).length;
+    return `<button class="dombtn" data-d="${d.id}"><b>D${d.id}</b> · ${d.name} <span class="note">(${n} soal · ${d.weight}%)</span></button>`;
+  }).join("");
+  $("domlist").querySelectorAll(".dombtn").forEach(b => b.addEventListener("click", () => {
+    const d = +b.dataset.d;
+    const pool = shuffle(BANK.filter(q => q.d === d));
+    startSession("domain", pool.slice(0, Math.min(20, pool.length)), d);
+  }));
+}
+
+/* ---------- stats ---------- */
+function renderStats() {
+  const res = results();
+  const answered = Object.keys(res).length;
+  const attempts = Object.values(res).reduce((s, v) => s + v.r + v.w, 0);
+  const rights = Object.values(res).reduce((s, v) => s + v.r, 0);
+  const hist = loadJSON(LS_HIST, []);
+  const best = hist.length ? Math.max(...hist.map(h => h.scaled)) : 0;
+  const coverage = Math.round(answered / BANK.length * 100);
+  const accuracy = attempts ? Math.round(rights / attempts * 100) : 0;
+
+  const domRows = DOMAINS.map(d => {
+    const qs = BANK.filter(q => q.d === d.id);
+    let r = 0, w = 0;
+    qs.forEach(q => { const v = res[q.id]; if (v) { r += v.r; w += v.w; } });
+    const pct = (r + w) ? Math.round(r / (r + w) * 100) : 0;
+    const col = pct >= 75 ? "var(--ok)" : pct >= 50 ? "var(--warn)" : "var(--bad)";
+    return `<div class="dombar">
+      <span class="name">D${d.id} · ${d.name}</span>
+      <span class="val">${r + w ? pct + "% (" + (r + w) + " jawaban)" : "belum ada data"}</span>
+      <span class="track"><i style="width:${pct}%;background:${col}"></i></span></div>`;
+  }).join("");
+
+  const objMap = {};
+  BANK.forEach(q => {
+    const v = res[q.id];
+    if (!v) return;
+    const o = objMap[q.o] = objMap[q.o] || { r: 0, w: 0 };
+    o.r += v.r; o.w += v.w;
+  });
+  const weak = Object.entries(objMap)
+    .map(([o, v]) => ({ o, pct: Math.round(v.r / (v.r + v.w) * 100), n: v.r + v.w }))
+    .filter(x => x.n >= 3 && x.pct < 75)
+    .sort((a, b) => a.pct - b.pct)
+    .slice(0, 8);
+
+  $("statsBody").innerHTML = `
+    <div class="grid2">
+      <div class="kpi"><div class="v">${coverage}%</div><div class="l">Cakupan bank (${answered}/${BANK.length})</div></div>
+      <div class="kpi ${accuracy >= 75 ? "ok" : accuracy >= 50 ? "warn" : "bad"}"><div class="v">${accuracy}%</div><div class="l">Akurasi (${attempts} jawaban)</div></div>
+      <div class="kpi ok"><div class="v">${best}</div><div class="l">Skor simulasi terbaik</div></div>
+      <div class="kpi"><div class="v">${hist.length}</div><div class="l">Sesi selesai</div></div>
+    </div>
+    <div class="panel" style="margin-top:18px">
+      <h3>Penguasaan per domain</h3>
+      <p>Persentase jawaban benar dari semua percobaan Anda.</p>
+      <div class="domres">${domRows}</div>
+    </div>
+    <div class="panel">
+      <h3>Objektif yang perlu diulang</h3>
+      <p>Objektif dengan akurasi di bawah 75% (minimal 3 jawaban).</p>
+      ${weak.length ? weak.map(x => `<div class="weak"><span><b>${x.o}</b> · ${x.n} jawaban</span><span style="color:var(--bad)">${x.pct}%</span></div>`).join("") : '<p class="note">Belum cukup data. Kerjakan latihan per objektif untuk mengisi statistik.</p>'}
+    </div>
+    <div class="panel">
+      <h3>Reset progres</h3>
+      <p>Menghapus riwayat sesi, daftar soal salah, dan statistik per soal di browser ini.</p>
+      <button class="btn" id="resetStats">Hapus semua progres</button>
+    </div>`;
+  $("resetStats").addEventListener("click", () => {
+    if (!confirm("Hapus semua progres belajar di browser ini?")) return;
+    [LS_WRONG, LS_HIST, LS_RESULTS].forEach(k => { try { localStorage.removeItem(k); } catch {} });
+    refreshHome(); renderStats();
+  });
+}
+
 /* ---------- start session ---------- */
 function startSession(mode, list, domain) {
   if (!list.length) return;
-  S.mode = mode; S.domain = domain || null; S.list = list; S.idx = 0; S.answers = {}; S.flags = new Set();
-  S.locked = new Set(); S.finished = false; S.start = Date.now();
-  S.remain = mode === "exam" ? 90 * 60 : 0;
+  S.mode = mode; S.domain = domain || null; S.list = list; S.idx = 0;
+  S.sel = {}; S.flags = new Set(); S.locked = new Set(); S.checked = new Set();
+  S.finished = false; S.start = Date.now(); S.remain = mode === "exam" ? 90 * 60 : 0;
 
-  $("home").classList.add("hide");
+  $("tabbar").classList.add("hide");
+  $("topbar").classList.add("hide");
+  ["practice", "pbq", "stats"].forEach(t => $("tab-" + t).classList.add("hide"));
   $("result").classList.add("hide");
   $("quiz").classList.remove("hide");
   $("modeLabel").textContent = mode === "exam" ? "Ujian simulasi · 90 menit" :
-    mode === "domain" ? "Latihan per domain" : mode === "wrong" ? "Ulangi yang salah" : "Latihan cepat";
+    mode === "domain" ? "Latihan per domain" : mode === "objective" ? "Latihan per objektif" :
+    mode === "wrong" ? "Ulangi yang salah" : "Latihan cepat";
 
   clearInterval(S.timer);
   if (mode === "exam") {
@@ -406,16 +755,15 @@ function tickTimer() {
 }
 
 function pickExam() {
-  const plan = EXAM_PLAN;
   let out = [];
   for (const d of [1, 2, 3, 4, 5]) {
     const pool = shuffle(BANK.filter(q => q.d === d));
-    out = out.concat(pool.slice(0, plan[d]));
+    out = out.concat(pool.slice(0, EXAM_PLAN[d]));
   }
   return shuffle(out);
 }
 
-/* ---------- render question ---------- */
+/* ---------- render ---------- */
 function buildGrid() {
   $("grid").innerHTML = S.list.map((q, i) =>
     `<button class="dot" data-i="${i}" title="Soal ${i + 1}">${i + 1}</button>`).join("");
@@ -428,7 +776,7 @@ function paintGrid() {
   $("grid").querySelectorAll(".dot").forEach((b, i) => {
     const q = S.list[i];
     b.classList.toggle("cur", i === S.idx);
-    b.classList.toggle("done", !!S.answers[q.id]);
+    b.classList.toggle("done", hasAnswer(q));
     b.classList.toggle("flag", S.flags.has(q.id));
   });
 }
@@ -436,39 +784,38 @@ function paintGrid() {
 function render() {
   const q = S.list[S.idx];
   const practice = S.mode !== "exam";
-  const chosen = S.answers[q.id];
+  const sel = S.sel[q.id] || [];
+  const multi = q.a.length > 1;
   const locked = S.locked.has(q.id);
 
-  $("qDomain").textContent = "Domain " + q.d + " · " + domName(q.d);
+  $("qDomain").textContent = "D" + q.d + " · " + domName(q.d);
   $("qObjective").textContent = "Objektif " + q.o;
   $("qType").textContent = q.t;
   $("stem").textContent = q.q;
+  $("hint").textContent = multi ? "Pilih " + q.a.length + " jawaban, lalu tekan Periksa jawaban." : "";
 
-  $("opts").innerHTML = q.opts.map(o =>
-    `<button class="opt" data-k="${o.k}" ${(locked || (practice && chosen)) ? "disabled" : ""}>
-       <span class="k">${o.k}</span><span>${escapeHtml(o.v)}</span></button>`).join("");
-
+  $("opts").className = "opts" + (multi ? " multi" : "");
+  $("opts").innerHTML = q.opts.map(o => {
+    const on = sel.includes(o.k);
+    return `<button class="opt${on ? " sel" : ""}" data-k="${o.k}" ${locked ? "disabled" : ""}>
+       <span class="k">${o.k}</span><span>${escapeHtml(o.v)}</span></button>`;
+  }).join("");
   $("opts").querySelectorAll(".opt").forEach(b =>
     b.addEventListener("click", () => choose(b.dataset.k)));
 
-  if (chosen && !practice) {
-    const sel = $("opts").querySelector('.opt[data-k="' + chosen + '"]');
-    if (sel) sel.classList.add("sel");
-  }
+  $("checkBtn").classList.toggle("hide", !(multi && practice && !locked));
+  $("checkBtn").disabled = sel.length === 0;
 
-  // feedback / answer state
   const fb = $("fb");
   fb.className = "fb";
   fb.innerHTML = "";
-  if (practice && chosen) {
-    const ok = chosen === q.a;
+  if (practice && S.checked.has(q.id)) {
+    const ok = isCorrect(q);
     fb.classList.add("show", ok ? "ok" : "bad");
     fb.innerHTML = `<div class="verdict">${ok ? "✅ Benar" : "❌ Belum tepat"}</div>
-      ${ok ? "" : `<div class="ans">Jawaban Anda: <b>${chosen}</b> · Jawaban benar: <b>${q.a}</b></div>`}
-      <p>${escapeHtml(q.e)}</p>`;
-    markOptions(q, chosen, !ok);
-  } else if (practice && !chosen) {
-    // nothing
+      ${ok ? "" : `<div class="ans">Jawaban Anda: <b>${sel.join(", ") || "kosong"}</b> · Jawaban benar: <b>${q.a.join(", ")}</b></div>`}
+      <p>${md(q.e)}</p>`;
+    markOptions(q, sel);
   }
 
   $("pbar").style.width = ((S.idx + 1) / S.list.length * 100) + "%";
@@ -480,55 +827,90 @@ function render() {
   paintGrid();
 }
 
-function markOptions(q, chosen, revealAll) {
+function markOptions(q, sel) {
   $("opts").querySelectorAll(".opt").forEach(b => {
     const k = b.dataset.k;
     b.disabled = true;
-    if (k === q.a) b.classList.add("correct");
-    else if (k === chosen) b.classList.add("wrong");
-    else if (revealAll) b.classList.add("dim");
+    if (q.a.includes(k)) b.classList.add("correct");
+    else if (sel.includes(k)) b.classList.add("wrong");
+    else b.classList.add("dim");
   });
 }
 
 function choose(k) {
   const q = S.list[S.idx];
   if (S.locked.has(q.id)) return;
-  S.answers[q.id] = k;
-  if (S.mode !== "exam") S.locked.add(q.id);
-
-  const wrong = wrongIds();
-  const ok = k === q.a;
-  if (ok && wrong.includes(q.id)) saveJSON(LS_WRONG, wrong.filter(id => id !== q.id));
-  if (!ok && !wrong.includes(q.id)) saveJSON(LS_WRONG, wrong.concat(q.id));
-
-  if (S.mode === "exam") {
-    $("opts").querySelectorAll(".opt").forEach(b => b.classList.toggle("sel", b.dataset.k === k));
-    paintGrid();
+  const multi = q.a.length > 1;
+  if (multi) {
+    const cur = (S.sel[q.id] || []).slice();
+    const i = cur.indexOf(k);
+    if (i >= 0) cur.splice(i, 1); else cur.push(k);
+    S.sel[q.id] = cur;
+    if (S.mode === "exam") { paintGrid(); }
+    renderOptions();
     return;
   }
+  S.sel[q.id] = [k];
+  if (S.mode === "exam") { renderOptions(); paintGrid(); return; }
+  S.locked.add(q.id);
+  S.checked.add(q.id);
+  recordResult(q.id, isCorrect(q));
+  updateWrongList(q);
   render();
-  $("fb").scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
-/* ---------- navigation ---------- */
+function renderOptions() {
+  const q = S.list[S.idx];
+  const sel = S.sel[q.id] || [];
+  $("opts").querySelectorAll(".opt").forEach(b => {
+    b.classList.toggle("sel", sel.includes(b.dataset.k));
+  });
+  $("checkBtn").disabled = sel.length === 0;
+}
+
+function checkMulti() {
+  const q = S.list[S.idx];
+  if (S.mode === "exam") return;
+  S.locked.add(q.id);
+  S.checked.add(q.id);
+  recordResult(q.id, isCorrect(q));
+  updateWrongList(q);
+  render();
+}
+
+function updateWrongList(q) {
+  const wrong = wrongIds();
+  const ok = isCorrect(q);
+  if (ok && wrong.includes(q.id)) saveJSON(LS_WRONG, wrong.filter(id => id !== q.id));
+  if (!ok && !wrong.includes(q.id)) saveJSON(LS_WRONG, wrong.concat(q.id));
+}
+
+/* ---------- navigation / finish ---------- */
 function move(d) {
   const n = S.idx + d;
   if (n < 0) return;
-  if (n >= S.list.length) {
-    const unanswered = S.list.filter(q => !S.answers[q.id]).length;
-    if (unanswered && !confirm("Masih ada " + unanswered + " soal yang belum dijawab. Selesaikan sesi sekarang?")) return;
-    finish();
-    return;
-  }
+  if (n >= S.list.length) { askFinish(); return; }
   S.idx = n; render(); window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-/* ---------- finish ---------- */
+function askFinish() {
+  const unanswered = S.list.filter(q => !hasAnswer(q)).length;
+  const flagged = S.list.filter(q => S.flags.has(q.id)).length;
+  $("modalText").textContent = unanswered || flagged
+    ? `Masih ada ${unanswered} soal kosong dan ${flagged} soal ditandai. Anda bisa kembali memeriksanya sebelum menyelesaikan sesi.`
+    : "Semua soal sudah dijawab. Selesaikan sesi dan lihat hasilnya?";
+  $("modal").classList.remove("hide");
+}
+
+function closeModal() { $("modal").classList.add("hide"); }
+
 function finish() {
   if (S.finished) return;
   S.finished = true;
   clearInterval(S.timer);
+  closeModal();
   $("quiz").classList.add("hide");
+  $("tabbar").classList.add("hide");
   $("result").classList.remove("hide");
   window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -538,10 +920,13 @@ function finish() {
   for (const q of S.list) {
     perDom[q.d] = perDom[q.d] || { ok: 0, total: 0 };
     perDom[q.d].total++;
-    const a = S.answers[q.id];
-    if (!a) skip++;
-    else if (a === q.a) { ok++; perDom[q.d].ok++; }
-    else bad++;
+    if (!hasAnswer(q)) { skip++; continue; }
+    const good = isCorrect(q);
+    if (S.mode === "exam") {
+      recordResult(q.id, good);
+      updateWrongList(q);
+    }
+    if (good) { ok++; perDom[q.d].ok++; } else bad++;
   }
   const pct = Math.round(ok / total * 100);
   const scaled = 100 + Math.round(pct * 8);
@@ -551,7 +936,7 @@ function finish() {
   $("scoreNum").textContent = scaled;
   $("scoreRing").style.setProperty("--deg", (scaled / 900 * 360) + "deg");
   $("resTitle").textContent = pass ? "Lulus ambang batas 🎉" : "Belum mencapai ambang batas";
-  $("resSub").textContent = `${ok} dari ${total} soal benar (${pct}%) · mode ${S.mode === "exam" ? "ujian simulasi" : "latihan"}`;
+  $("resSub").textContent = `${ok} dari ${total} soal benar (${pct}%) · ${S.mode === "exam" ? "ujian simulasi" : "latihan"}`;
   const pill = $("resPill");
   pill.className = "pill " + (pass ? "pass" : "fail");
   pill.textContent = pass ? "LULUS (≥750)" : "BELUM LULUS (<750)";
@@ -568,15 +953,15 @@ function finish() {
       <span class="track"><i style="width:${r}%;background:${col}"></i></span></div>`;
   }).join("");
 
-  const miss = S.list.filter(q => S.answers[q.id] !== q.a);
+  const miss = S.list.filter(q => !isCorrect(q));
   $("review").innerHTML = miss.length ? `<h3>Pembahasan soal yang belum benar (${miss.length})</h3>` +
     miss.map((q, i) => `<details class="ritem">
       <summary><span>${i + 1}.</span><span>${escapeHtml(q.q)}</span></summary>
       <div class="body">
-        <div class="opts">${q.opts.map(o => `<div class="o ${o.k === q.a ? "a" : ""} ${o.k === S.answers[q.id] && o.k !== q.a ? "mine" : ""}">
-          <b>${o.k}.</b> ${escapeHtml(o.v)}</div>`).join("")}</div>
-        <p class="note">Jawaban Anda: <b>${S.answers[q.id] || "kosong"}</b> · Jawaban benar: <b>${q.a}</b> · Objektif ${q.o}</p>
-        <p>${escapeHtml(q.e)}</p>
+        ${q.opts.map(o => `<div class="o ${q.a.includes(o.k) ? "a" : ""} ${(S.sel[q.id] || []).includes(o.k) && !q.a.includes(o.k) ? "mine" : ""}">
+          <b>${o.k}.</b> ${escapeHtml(o.v)}</div>`).join("")}
+        <p class="note">Jawaban Anda: <b>${(S.sel[q.id] || []).join(", ") || "kosong"}</b> · Jawaban benar: <b>${q.a.join(", ")}</b> · Objektif ${q.o}</p>
+        <p>${md(q.e)}</p>
       </div></details>`).join("") : `<h3>Tidak ada soal yang salah 🎯</h3><p class="note">Semua jawaban benar. Coba mode ujian simulasi untuk mengukur kesiapan.</p>`;
 
   const hist = loadJSON(LS_HIST, []);
@@ -604,20 +989,15 @@ document.querySelectorAll(".mode").forEach(el => el.addEventListener("click", ()
   }
 }));
 
-function buildDomainList() {
-  $("domlist").innerHTML = DOMAINS.map(d => {
-    const n = BANK.filter(q => q.d === d.id).length;
-    return `<button class="dombtn" data-d="${d.id}"><b>D${d.id}</b> · ${d.name} <span class="note">(${n} soal · ${d.weight}%)</span></button>`;
-  }).join("");
-  $("domlist").querySelectorAll(".dombtn").forEach(b => b.addEventListener("click", () => {
-    const d = +b.dataset.d;
-    const pool = shuffle(BANK.filter(q => q.d === d));
-    startSession("domain", pool.slice(0, Math.min(20, pool.length)), d);
-  }));
-}
+$("objStart").addEventListener("click", () => {
+  const o = $("objSelect").value;
+  const pool = shuffle(BANK.filter(q => q.o === o));
+  if (pool.length) startSession("objective", pool.slice(0, Math.min(20, pool.length)));
+});
 
 $("prevBtn").addEventListener("click", () => move(-1));
 $("nextBtn").addEventListener("click", () => move(1));
+$("checkBtn").addEventListener("click", checkMulti);
 $("flagBtn").addEventListener("click", () => {
   const q = S.list[S.idx];
   if (S.flags.has(q.id)) S.flags.delete(q.id); else S.flags.add(q.id);
@@ -626,18 +1006,27 @@ $("flagBtn").addEventListener("click", () => {
 $("quitBtn").addEventListener("click", () => {
   if (confirm("Keluar dari sesi ini? Progres sesi akan hilang.")) {
     clearInterval(S.timer); S.finished = true;
-    $("quiz").classList.add("hide"); $("home").classList.remove("hide");
-    refreshHome(); window.scrollTo(0, 0);
+    $("quiz").classList.add("hide");
+    $("tabbar").classList.remove("hide");
+    showTab("practice");
+    refreshHome();
   }
 });
 $("homeBtn").addEventListener("click", () => {
-  $("result").classList.add("hide"); $("home").classList.remove("hide"); refreshHome();
+  $("result").classList.add("hide");
+  $("tabbar").classList.remove("hide");
+  showTab("practice");
 });
 $("againBtn").addEventListener("click", () => {
   if (S.mode === "exam") return startSession("exam", pickExam());
   if (S.mode === "domain" && S.domain) {
     const pool = shuffle(BANK.filter(q => q.d === S.domain));
     return startSession("domain", pool.slice(0, Math.min(20, pool.length)), S.domain);
+  }
+  if (S.mode === "objective") {
+    const o = S.list[0].o;
+    const pool = shuffle(BANK.filter(q => q.o === o));
+    return startSession("objective", pool.slice(0, Math.min(20, pool.length)));
   }
   startSession(S.mode === "wrong" ? "quick" : S.mode, shuffle(BANK).slice(0, S.list.length));
 });
@@ -646,8 +1035,14 @@ $("retryWrongBtn").addEventListener("click", () => {
   const list = shuffle(BANK.filter(q => ids.includes(q.id))).slice(0, 50);
   if (list.length) startSession("wrong", list);
 });
+$("modalBack").addEventListener("click", closeModal);
+$("modalSubmit").addEventListener("click", finish);
 
 document.addEventListener("keydown", (e) => {
+  if (!$("modal").classList.contains("hide")) {
+    if (e.key === "Escape") closeModal();
+    return;
+  }
   if ($("quiz").classList.contains("hide")) return;
   const q = S.list[S.idx];
   if (!q) return;
@@ -657,13 +1052,43 @@ document.addEventListener("keydown", (e) => {
   } else if (e.key === "ArrowRight") { e.preventDefault(); move(1); }
   else if (e.key === "ArrowLeft") { e.preventDefault(); move(-1); }
   else if (e.key.toLowerCase() === "f") { e.preventDefault(); $("flagBtn").click(); }
+  else if (e.key === "Enter") {
+    if (!$("checkBtn").classList.contains("hide") && !$("checkBtn").disabled) { e.preventDefault(); checkMulti(); }
+  }
 });
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+/* ---------- PBQ ---------- */
+function renderPBQ() {
+  const notes = loadJSON(LS_PBQ, {});
+  $("pbqList").innerHTML = PBQ.map(p => `
+    <article class="pbq" data-id="${p.id}">
+      <div class="pbq-head"><span class="badge gold">${p.id}</span><h3>${escapeHtml(p.title)}</h3></div>
+      <div class="md">${p.prompt}</div>
+      <textarea data-note="${p.id}" placeholder="Tulis jawaban Anda di sini (tersimpan otomatis)...">${escapeHtml(notes[p.id] || "")}</textarea>
+      <div class="pbq-actions">
+        <button class="btn" data-reveal="${p.id}">Lihat jawaban model</button>
+        <span class="note">Kerjakan dulu, baru buka kunci.</span>
+      </div>
+      <div class="md pbq-answer hide" data-answer="${p.id}">${p.answer}</div>
+    </article>`).join("");
+  $("pbqList").querySelectorAll("textarea").forEach(t => t.addEventListener("input", () => {
+    const n = loadJSON(LS_PBQ, {});
+    n[t.dataset.note] = t.value;
+    saveJSON(LS_PBQ, n);
+  }));
+  $("pbqList").querySelectorAll("[data-reveal]").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.reveal;
+    const ans = $("pbqList").querySelector(`[data-answer="${id}"]`);
+    const hidden = ans.classList.toggle("hide");
+    b.textContent = hidden ? "Lihat jawaban model" : "Sembunyikan jawaban";
+  }));
 }
 
+/* ---------- boot ---------- */
+applyTheme(localStorage.getItem(LS_THEME) || "dark");
+try { buildObjectiveSelect(); } catch (e) { console.error(e); }
 refreshHome();
+renderPBQ();
 </script>
 </body>
 </html>
@@ -683,7 +1108,7 @@ def main() -> None:
                     "t": q["type"],
                     "q": q["stem"],
                     "opts": [{"k": o["key"], "v": o["text"]} for o in q["options"]],
-                    "a": q["answer"],
+                    "a": q["answers"],
                     "e": q["explanation"],
                 }
             )
@@ -694,15 +1119,23 @@ def main() -> None:
         if have < n:
             raise SystemExit(f"Domain {d} only has {have} questions, need {n} for exam plan")
 
-    questions_js = json.dumps(bank, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    pbq = parse_pbq()
+    if not pbq:
+        raise SystemExit("No PBQ items parsed")
+
+    def js(obj) -> str:
+        return json.dumps(obj, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+
     html = (
-        TEMPLATE.replace("__QUESTIONS__", questions_js)
+        TEMPLATE.replace("__QUESTIONS__", js(bank))
+        .replace("__PBQ__", js(pbq))
         .replace("__DOMAINS__", json.dumps(DOMAINS, ensure_ascii=False))
         .replace("__PLAN__", json.dumps(plan))
     )
     out = DIST / "quiz.html"
     out.write_text(html, encoding="utf-8")
-    print(f"Wrote {out.relative_to(ROOT)} ({out.stat().st_size/1024:.0f} KB, {len(bank)} soal)")
+    multi = sum(1 for q in bank if len(q["a"]) > 1)
+    print(f"Wrote {out.relative_to(ROOT)} ({out.stat().st_size/1024:.0f} KB, {len(bank)} soal, {multi} multi-select, {len(pbq)} PBQ)")
 
 
 if __name__ == "__main__":

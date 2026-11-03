@@ -21,6 +21,7 @@ DOMAINS = [
 
 BLOCK_RE = re.compile(r"^## Soal (\d+)\s*$", re.MULTILINE)
 OPT_RE = re.compile(r"^- ([A-E])\. (.+)$", re.MULTILINE)
+ANS_RE = re.compile(r"\*\*Jawaban:\*\*\s*([A-E](?:\s*,\s*[A-E])*)")
 
 
 def parse_file(path: Path, domain_id: int) -> list[dict]:
@@ -38,7 +39,7 @@ def parse_file(path: Path, domain_id: int) -> list[dict]:
         objective = re.search(r"\*\*Objektif:\*\*\s*([0-9.]+)", block)
         qtype = re.search(r"\*\*Tipe:\*\*\s*(.+)", block)
         stem_m = re.search(r"\*\*Soal:\*\*\s*(.+?)(?=\n- [A-E]\.)", block, re.DOTALL)
-        answer = re.search(r"\*\*Jawaban:\*\*\s*([A-E])", block)
+        answer = ANS_RE.search(block)
         expl = re.search(r"\*\*Pembahasan:\*\*\s*(.+)", block, re.DOTALL)
         options = [{"key": k, "text": t.strip()} for k, t in OPT_RE.findall(block)]
 
@@ -60,8 +61,16 @@ def parse_file(path: Path, domain_id: int) -> list[dict]:
         keys = [o["key"] for o in options]
         if keys != sorted(keys) or len(set(keys)) != len(keys):
             raise SystemExit(f"{path.name} Soal {number}: option keys out of order {keys}")
-        if answer.group(1) not in keys:
-            raise SystemExit(f"{path.name} Soal {number}: answer not among options")
+        answers = [a.strip() for a in answer.group(1).split(",")]
+        if len(set(answers)) != len(answers):
+            raise SystemExit(f"{path.name} Soal {number}: duplicate answer letters")
+        for letter in answers:
+            if letter not in keys:
+                raise SystemExit(f"{path.name} Soal {number}: answer {letter} not among options")
+        if len(answers) > 1 and len(options) < 5:
+            raise SystemExit(
+                f"{path.name} Soal {number}: multi-answer question needs 5 options"
+            )
 
         questions.append(
             {
@@ -72,7 +81,8 @@ def parse_file(path: Path, domain_id: int) -> list[dict]:
                 "type": qtype.group(1).strip(),
                 "stem": " ".join(stem_m.group(1).split()),
                 "options": options,
-                "answer": answer.group(1),
+                "answers": answers,
+                "answer": ", ".join(answers),
                 "explanation": " ".join(expl.group(1).split()),
             }
         )

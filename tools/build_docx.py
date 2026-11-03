@@ -239,9 +239,29 @@ def build() -> Path:
     r = p.add_run("Materi latihan mandiri — bukan soal resmi CompTIA dan tidak berafiliasi dengan CompTIA, Inc.")
     r.font.size = Pt(8)
     r.font.color.rgb = MUTED
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = p.add_run("Bank soal disusun dengan bantuan kecerdasan buatan (AI) DeepSeek.")
+    r.font.size = Pt(8)
+    r.font.color.rgb = MUTED
 
     # ---------------- how to use ----------------
     doc.add_page_break()
+    doc.add_heading("Format Ujian SY0-701", level=1)
+    for line in (
+        "Maksimal 90 soal dalam 90 menit, skor berskala 100–900, ambang lulus 750.",
+        "Tipe soal: pilihan ganda satu jawaban, sesekali multi-select (pilih dua/tiga), dan 3–5 performance-based questions (PBQ). Tidak ada soal esai.",
+        "PBQ muncul di awal ujian dan dapat diberi nilai parsial; tandai lalu lanjut bila macet, kembali lagi jika ada waktu.",
+        "PBQ berbentuk simulasi: menempatkan perangkat di zona jaringan, menyusun aturan firewall, membaca log, hardening endpoint, mengatur IAM, memilih algoritma kriptografi, konfigurasi Wi-Fi, dan memprioritaskan kerentanan.",
+    ):
+        p = doc.add_paragraph(style="List Bullet")
+        p.add_run(line)
+    p = doc.add_paragraph()
+    r = p.add_run("Periksa selalu halaman resmi CompTIA untuk memastikan versi ujian yang berlaku (SY0-701 vs SY0-801) dan ketentuan terbaru.")
+    r.font.size = Pt(9)
+    r.font.color.rgb = MUTED
+    r.italic = True
+
     doc.add_heading("Cara Menggunakan Bank Soal Ini", level=1)
     for line in (
         "Kerjakan satu domain per sesi. Tutup bagian kunci jawaban sampai semua soal domain tersebut selesai dijawab.",
@@ -337,7 +357,7 @@ def build() -> Path:
             cell.text = ""
             p = cell.paragraphs[0]
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            r = p.add_run(f"{q['number']}. {q['answer']}")
+            r = p.add_run(f"{q['number']}. {q['answer'].replace(', ', ',')}")
             r.font.size = Pt(8.5)
             r.bold = True
         doc.add_paragraph()

@@ -15,14 +15,26 @@ BANK = ROOT / "bank-soal"
 def main() -> None:
     data = json.loads((DIST / "questions.json").read_text(encoding="utf-8"))
     total = sum(len(d["questions"]) for d in data["domains"])
+    multi = sum(1 for d in data["domains"] for q in d["questions"] if len(q["answers"]) > 1)
 
     lines: list[str] = []
     add = lines.append
     add("# Bank Soal CompTIA Security+ (SY0-701)")
     add("")
-    add(f"**{total} soal pilihan ganda + 12 soal performa (PBQ), lengkap dengan pembahasan Bahasa Indonesia.**")
+    add(
+        f"**{total} soal pilihan ganda (termasuk {multi} multi-select) + 12 soal performa (PBQ), "
+        "lengkap dengan pembahasan Bahasa Indonesia.**"
+    )
     add("")
     add(f"Disusun: {date.today().strftime('%d %B %Y')} · Sumber soal: latihan mandiri, bukan soal resmi CompTIA.")
+    add("")
+    add("Bank soal ini disusun dengan bantuan kecerdasan buatan (AI) DeepSeek, lalu ditinjau untuk konsistensi.")
+    add("")
+    add("## Format ujian")
+    add("")
+    add("- Maksimal **90 soal**, **90 menit**, skor **100–900**, lulus **750**.")
+    add("- Tipe soal: pilihan ganda, sesekali **multi-select**, dan **3–5 PBQ** (simulasi). Tidak ada esai.")
+    add("- PBQ muncul di awal dan dapat bernilai parsial — tandai, lanjut, kembali bila ada waktu.")
     add("")
     add("## Cara pakai")
     add("")

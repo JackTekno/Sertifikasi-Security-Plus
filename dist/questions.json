@@ -32,6 +32,9 @@
        "text": "Operational, deterrent"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Badge reader dan biometric scanner adalah kontrol **technical (logical)** karena berbasis teknologi, dan bersifat **preventive** karena menghentikan akses sebelum terjadi. Kontrol physical adalah seperti pagar, kunci mekanis, atau penjaga; deterrent hanya bertujuan menakuti pelaku, bukan menolak akses."
     },
@@ -59,6 +62,9 @@
        "key": "D",
        "text": "A firewall rule that blocks inbound RDP traffic"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "Managerial (administrative) control adalah kontrol berbentuk kebijakan, prosedur, standar, dan proses tata kelola seperti risk assessment. Firewall dan honeypot bersifat technical, sedangkan motion sensor bersifat physical."
@@ -88,6 +94,9 @@
        "text": "Detective"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "Kamera yang terlihat jelas, papan peringatan, dan pos penjaga dimaksudkan untuk **mencegah niat** pelaku — itu definisi deterrent. Kontrol corrective memulihkan setelah insiden, compensating menggantikan kontrol yang tidak bisa diterapkan, dan detective hanya mendeteksi (misalnya alarm yang tidak terlihat)."
     },
@@ -115,6 +124,9 @@
        "key": "D",
        "text": "Compensating"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "Karena patch tidak mungkin diterapkan, tim memakai kontrol lain sebagai pengganti — ini **compensating control**. Isolasi jaringan memang bersifat preventive juga, tetapi dalam konteks \"menggantikan patch yang tidak tersedia\", jawaban yang paling tepat adalah compensating."
@@ -144,6 +156,9 @@
        "text": "Deterrent"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Restore dari backup memulihkan sistem ke kondisi normal setelah insiden terjadi, sehingga termasuk **corrective**. Detective hanya menemukan masalah, sedangkan deterrent dan directive bekerja sebelum insiden."
     },
@@ -171,6 +186,9 @@
        "key": "D",
        "text": "Physical"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Directive control** mengarahkan perilaku melalui aturan tertulis, kebijakan, atau instruksi. Kebijakan lock screen tidak memblokir secara teknis, tidak mendeteksi, dan bukan kontrol fisik."
@@ -200,6 +218,9 @@
        "text": "Non-repudiation"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Hashing membuktikan data tidak berubah — itu **integrity**. Confidentiality dijaga dengan enkripsi, availability dengan redundansi, sedangkan non-repudiation membutuhkan bukti identitas seperti digital signature."
     },
@@ -227,6 +248,9 @@
        "key": "D",
        "text": "Authentication records activity, authorization proves identity, accounting grants access"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Authentication** = membuktikan siapa Anda; **authorization** = menentukan apa yang boleh Anda lakukan; **accounting** = mencatat apa yang Anda lakukan (log/audit trail). Urutannya selalu identifikasi → autentikasi → otorisasi → akuntansi."
@@ -256,6 +280,9 @@
        "text": "Accounting and authorization"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "Password + kode OTP adalah **authentication** (plus identification di awal), dan pemeriksaan role terhadap modul payroll adalah **authorization**. Accounting baru terjadi saat aktivitas pengguna dicatat."
     },
@@ -283,6 +310,9 @@
        "key": "D",
        "text": "Policy engine"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "Dalam model NIST SP 800-207, **policy engine** mengambil keputusan (allow/deny) berdasarkan kebijakan dan sinyal konteks. **Policy administrator** mengeksekusi keputusan dengan membuat/menghapus sesi, dan **policy enforcement point** menegakkan keputusan pada lalu lintas aktual."
@@ -312,6 +342,9 @@
        "text": "Microsegmentation"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Microsegmentation** membagi jaringan menjadi segmen kecil dengan aturan akses spesifik, menghilangkan implicit trust antar sistem. Implicit trust zone justru konsep yang harus dihilangkan dalam zero trust."
     },
@@ -339,6 +372,9 @@
        "key": "D",
        "text": "Honeypot"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Honeytoken** adalah data umpan (file, record, kredensial) yang tidak punya kegunaan sah; siapa pun yang menyentuhnya hampir pasti penyerang atau insider. Honeypot adalah sistem/ host umpan, bukan artefak data."
@@ -368,6 +404,9 @@
        "text": "Scanning the network for unpatched hosts"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Gap analysis** membandingkan kondisi saat ini dengan target (misalnya ISO 27001 atau NIST CSF) lalu mengidentifikasi kekurangan. Opsi lain adalah aktivitas operasional spesifik, bukan analisis kesenjangan menyeluruh."
     },
@@ -395,6 +434,9 @@
        "key": "D",
        "text": "Maintenance window"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Backout plan** (rollback plan) menjelaskan cara mengembalikan sistem ke kondisi semula bila perubahan gagal. Impact analysis menilai dampak perubahan, maintenance window menentukan jadwal, dan approval adalah persetujuan itu sendiri."
@@ -424,6 +466,9 @@
        "text": "Vulnerability scanning"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "Persetujuan, pengujian, komunikasi stakeholder, dan jadwal perubahan adalah elemen **change management**. Tujuannya mencegah perubahan yang tidak terdokumentasi dan memicu gangguan produksi."
     },
@@ -451,6 +496,9 @@
        "key": "D",
        "text": "Availability, non-repudiation, and authorization"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Digital signature mengenkripsi hash pesan dengan private key pengirim, sehingga penerima dapat memverifikasi **integrity**, memastikan identitas pengirim (**authentication**), dan penandatangan tidak bisa menyangkal (**non-repudiation**). Signature tidak menyembunyikan isi pesan, jadi bukan confidentiality."
@@ -480,6 +528,9 @@
        "text": "Key exchange"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Key escrow** menyimpan salinan kunci pada pihak ketiga tepercaya untuk keperluan pemulihan. Key rotation adalah pergantian kunci berkala, key stretching memperkuat password lemah, dan key exchange adalah pertukaran kunci (misalnya Diffie-Hellman)."
     },
@@ -507,6 +558,9 @@
        "key": "D",
        "text": "Both are software libraries used to generate certificates"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**TPM** adalah chip kriptografi pada satu perangkat (untuk BitLocker, measured boot, attestation). **HSM** adalah perangkat/ layanan khusus yang diperkuat untuk operasi kriptografi bervolume tinggi dan penyimpanan kunci pada level organisasi."
@@ -536,6 +590,9 @@
        "text": "CRL"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**OCSP** (Online Certificate Status Protocol) memungkinkan pemeriksaan status satu sertifikat secara real time tanpa mengunduh seluruh daftar. CRL adalah daftar lengkap yang diunduh, CSR adalah permintaan sertifikat, dan trust anchor adalah root certificate yang dipercaya."
     },
@@ -563,6 +620,9 @@
        "key": "D",
        "text": "To shorten the hash output"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Salt** memastikan dua pengguna dengan password sama menghasilkan hash berbeda, sehingga rainbow table yang sudah dihitung sebelumnya tidak berguna. Salt bukan enkripsi dan tidak membuat hash bisa dibalik."
@@ -592,6 +652,9 @@
        "text": "Tokenization"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Key stretching** (misalnya PBKDF2, bcrypt, Argon2) menerapkan fungsi hash berulang kali dengan biaya komputasi tinggi sehingga setiap tebakan menjadi lambat. Salting mencegah rainbow table tetapi tidak memperlambat per tebakan."
     },
@@ -619,6 +682,9 @@
        "key": "D",
        "text": "Both provide confidentiality"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Hash** bersifat satu arah (tidak bisa dikembalikan) dan dipakai untuk integritas/verifikasi. **Enkripsi** bersifat reversibel dengan kunci yang tepat dan melindungi kerahasiaan."
@@ -648,6 +714,9 @@
        "text": "Confidentiality of the records"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Blockchain** mengaitkan setiap blok dengan hash blok sebelumnya sehingga perubahan satu blok merusak seluruh rantai — sifatnya tamper-evident (integritas). Blockchain tidak otomatis menjamin kerahasiaan karena isinya bisa terbaca semua node."
     },
@@ -675,6 +744,9 @@
        "key": "D",
        "text": "Secure enclave"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**TPM** menyegel kunci ke platform dan melakukan **measured boot**; kunci hanya dilepas bila PCR (measurement) sesuai. HSM melayani banyak sistem, sedangkan secure enclave melindungi kode/data dalam CPU, bukan mengukur boot."
@@ -704,6 +776,9 @@
        "text": "Because symmetric keys cannot be rotated"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Kriptografi asimetris dipakai untuk autentikasi dan menyepakati kunci sesi karena mahal secara komputasi; transfer data massal kemudian memakai **symmetric** (AES) yang jauh lebih cepat. Asymmetric tetap bisa mengenkripsi data kecil, hanya tidak efisien."
     },
@@ -731,6 +806,9 @@
        "key": "D",
        "text": "Partition encryption"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "FDE melindungi data saat disk dalam keadaan mati, tetapi file yang sudah dikopi ke media lain tidak lagi terlindungi. **File-level encryption** (atau container terenkripsi) tetap melekat pada file tersebut di mana pun ia berada."
@@ -760,6 +838,9 @@
        "text": "HTTPS for email, SNMPv3 for file transfer"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**S/MIME** memberi enkripsi dan tanda tangan pada pesan email, sedangkan **IPsec** melindungi lalu lintas pada layer network (mode tunnel/transport). TLS melindungi hop transport, bukan isi email end-to-end."
     },
@@ -787,6 +868,9 @@
        "key": "D",
        "text": "Data masking"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Tokenization** menukar data asli (misalnya nomor kartu kredit) dengan token yang tidak bermakna; pemetaan disimpan di vault. Data masking biasanya mengubah tampilan secara permanen (misalnya `****-****-****-1234`), sedangkan steganografi menyembunyikan data di dalam media lain."
@@ -816,6 +900,9 @@
        "text": "Downgrade attack"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Collision** terjadi ketika dua input berbeda menghasilkan hash yang sama; MD5 dan SHA-1 sudah terbukti rentan. Downgrade menurunkan versi protokol, rainbow table menyerang password, dan brute force menebak kunci."
     },
@@ -843,6 +930,9 @@
        "key": "D",
        "text": "Birthday attack"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Downgrade attack** memaksa kedua pihak memakai versi protokol atau cipher suite yang lebih lemah agar mudah diserang. Mitigasinya: menonaktifkan protokol lama dan mengaktifkan strict security settings di kedua sisi."
@@ -872,6 +962,9 @@
        "text": "OCSP responders stop working automatically"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Dengan private key root CA, penyerang dapat menerbitkan sertifikat yang tampak sah untuk domain apa pun (misalnya bank), sehingga terjadi impersonation dan MITM. Inilah alasan root CA dijaga offline di HSM dan ada mekanisme revocation."
     },
@@ -899,6 +992,9 @@
        "key": "D",
        "text": "Mantrap sensor"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Access control vestibule** (mantrap) adalah ruang kecil dengan dua pintu interlock untuk mencegah tailgating/piggybacking. Bollard adalah penghalang kendaraan, Faraday cage memblokir sinyal elektromagnetik."
@@ -928,6 +1024,9 @@
        "text": "Bollards"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Bollards** adalah tiang penghalang fisik untuk mencegah kendaraan menabrak bangunan atau area terlarang. Lighting bersifat deterrent/detective, motion sensor detective, proximity reader untuk kontrol akses."
     },
@@ -955,6 +1054,9 @@
        "key": "D",
        "text": "IDS and DLP"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Server umpan adalah **honeypot**, sedangkan kredensial palsu di dalamnya adalah **honeytoken**. Kombinasi ini mendeteksi dan mempelajari teknik penyerang tanpa memberi akses ke aset nyata."
@@ -984,6 +1086,9 @@
        "text": "Let the administrator approve their own change without review"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Emergency change** tetap harus dicatat dan ditinjau (sering secara retroaktif) oleh CAB. Melewati dokumentasi menghilangkan jejak audit dan membuat rollback sulit; menunggu jadwal normal justru membiarkan risiko aktif."
     },
@@ -1012,8 +1117,83 @@
        "text": "Business impact analysis"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**SOP** merinci langkah operasional, peran, dan verifikasi sehingga perubahan konsisten dan dapat diaudit. Kebijakan AUP mengatur perilaku pengguna; BIA dan risk register bukan instruksi teknis."
+    },
+    {
+     "id": "D1-37",
+     "number": 37,
+     "domain": 1,
+     "objective": "1.1",
+     "type": "Multi-select",
+     "stem": "Which TWO of the following are managerial (administrative) controls? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Acceptable use policy"
+      },
+      {
+       "key": "B",
+       "text": "Security guard stationed in the lobby"
+      },
+      {
+       "key": "C",
+       "text": "Annual risk assessment"
+      },
+      {
+       "key": "D",
+       "text": "Motion sensor that triggers an alarm"
+      },
+      {
+       "key": "E",
+       "text": "Web application firewall"
+      }
+     ],
+     "answers": [
+      "A",
+      "C"
+     ],
+     "answer": "A, C",
+     "explanation": "Kebijakan AUP dan risk assessment adalah kontrol **managerial** karena berbentuk aturan dan proses tata kelola. Penjaga dan sensor gerak bersifat physical, WAF bersifat technical."
+    },
+    {
+     "id": "D1-38",
+     "number": 38,
+     "domain": 1,
+     "objective": "1.4",
+     "type": "Multi-select",
+     "stem": "Which TWO statements about cryptographic hashing are correct? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "It is reversible with the correct private key"
+      },
+      {
+       "key": "B",
+       "text": "It produces an output of fixed length"
+      },
+      {
+       "key": "C",
+       "text": "It provides confidentiality without any encryption"
+      },
+      {
+       "key": "D",
+       "text": "It requires both parties to share a secret key"
+      },
+      {
+       "key": "E",
+       "text": "It is a one-way function"
+      }
+     ],
+     "answers": [
+      "B",
+      "E"
+     ],
+     "answer": "B, E",
+     "explanation": "Hash bersifat **satu arah** dan menghasilkan panjang output tetap (misalnya SHA-256 selalu 256 bit). Hash tidak dapat dibalik, tidak memberi kerahasiaan, dan tidak memerlukan kunci bersama."
     }
    ]
   },
@@ -1047,6 +1227,9 @@
        "text": "Unskilled attacker"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "Ciri **nation-state/APT**: pendanaan besar, malware kustom, kampanye jangka panjang, dan motif spionase. Hacktivist termotivasi ideologi dan biasanya aksinya lebih terbuka; unskilled attacker memakai tool yang sudah ada; insider berada di dalam organisasi."
     },
@@ -1074,6 +1257,9 @@
        "key": "D",
        "text": "Espionage"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "Aksi defacement dan kebocoran data untuk menyampaikan pesan politik adalah ciri **hacktivist** yang dimotivasi ideologi. Pencurian data untuk dijual atau spionase tidak sesuai dengan pola ini."
@@ -1103,6 +1289,9 @@
        "text": "Organized crime"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Insider threat** adalah orang dengan akses sah yang menyalahgunakan aksesnya, termasuk karyawan yang akan keluar. Shadow IT lebih mengarah pada penggunaan teknologi tanpa persetujuan, bukan pencurian data dengan niat jahat."
     },
@@ -1130,6 +1319,9 @@
        "key": "D",
        "text": "Hacktivist"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Organized crime** menjalankan serangan untuk keuntungan finansial dengan struktur bisnis, termasuk model RaaS dan afiliasi. Nation-state fokus pada spionase/geo-politik, hacktivist pada ideologi."
@@ -1159,6 +1351,9 @@
        "text": "Supply chain attack"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Shadow IT** adalah penggunaan perangkat, aplikasi, atau layanan TI tanpa persetujuan/pengetahuan departemen TI. Risikonya: data tidak terklasifikasi, tidak terpantau DLP, dan sulit diaudit."
     },
@@ -1186,6 +1381,9 @@
        "key": "D",
        "text": "Unskilled attacker"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Unskilled attacker** (script kiddie) memakai tool siap pakai tanpa memahami mekanismenya, biasanya untuk mencari korban acak. ATP/APT justru memiliki keahlian dan sumber daya tinggi."
@@ -1215,6 +1413,9 @@
        "text": "The targeting of private companies"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Keduanya bisa memakai malware dan menyerang perusahaan. Yang membedakan adalah **sumber daya, sofistikasi, dan kesabaran** (kampanye bertahun-tahun) untuk tujuan strategis seperti spionase."
     },
@@ -1242,6 +1443,9 @@
        "key": "D",
        "text": "Insider — ideological protest"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Organized crime** dimotivasi uang (ransomware, penipuan, penjualan data). Hacktivist = ideologi, nation-state = spionase/strategi, insider bisa bermacam-macam (uang, dendam, kelalaian)."
@@ -1271,6 +1475,9 @@
        "text": "Supply chain"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "Serangan lewat **supply chain** memanfaatkan kepercayaan pada vendor/MSP/perangkat lunak pihak ketiga. Satu kompromi di penyedia dapat menyebar ke banyak pelanggan sekaligus."
     },
@@ -1298,6 +1505,9 @@
        "key": "D",
        "text": "Domain fronting"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Typosquatting** mendaftarkan domain yang mirip (salah ketik, karakter mirip) untuk menipu pengguna. Watering hole adalah situs sah yang dikompromikan untuk menyerang kelompok tertentu."
@@ -1327,6 +1537,9 @@
        "text": "Watering hole"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Watering hole** menyerang situs yang biasa dikunjungi target, lalu menyuntikkan malware khusus untuk kelompok tersebut. Spear phishing tetap berbasis pesan yang dikirim langsung ke korban."
     },
@@ -1354,6 +1567,9 @@
        "key": "D",
        "text": "Business email compromise"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**BEC** memalsukan identitas eksekutif/rekan bisnis untuk memicu transfer dana atau perubahan data pembayaran. Whaling adalah phishing yang menyasar eksekutif sebagai korban, bukan memalsukan eksekutif untuk menipu staf."
@@ -1383,6 +1599,9 @@
        "text": "Vishing"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Smishing** adalah phishing melalui SMS. Vishing melalui panggilan suara, phishing umumnya email, dan pretexting adalah teknik membangun alasan palsu (bisa dipakai di semua kanal)."
     },
@@ -1410,6 +1629,9 @@
        "key": "D",
        "text": "Tailgating"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "Panggilan telepon (vishing) dengan cerita palsu yang meyakinkan (pretexting) untuk melewati prosedur help desk. Mitigasinya: verifikasi identitas melalui kanal terpisah dan prosedur reset MFA yang ketat."
@@ -1439,6 +1661,9 @@
        "text": "Open service port"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Removable media** (USB) dapat berisi malware atau melakukan HID attack saat dicolok. Kontrol: disable autorun, endpoint protection, dan kebijakan larangan memakai media tak dikenal."
     },
@@ -1466,6 +1691,9 @@
        "key": "D",
        "text": "Shadow IT and insider threat"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "Port 3389 (RDP) yang terbuka ke internet memperluas attack surface, dan **default credentials** memudahkan akses. Mitigasi: tutup port, gunakan VPN/jump host, dan ganti kredensial default."
@@ -1495,6 +1723,9 @@
        "text": "Legacy protocol; encryption is weaker"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**EOL/unsupported system** tidak lagi menerima patch, sehingga kerentanan yang sudah diketahui publik akan tetap terbuka. Zero-day adalah kerentanan yang belum diketahui vendor, berbeda konsep."
     },
@@ -1522,6 +1753,9 @@
        "key": "D",
        "text": "Evil twin"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Bluesnarfing** adalah pencurian data melalui koneksi Bluetooth, sedangkan bluejacking hanya mengirim pesan tak diminta. Deauthentication dan evil twin adalah serangan Wi-Fi."
@@ -1551,6 +1785,9 @@
        "text": "File-based"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**File-based vector** adalah file berbahaya (dokumen bermakro, installer, arsip) yang dieksekusi pengguna, baik dari unduhan maupun media lepas. **Message-based vector** menekankan kanal pesan seperti email, SMS, atau IM yang membawa tautan/lampiran."
     },
@@ -1578,6 +1815,9 @@
        "key": "D",
        "text": "Supply chain (software provider)"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "Ini adalah serangan **supply chain** melalui penyedia perangkat lunak: pelanggan mempercayai update bertanda tangan dari vendor. Pertahanan: verifikasi hash/tanda tangan, code signing yang aman, dan pemantauan perilaku setelah update."
@@ -1607,6 +1847,9 @@
        "text": "Directory traversal"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Buffer overflow** menulis melebihi batas memori yang dialokasikan sehingga menimpa area lain, termasuk return address. Mitigasi: input validation, safe languages, ASLR, dan DEP."
     },
@@ -1634,6 +1877,9 @@
        "key": "D",
        "text": "Buffer overflow"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Race condition TOCTOU** (time-of-check to time-of-use) terjadi karena keadaan berubah antara pemeriksaan dan penggunaan. Mitigasi: operasi atomik, file locking, dan validasi ulang."
@@ -1663,6 +1909,9 @@
        "text": "Directory traversal"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Pesan error SQL yang membocorkan sintaks menunjukkan input pengguna masuk ke query tanpa parameterisasi — **SQL injection**. Mitigasi utama: prepared statements/parameterized queries dan least privilege pada akun database."
     },
@@ -1690,6 +1939,9 @@
        "key": "D",
        "text": "Reflected XSS"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Stored (persistent) XSS** menyimpan payload di server sehingga tereksekusi pada semua pengunjung. Reflected XSS hanya muncul dari parameter yang dipantulkan kembali ke satu korban."
@@ -1719,6 +1971,9 @@
        "text": "XSS"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**CSRF** memanfaatkan sesi korban yang masih aktif untuk mengirim permintaan yang tidak diinginkan. Mitigasi: anti-CSRF token, SameSite cookie, dan verifikasi origin."
     },
@@ -1746,6 +2001,9 @@
        "key": "D",
        "text": "Insecure direct object reference"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Directory traversal** (path traversal) memakai `../` untuk keluar dari direktori yang diizinkan. Mitigasi: validasi path, gunakan allow list nama file, dan jalankan dengan hak minimal."
@@ -1775,6 +2033,9 @@
        "text": "VM sprawl"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**VM escape** menembus isolasi hypervisor sehingga penyerang menguasai host dan VM lain. Mitigasi: patch hypervisor, matikan fitur tidak perlu, dan batasi akses manajemen."
     },
@@ -1802,6 +2063,9 @@
        "key": "D",
        "text": "VM sprawl"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**VM sprawl** adalah pertumbuhan VM tak terkendali tanpa inventaris dan patch, sehingga muncul sistem tak terkelola. Solusinya: inventaris otomatis, lifecycle management, dan decommissioning."
@@ -1831,6 +2095,9 @@
        "text": "Cloud misconfiguration"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Misconfiguration** cloud (bucket publik, IAM terlalu longgar, logging mati) adalah penyebab kebocoran data paling umum di cloud. Mitigasi: secure baseline, policy as code, dan pemindaian konfigurasi."
     },
@@ -1858,6 +2125,9 @@
        "key": "D",
        "text": "A vulnerability that has been patched but not yet deployed"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Zero-day** adalah celah yang belum diketahui pembuat software, sehingga belum ada patch pada saat dieksploitasi. Mitigasi tidak bisa mengandalkan patching, melainkan deteksi perilaku, segmentasi, dan virtual patching."
@@ -1887,6 +2157,9 @@
        "text": "Jailbreaking and bootkit"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Sideloading** (memasang aplikasi dari luar toko resmi) membuka jalan bagi aplikasi berbahaya. **Jailbreaking/rooting** adalah membuka kunci sistem operasi, berbeda dari sekadar sideloading."
     },
@@ -1914,6 +2187,9 @@
        "key": "D",
        "text": "Hardware end-of-life and unpatched firmware"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "Perangkat **EOL** dengan firmware usang tidak lagi menerima patch dan sering memiliki kerentanan publik. Mitigasi: ganti perangkat, isolasi VLAN, dan batasi akses manajemen."
@@ -1943,6 +2219,9 @@
        "text": "Insufficient hashing rounds"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Kunci yang di-hardcode di source code dapat dibaca siapa pun yang memiliki akses repo — ini **improper key storage**. Kunci seharusnya disimpan di KMS/HSM dan dirotasi."
     },
@@ -1970,6 +2249,9 @@
        "key": "D",
        "text": "DLL injection"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**DLL injection** memaksa proses yang sah memuat library berbahaya sehingga kode berjalan dalam konteks proses tersebut dan sulit terdeteksi. Ini sering dipakai malware untuk persistence dan menghindari deteksi."
@@ -1999,6 +2281,9 @@
        "text": "VM escape"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Resource reuse** terjadi ketika resource (disk, memori, IP) dialokasikan ulang tanpa sanitasi menyeluruh. Mitigasi: enkripsi disk, secure wipe, dan sanitasi sebelum reuse."
     },
@@ -2026,6 +2311,9 @@
        "key": "D",
        "text": "Supply chain (hardware provider)"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Hardware supply chain** compromise menanam komponen atau backdoor pada perangkat fisik. Mitigasi: vendor vetting, inspeksi perangkat, dan pemantauan lalu lintas keluar."
@@ -2055,6 +2343,9 @@
        "text": "Ransomware"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Ransomware** mengenkripsi data dan meminta tebusan. Mitigasi: backup offline teruji, segmentasi, dan deteksi perilaku enkripsi massal."
     },
@@ -2082,6 +2373,9 @@
        "key": "D",
        "text": "Trojan"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Worm** menyebar sendiri melalui jaringan tanpa interaksi pengguna. Virus membutuhkan eksekusi pengguna/host, trojan menyamar sebagai program sah, logic bomb menunggu pemicu."
@@ -2111,6 +2405,9 @@
        "text": "Rootkit"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Rootkit** bersembunyi di kernel/firmware dan memanipulasi tampilan sistem sehingga prosesnya tidak terlihat. Deteksinya sering memerlukan boot dari media tepercaya atau pemindaian offline."
     },
@@ -2138,6 +2435,9 @@
        "key": "D",
        "text": "Cryptominer"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Keylogger** merekam input pengguna (dan sering clipboard) untuk mencuri kredensial. Indikatornya: koneksi keluar periodik, proses tak dikenal, dan alert EDR pada API hooking keyboard."
@@ -2167,6 +2467,9 @@
        "text": "Worm"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Logic bomb** adalah kode yang dieksekusi saat kondisi tertentu terpenuhi (waktu, event, status akun). Pencegahannya: code review, kontrol perubahan, dan pencabutan akses segera saat terminasi."
     },
@@ -2194,6 +2497,9 @@
        "key": "D",
        "text": "Honeypot"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "Pola **beaconing** periodik ke C2 menunjukkan host terinfeksi dan tergabung dalam **botnet**. Tindakan: isolasi host, blokir IOC, dan analisis lateral movement."
@@ -2223,6 +2529,9 @@
        "text": "Cryptomalware"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Cryptomalware/cryptojacking** memakai resource korban untuk menambang kripto; indikatornya konsumsi CPU/GPU tinggi, tagihan cloud naik, dan koneksi ke pool mining."
     },
@@ -2250,6 +2559,9 @@
        "key": "D",
        "text": "Fileless malware"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Fileless malware** berjalan di memori memakai tool sah (PowerShell, WMI) sehingga tidak ada file untuk dipindai signature. Deteksi mengandalkan EDR, script block logging, dan analisis perilaku."
@@ -2279,6 +2591,9 @@
        "text": "Evil twin"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Evil twin** adalah AP palsu dengan SSID sama untuk menipu klien agar terhubung dan menyerahkan kredensial/lalu lintas. Mitigasi: WPA3-Enterprise, certificate validation, dan wireless IDS."
     },
@@ -2306,6 +2621,9 @@
        "key": "D",
        "text": "ARP poisoning"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Deauthentication attack** mengirim frame deauth palsu sehingga klien terputus dan mencoba terhubung ulang — sering dikombinasikan dengan evil twin. Mitigasi: 802.11w (PMF) dan WPA3."
@@ -2335,6 +2653,9 @@
        "text": "MAC flooding"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**ARP poisoning** memetakan IP gateway ke MAC penyerang sehingga terjadi on-path (MITM) di jaringan lokal. Mitigasi: dynamic ARP inspection, port security, dan segmentasi."
     },
@@ -2362,6 +2683,9 @@
        "key": "D",
        "text": "DNS poisoning"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**DNS poisoning** (cache poisoning) mengubah pemetaan nama domain ke IP penyerang. Mitigasi: DNSSEC, resolver tepercaya, dan pemantauan perubahan record."
@@ -2391,6 +2715,9 @@
        "text": "VLAN hopping"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**VLAN hopping** (double tagging/switch spoofing) melewati isolasi VLAN. Mitigasi: matikan DTP, set port access secara eksplisit, dan gunakan VLAN native yang tidak dipakai."
     },
@@ -2418,6 +2745,9 @@
        "key": "D",
        "text": "MAC cloning"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**MAC flooding** membanjiri tabel CAM switch sehingga switch berperilaku seperti hub dan lalu lintas dapat disadap. Mitigasi: port security dengan batas MAC dan monitoring."
@@ -2447,6 +2777,9 @@
        "text": "Privilege escalation"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**On-path (MITM)** menempatkan penyerang di antara klien dan tujuan. Mitigasi: HTTPS dengan certificate pinning/HSTS, VPN, dan tidak mengabaikan peringatan sertifikat."
     },
@@ -2474,6 +2807,9 @@
        "key": "D",
        "text": "Pass-the-hash"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Replay attack** menggunakan ulang kredensial/token yang sah. Mitigasi: timestamp, nonce, sequence number, dan token berumur pendek (short-lived)."
@@ -2503,6 +2839,9 @@
        "text": "Volumetric DDoS"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "Serangan **volumetric** membanjiri bandwidth (misalnya UDP/ICMP amplification). Application-layer DoS menghabiskan resource aplikasi (misalnya HTTP request mahal), dan SYN flood adalah salah satu teknik DDoS, bukan kategori yang paling tepat di sini."
     },
@@ -2530,6 +2869,9 @@
        "key": "D",
        "text": "Password spraying"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Password spraying** mencoba sedikit password umum ke banyak akun untuk menghindari lockout. Credential stuffing memakai pasangan username/password hasil kebocoran; dictionary attack menebak banyak password pada satu akun."
@@ -2559,6 +2901,9 @@
        "text": "Brute force"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Credential stuffing** memanfaatkan kredensial bocor dan kebiasaan reuse password. Mitigasi: cek terhadap breach corpus, MFA, dan passwordless."
     },
@@ -2586,6 +2931,9 @@
        "key": "D",
        "text": "Dictionary attack; MFA"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "Tabel **rainbow** memetakan hash ke password yang sudah dihitung sebelumnya; **salt** unik per pengguna membuat tabel tersebut tidak berguna. MFA dan panjang password tetap penting, tetapi bukan penangkal utama serangan offline ini."
@@ -2615,6 +2963,9 @@
        "text": "Directory traversal"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Pola `UNION SELECT` adalah **SQL injection** untuk mengekstrak data dari tabel lain. Mitigasi: parameterized query, WAF sebagai lapisan tambahan, dan least privilege akun DB."
     },
@@ -2642,6 +2993,9 @@
        "key": "D",
        "text": "Concurrent session usage"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Impossible travel** menandakan kredensial dipakai dari dua lokasi yang tidak mungkin dijangkau dalam waktu tersebut — indikasi akun dicuri. Perlu verifikasi dan pemeriksaan MFA."
@@ -2671,6 +3025,9 @@
        "text": "Account lockout"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Concurrent session usage** di luar kebiasaan menandakan kredensial dibagikan atau dicuri. Kebijakan biasanya membatasi jumlah sesi simultan dan memicu verifikasi tambahan."
     },
@@ -2698,6 +3055,9 @@
        "key": "D",
        "text": "Brute force or targeted lockout, possibly social engineering follow-up"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "Lonjakan login gagal menunjukkan **brute force** atau sengaja mengunci akun agar korban menghubungi help desk (untuk menipu reset MFA). Ini juga indikator social engineering lanjutan."
@@ -2727,6 +3087,9 @@
        "text": "Resource consumption and unusual data flow"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "Lonjakan trafik keluar yang tidak wajar dapat menandakan **exfiltration** atau C2. Indikator lain seperti resource consumption (CPU/disk) juga bisa menyertai pencurian data atau cryptomining."
     },
@@ -2754,6 +3117,9 @@
        "key": "D",
        "text": "Blocked content"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Missing logs** bisa berarti log dihapus, logging dimatikan, atau penyerang menutupi jejak. Bandingkan dengan sumber log lain (SIEM, syslog server) untuk memastikan."
@@ -2783,6 +3149,9 @@
        "text": "Out-of-cycle logging"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Published/documented** berarti penyerang mempublikasikan bukti akses atau data curian (leak site, paste site) untuk menekan korban. Ini juga sering menjadi awal negosiasi ransomware."
     },
@@ -2810,6 +3179,9 @@
        "key": "D",
        "text": "Patching"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Segmentation** membatasi lalu lintas antar zona; sistem tetap beroperasi tetapi attack surface-nya kecil. **Isolation** biasanya berarti memisahkan sepenuhnya (misalnya air-gap atau VM terisolasi) tanpa konektivitas produksi."
@@ -2839,6 +3211,9 @@
        "text": "Host-based firewall"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Allow list** hanya mengizinkan program yang terdaftar (biasanya berdasarkan hash atau sertifikat), sehingga malware baru otomatis diblokir. Block list mudah dilewati karena hanya menolak yang sudah diketahui."
     },
@@ -2866,6 +3241,9 @@
        "key": "D",
        "text": "SIEM"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**NAC** (Network Access Control) memeriksa postur perangkat sebelum memberi akses, dan dapat menempatkan perangkat tidak patuh di VLAN remediasi. MDM mengelola perangkat, bukan mengontrol akses jaringan."
@@ -2895,6 +3273,9 @@
        "text": "EDR"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**EDR** mengumpulkan telemetri perilaku, mendeteksi teknik seperti process injection, dan dapat mengisolasi endpoint. HIDS hanya mendeteksi perubahan file/log, antivirus berbasis signature mudah dilewati malware baru."
     },
@@ -2922,6 +3303,9 @@
        "key": "D",
        "text": "WAF"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**DLP** memeriksa konten (pola nomor identitas) dan memblokir/ mengarantina pengiriman ke tujuan tidak sah. FDE melindungi data saat perangkat hilang, bukan saat dikirim keluar."
@@ -2951,6 +3335,9 @@
        "text": "Quarantine"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Sandboxing** menjalankan file di lingkungan terisolasi dan memantau perilakunya (network callbacks, file changes). Quarantine hanya menahan pesan, bukan menganalisis perilaku."
     },
@@ -2978,6 +3365,9 @@
        "key": "D",
        "text": "Network segmentation"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Secure baseline** adalah konfigurasi acuan yang sudah diperkuat dan dipakai untuk semua deployment. Baseline harus diverifikasi berkala (configuration enforcement) agar tidak melenceng."
@@ -3007,6 +3397,9 @@
        "text": "Isolation"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Decommissioning** menghapus sistem dari produksi secara aman: cabut akses, sanitasi media, hapus record, dan perbarui inventaris. Ini mengurangi attack surface permanen."
     },
@@ -3034,6 +3427,9 @@
        "key": "D",
        "text": "VDI only"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**MDM** menerapkan kebijakan perangkat (enkripsi, PIN, remote wipe) dan dapat memisahkan data kerja dari data pribadi pada perangkat **BYOD**. NAC hanya mengontrol akses jaringan."
@@ -3063,6 +3459,9 @@
        "text": "Application allow list"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Host-based firewall** dapat membatasi lalu lintas per host tanpa mengubah topologi jaringan. Segmentasi jaringan juga bisa, tetapi untuk aturan per-endpoint, host firewall lebih langsung."
     },
@@ -3091,8 +3490,119 @@
        "text": "TPM"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Secure enclave** adalah area terisolasi di dalam prosesor yang melindungi kode dan kunci dari OS utama. TPM adalah chip terpisah untuk menyimpan kunci/measurement, HSM adalah perangkat eksternal."
+    },
+    {
+     "id": "D2-75",
+     "number": 75,
+     "domain": 2,
+     "objective": "2.3",
+     "type": "Multi-select",
+     "stem": "Which TWO are examples of injection vulnerabilities? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Cross-site scripting"
+      },
+      {
+       "key": "B",
+       "text": "Race condition"
+      },
+      {
+       "key": "C",
+       "text": "Buffer overflow"
+      },
+      {
+       "key": "D",
+       "text": "SQL injection"
+      },
+      {
+       "key": "E",
+       "text": "Directory traversal"
+      }
+     ],
+     "answers": [
+      "A",
+      "D"
+     ],
+     "answer": "A, D",
+     "explanation": "**SQL injection** menyuntikkan perintah SQL dan **XSS** menyuntikkan skrip ke halaman. Directory traversal memanipulasi path, race condition adalah masalah sinkronisasi, buffer overflow adalah kesalahan batas memori."
+    },
+    {
+     "id": "D2-76",
+     "number": 76,
+     "domain": 2,
+     "objective": "2.4",
+     "type": "Multi-select",
+     "stem": "Which TWO indicators MOST likely suggest that an account's credentials have been stolen? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "High CPU usage on the user's workstation"
+      },
+      {
+       "key": "B",
+       "text": "A scheduled antivirus signature update"
+      },
+      {
+       "key": "C",
+       "text": "Successful sign-ins from two distant countries within minutes"
+      },
+      {
+       "key": "D",
+       "text": "Multiple active sessions for one account from different regions"
+      },
+      {
+       "key": "E",
+       "text": "A single failed login followed by a successful one"
+      }
+     ],
+     "answers": [
+      "C",
+      "D"
+     ],
+     "answer": "C, D",
+     "explanation": "**Impossible travel** dan **concurrent sessions** dari lokasi berbeda menunjukkan kredensial dipakai pihak lain. Satu login gagal adalah hal normal, CPU tinggi dan update antivirus tidak berkaitan dengan pencurian kredensial."
+    },
+    {
+     "id": "D2-77",
+     "number": 77,
+     "domain": 2,
+     "objective": "2.5",
+     "type": "Multi-select",
+     "stem": "Which TWO controls BEST reduce the risk from an unsupported legacy system that cannot be patched? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Network segmentation"
+      },
+      {
+       "key": "B",
+       "text": "Decommissioning the system when possible"
+      },
+      {
+       "key": "C",
+       "text": "Full-disk encryption"
+      },
+      {
+       "key": "D",
+       "text": "Quarterly password rotation"
+      },
+      {
+       "key": "E",
+       "text": "Longer screen-lock timeout"
+      }
+     ],
+     "answers": [
+      "A",
+      "B"
+     ],
+     "answer": "A, B",
+     "explanation": "**Segmentasi** membatasi penyebaran jika sistem diserang, dan **decommissioning** menghilangkan risiko sepenuhnya. Enkripsi disk, rotasi password, dan timeout layar tidak menutup kerentanan yang tidak dapat dipatch."
     }
    ]
   },
@@ -3126,6 +3636,9 @@
        "text": "Maintaining the hypervisor"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Pada **SaaS**, penyedia mengelola aplikasi, OS, dan infrastruktur; pelanggan tetap bertanggung jawab atas **identitas, akses, dan data** (termasuk klasifikasi dan berbagi data). Patch aplikasi dan hypervisor menjadi tanggung jawab penyedia."
     },
@@ -3153,6 +3666,9 @@
        "key": "D",
        "text": "Securing the network backbone"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Pada **IaaS**, pelanggan mengelola OS tamu, patch, konfigurasi keamanan, dan aturan firewall/security group. Lapisan fisik, hypervisor, dan backbone berada pada penyedia."
@@ -3182,6 +3698,9 @@
        "text": "SaaS"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**PaaS** menyediakan runtime dan platform terkelola; tim hanya bertanggung jawab atas aplikasi, konfigurasi, dan data. IaaS menyediakan VM mentah, SaaS menyediakan aplikasi jadi."
     },
@@ -3209,6 +3728,9 @@
        "key": "D",
        "text": "Hybrid cloud"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Hybrid cloud** menggabungkan on-premises dengan cloud publik. Multi-cloud berarti memakai dua atau lebih penyedia cloud publik, sedangkan private cloud sepenuhnya dedicated untuk satu organisasi."
@@ -3238,6 +3760,9 @@
        "text": "Serverless computing"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**IaC** memungkinkan infrastruktur didefinisikan dan direview seperti kode, sehingga konsisten dan dapat diaudit. Risikonya: kesalahan konfigurasi menyebar cepat, sehingga pipeline perlu pemeriksaan keamanan (policy as code)."
     },
@@ -3265,6 +3790,9 @@
        "key": "D",
        "text": "Patching the underlying operating system"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "Pada **serverless**, OS dikelola penyedia sehingga risiko bergeser ke **izin fungsi (IAM), secret, dan dependency**. Fungsi dengan izin berlebihan adalah kesalahan umum yang dapat dieksploitasi."
@@ -3294,6 +3822,9 @@
        "text": "Microservices"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Microservices** memecah aplikasi menjadi layanan kecil dengan API. Keuntungan: isolasi kegagalan dan deployment independen; risikonya: permukaan API luas, autentikasi antar-layanan rumit, dan perlu service mesh/mTLS."
     },
@@ -3321,6 +3852,9 @@
        "key": "D",
        "text": "Containers require a hypervisor for isolation"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Container** berbagi kernel host, sehingga isolasinya lebih lemah daripada VM. Mitigasi: minimal base image, tidak menjalankan sebagai root, seccomp/AppArmor, dan pemisahan host untuk beban kerja sensitif."
@@ -3350,6 +3884,9 @@
        "text": "The devices use outdated web browsers"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "Sistem **embedded/RTOS** menuntut determinisme waktu dan ketersediaan tinggi, sehingga patch dan agen keamanan berat sulit diterapkan. Pendekatannya: segmentasi, kontrol jaringan, dan pemantauan pasif."
     },
@@ -3377,6 +3914,9 @@
        "key": "D",
        "text": "Availability and safety"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "Pada **ICS/SCADA**, gangguan dapat membahayakan nyawa dan peralatan, sehingga **availability dan safety** menjadi prioritas, diikuti integritas. Confidentiality tetap penting, tetapi bukan prioritas utama."
@@ -3406,6 +3946,9 @@
        "text": "Isolation between logical networks with distinct policies"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Network slicing** memisahkan jaringan logis dengan karakteristik dan kebijakan masing-masing, sehingga gangguan atau serangan pada satu slice tidak otomatis meluas. Enkripsi aplikasi tetap diperlukan."
     },
@@ -3433,6 +3976,9 @@
        "key": "D",
        "text": "Software-defined networking"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**SDN** memisahkan control plane (controller) dari data plane (switch), sehingga kebijakan dapat diprogram terpusat. Kontroler menjadi aset kritis yang harus diamankan."
@@ -3462,6 +4008,9 @@
        "text": "Fail-safe; traffic is inspected twice"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Fail-open** mengutamakan ketersediaan: saat perangkat gagal, semua lalu lintas diizinkan sehingga kebijakan keamanan hilang. **Fail-closed** lebih aman tetapi berisiko memutus layanan."
     },
@@ -3489,6 +4038,9 @@
        "key": "D",
        "text": "Fail-closed"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "IDS biasanya **passive** (menerima salinan trafik dari TAP/SPAN) dan hanya memberi alert. IPS ditempatkan **inline** sehingga dapat memblokir paket secara real time."
@@ -3518,6 +4070,9 @@
        "text": "DNSSEC validation"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**TLS inspection** melakukan dekripsi, inspeksi, lalu enkripsi ulang; perangkat klien harus mempercayai CA internal yang dipakai untuk menandatangani ulang. Ini menimbulkan isu privasi dan harus dikecualikan untuk kategori tertentu (misalnya perbankan)."
     },
@@ -3545,6 +4100,9 @@
        "key": "D",
        "text": "WAF"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**WAF** (Web Application Firewall) memeriksa payload HTTP dan dapat memblokir pola serangan aplikasi. Firewall layer 4 hanya melihat IP/port, load balancer membagi trafik, ACL router memfilter alamat/port."
@@ -3574,6 +4132,9 @@
        "text": "Reverse proxy"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**UTM** (Unified Threat Management) menggabungkan beberapa fungsi keamanan dalam satu perangkat. Kelemahannya: satu titik kegagalan dan potensi penurunan performa saat semua fitur aktif."
     },
@@ -3601,6 +4162,9 @@
        "key": "D",
        "text": "RDP gateway with MFA only"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**ZTNA** memberikan akses per aplikasi berdasarkan identitas dan postur perangkat, tanpa mengekspos jaringan internal. VPN klasik memberi akses jaringan luas (network-level) setelah terhubung."
@@ -3630,6 +4194,9 @@
        "text": "TLS on each application"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**IPsec** melindungi lalu lintas pada layer network dan mendukung banyak protokol dalam satu tunnel (mode tunnel untuk site-to-site). TLS hanya melindungi aplikasi tertentu, SSH untuk sesi administratif."
     },
@@ -3657,6 +4224,9 @@
        "key": "D",
        "text": "VDI"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**SASE** menggabungkan SD-WAN dengan layanan keamanan cloud (secure web gateway, CASB, ZTNA, firewall-as-a-service). SD-WAN hanya mengoptimalkan konektivitas WAN."
@@ -3686,6 +4256,9 @@
        "text": "Port knocking only"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Jump host/bastion** terpusat di subnet manajemen, dengan MFA, logging, dan akses terbatas. Ini mengurangi attack surface dibandingkan mengekspos SSH/RDP langsung."
     },
@@ -3713,6 +4286,9 @@
        "key": "D",
        "text": "Put the web server in a DMZ with rules allowing only required outbound flows"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**DMZ** memisahkan sistem yang dapat diakses publik dari jaringan internal, dengan aturan ketat untuk koneksi keluar. Menempatkan database di DMZ justru meningkatkan risiko."
@@ -3742,6 +4318,9 @@
        "text": "Transparent proxy"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**TAP/passive sensor** menyalin trafik tanpa berada di jalur data, sehingga tidak menambah latensi atau titik kegagalan. Konsekuensinya, sensor tidak dapat memblokir trafik."
     },
@@ -3769,6 +4348,9 @@
        "key": "D",
        "text": "Agentless provides better endpoint process visibility than agent-based"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Agent-based** memberi visibilitas mendalam (proses, file, registry) tetapi perlu dipasang dan dirawat di setiap host. **Agentless** memakai data jaringan/API, lebih mudah diterapkan tetapi kurang detail."
@@ -3798,6 +4380,9 @@
        "text": "Public"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "Dalam skema umum SY0-701, urutan dari paling sensitif: **extremely sensitive > sensitive > confidential > private > public**. Extremely sensitive mencakup data yang kebocorannya dapat menyebabkan kerugian besar (misalnya rahasia dagang inti)."
     },
@@ -3825,6 +4410,9 @@
        "key": "D",
        "text": "Data sovereignty"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Data sovereignty** mengharuskan data tunduk pada hukum negara tempat data berada, sehingga lokasi penyimpanan dan replikasi harus dibatasi. Ini memengaruhi pilihan region cloud dan penyedia."
@@ -3854,6 +4442,9 @@
        "text": "Anonymization"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Data masking** menyamarkan sebagian data sehingga tetap terlihat formatnya tetapi tidak dapat dipakai. Tokenization mengganti seluruh nilai dengan token yang dipetakan di vault."
     },
@@ -3881,6 +4472,9 @@
        "key": "D",
        "text": "The token encrypts the entire database"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Tokenization** membuat data curian tidak berguna tanpa akses ke vault, dan dapat mengurangi cakupan kepatuhan (PCI DSS). Token memang dapat dipetakan kembali, tetapi hanya oleh sistem berwenang."
@@ -3910,6 +4504,9 @@
        "text": "Salting"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Anonymization** menghapus atau menggeneralisasi identitas sehingga data tidak dapat dikaitkan kembali ke individu. Enkripsi dan tokenization masih memungkinkan re-identifikasi bila kunci/vault tersedia."
     },
@@ -3937,6 +4534,9 @@
        "key": "D",
        "text": "No DLP"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Tanpa **retention policy**, data lama menumpuk dan memperbesar dampak kebocoran serta melanggar kewajiban regulasi. Retention harus menentukan berapa lama disimpan dan bagaimana dihancurkan."
@@ -3966,6 +4566,9 @@
        "text": "Physical destruction (shredding) or crypto-erase"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "SSD memakai wear leveling sehingga overwrite tidak menjangkau semua sel; **physical destruction** atau **crypto-erase** (jika terenkripsi) adalah pilihan aman. Format cepat dan hapus partisi tidak menghilangkan data."
     },
@@ -3993,6 +4596,9 @@
        "key": "D",
        "text": "WAF"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**CASB** memberikan visibilitas dan kontrol atas penggunaan cloud (shadow IT), termasuk blokir unggahan ke layanan tidak disetujui. NAC mengontrol akses jaringan perangkat, bukan isi unggahan."
@@ -4022,6 +4628,9 @@
        "text": "Data at rest and in use"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Data in transit** (in motion) dilindungi oleh TLS/IPsec. Data at rest dilindungi enkripsi disk/database, dan data in use dilindungi secure enclave/confidential computing."
     },
@@ -4049,6 +4658,9 @@
        "key": "D",
        "text": "Data sovereignty"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Data minimization** mengumpulkan hanya data yang benar-benar diperlukan untuk tujuan tertentu, mengurangi risiko dan kewajiban kepatuhan."
@@ -4078,6 +4690,9 @@
        "text": "Warm site with nightly backups"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Active-active** di dua lokasi menjalankan beban kerja bersamaan sehingga kegagalan satu site tidak menghentikan layanan dan data direplikasi sinkron. Warm site masih butuh waktu pemulihan; RAID hanya melindungi kegagalan disk."
     },
@@ -4105,6 +4720,9 @@
        "key": "D",
        "text": "MTBF"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**RPO** (Recovery Point Objective) menentukan berapa lama data boleh hilang — menentukan frekuensi backup/replikasi. **RTO** adalah waktu maksimal pemulihan layanan, MTTR waktu perbaikan rata-rata, MTBF waktu antar-kegagalan."
@@ -4134,6 +4752,9 @@
        "text": "Reciprocal site"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Hot site** memiliki infrastruktur lengkap dan data terbaru sehingga dapat mengambil alih hampir seketika. Warm site punya sebagian infrastruktur, cold site hanya ruang dan daya."
     },
@@ -4161,6 +4782,9 @@
        "key": "D",
        "text": "Parallel processing test"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Tabletop exercise** adalah diskusi skenario untuk menguji prosedur, peran, dan komunikasi tanpa mengubah sistem. Failover test benar-benar memindahkan beban kerja, parallel processing menjalankan site sekunder bersamaan."
@@ -4190,6 +4814,9 @@
        "text": "Three copies, on two different media, with one copy offsite"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**3-2-1**: tiga salinan data, pada dua jenis media berbeda, dengan satu salinan di lokasi terpisah. Tujuannya melindungi dari kegagalan perangkat, bencana, dan ransomware yang menyebar."
     },
@@ -4217,6 +4844,9 @@
        "key": "D",
        "text": "Geographic dispersion and platform diversity"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Geographic dispersion** menyebar beban ke beberapa lokasi, dan **platform diversity/multi-cloud** mengurangi risiko kegagalan atau lock-in satu penyedia. Keduanya meningkatkan ketahanan."
@@ -4246,6 +4876,9 @@
        "text": "Data corruption from too much power"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "UPS hanya jembatan sementara; jika generator gagal, sistem akan mati setelah baterai habis. Karena itu generator harus diuji berkala dan bahan bakar dipantau."
     },
@@ -4273,6 +4906,9 @@
        "key": "D",
        "text": "Increase the number of servers"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "Tanpa **sticky sessions** atau penyimpanan sesi terpusat, pengguna berpindah server dan kehilangan sesi. Solusi umum: session store bersama (Redis) atau cookie berbasis token."
@@ -4302,6 +4938,9 @@
        "text": "Full backups once per week"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Point-in-time recovery** memakai backup penuh + log transaksi berkelanjutan sehingga database dapat dipulihkan ke detik tertentu. Backup mingguan saja tidak memenuhi kebutuhan 24 jam."
     },
@@ -4329,6 +4968,9 @@
        "key": "D",
        "text": "98.0%"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Availability = MTBF / (MTBF + MTTR) = 2000 / 2004 ≈ **99.8%**. Ini setara downtime sekitar 1,75 jam per tahun."
@@ -4358,6 +5000,9 @@
        "text": "Tabletop"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Parallel processing** menjalankan sistem primer dan sekunder bersamaan untuk memvalidasi hasil sebelum beralih penuh. Ini lebih aman daripada failover penuh karena primer tetap tersedia."
     },
@@ -4385,6 +5030,9 @@
        "key": "D",
        "text": "Least privilege"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "Backup pada sistem yang sama rentan ikut terhapus saat ransomware atau kegagalan storage. Prinsip **3-2-1** membutuhkan salinan di media dan lokasi berbeda, idealnya satu offline/immutable."
@@ -4414,6 +5062,9 @@
        "text": "WAF in monitor-only mode"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**API gateway** memusatkan autentikasi, validasi skema, rate limiting, dan logging, sehingga service internal tidak terekspos langsung. Ini juga memudahkan inventaris endpoint."
     },
@@ -4442,8 +5093,83 @@
        "text": "MAC address allow list only"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**802.1X + NAC** memeriksa identitas perangkat dan postur (domain join, patch) sebelum menempatkannya di VLAN yang tepat. MAC allow list mudah dipalsukan dan tidak memeriksa postur."
+    },
+    {
+     "id": "D3-49",
+     "number": 49,
+     "domain": 3,
+     "objective": "3.2",
+     "type": "Multi-select",
+     "stem": "Which TWO statements describe a fail-closed security device? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "It prioritizes availability over security"
+      },
+      {
+       "key": "B",
+       "text": "It can cause an outage if the device fails"
+      },
+      {
+       "key": "C",
+       "text": "It allows all traffic during a failure"
+      },
+      {
+       "key": "D",
+       "text": "It is always deployed passively"
+      },
+      {
+       "key": "E",
+       "text": "It blocks traffic when the inspection engine fails"
+      }
+     ],
+     "answers": [
+      "B",
+      "E"
+     ],
+     "answer": "B, E",
+     "explanation": "**Fail-closed** memblokir lalu lintas saat terjadi kegagalan sehingga kebijakan tetap terjaga, tetapi berisiko memutus layanan. Fail-open justru mengizinkan semua trafik dan mengutamakan ketersediaan."
+    },
+    {
+     "id": "D3-50",
+     "number": 50,
+     "domain": 3,
+     "objective": "3.3",
+     "type": "Multi-select",
+     "stem": "Which TWO methods can render data unrecoverable before disposal? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Quick format"
+      },
+      {
+       "key": "B",
+       "text": "Moving files to the recycle bin"
+      },
+      {
+       "key": "C",
+       "text": "Deleting the partition table"
+      },
+      {
+       "key": "D",
+       "text": "Physical destruction"
+      },
+      {
+       "key": "E",
+       "text": "Cryptographic erase"
+      }
+     ],
+     "answers": [
+      "D",
+      "E"
+     ],
+     "answer": "D, E",
+     "explanation": "**Physical destruction** dan **crypto-erase** (menghapus kunci enkripsi) membuat data tidak dapat dipulihkan. Quick format, recycle bin, dan hapus partisi hanya menghapus referensi, bukan isi media."
     }
    ]
   },
@@ -4477,6 +5203,9 @@
        "text": "Decommissioning"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Hardening** mengurangi attack surface dengan menonaktifkan layanan tidak perlu, menghapus akun default, dan menerapkan konfigurasi aman. Patching hanya menutup kerentanan yang sudah diketahui."
     },
@@ -4504,6 +5233,9 @@
        "key": "D",
        "text": "Open network with captive portal"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**WPA3-Enterprise + 802.1X** memberi autentikasi per pengguna dan mendukung EAP-TLS berbasis sertifikat. PSK memakai kunci bersama yang dapat dibagikan; WEP sudah usang dan mudah dipecahkan."
@@ -4533,6 +5265,9 @@
        "text": "VPN only"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**MDM** menerapkan kebijakan perangkat dan dapat memisahkan data kerja (container/MAM) dari data pribadi. Ini penting pada model **BYOD/COPE**."
     },
@@ -4560,6 +5295,9 @@
        "key": "D",
        "text": "The device loses its IMEI"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Sideloading** melewati kurasi toko aplikasi sehingga malware, spyware, atau aplikasi berbahaya bisa terpasang. Kebijakan MDM biasanya memblokir sumber tidak dikenal."
@@ -4589,6 +5327,9 @@
        "text": "VDI or application virtualization"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**VDI/application virtualization** menjalankan aplikasi dan data di lingkungan terkontrol, sehingga perangkat pribadi tidak menyimpan data perusahaan. FDE pada perangkat pribadi sulit ditegakkan."
     },
@@ -4616,6 +5357,9 @@
        "key": "D",
        "text": "Disable unused modules and services, remove sample applications"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "Menonaktifkan modul/layanan tidak terpakai dan menghapus aplikasi contoh menghilangkan jalur serangan yang tidak perlu. Menambah resource tidak mengurangi attack surface."
@@ -4645,6 +5389,9 @@
        "text": "Application allow listing"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Allow listing** hanya mengizinkan binary bertanda tangan/terdaftar, sehingga malware tanpa signature tidak dapat berjalan. Ini termasuk teknik hardening endpoint."
     },
@@ -4672,6 +5419,9 @@
        "key": "D",
        "text": "Moving files to the recycle bin"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Physical destruction** menjamin data tidak dapat dipulihkan, bahkan dari komponen disk. Quick format dan penghapusan file hanya menghapus referensi, bukan data."
@@ -4701,6 +5451,9 @@
        "text": "Data loss prevention"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Asset management** mencakup inventaris, penemuan (discovery/enumeration), dan pelacakan kepemilikan. Tanpa itu, pemindaian dan patching tidak lengkap karena aset tak dikenal (shadow assets) terlewat."
     },
@@ -4728,6 +5481,9 @@
        "key": "D",
        "text": "Asset tag with assignment records"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Asset tag dan catatan penugasan** menghubungkan perangkat dengan pemilik/pengguna, lokasi, dan status. Ini penting untuk audit, pemulihan, dan investigasi."
@@ -4757,6 +5513,9 @@
        "text": "Remove the paper tray"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "Perangkat multifungsi menyimpan gambar dokumen di disk internal; **sanitasi/destruksi** media tersebut mencegah kebocoran data. Mengganti password tidak menghapus data lama."
     },
@@ -4784,6 +5543,9 @@
        "key": "D",
        "text": "Baseline comparison"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Certification** (sertifikat sanitasi/destruksi) mendokumentasikan metode dan hasil sehingga organisasi dapat membuktikan kepatuhan. Chain of custody berkaitan dengan bukti forensik."
@@ -4813,6 +5575,9 @@
        "text": "Escalate it as an active incident"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "Temuan yang tidak dapat dieksploitasi karena layanan nonaktif adalah **false positive**; dokumentasikan bukti dan tutup dengan justifikasi. Ini berbeda dari false negative (kerentanan nyata yang tidak terdeteksi)."
     },
@@ -4840,6 +5605,9 @@
        "key": "D",
        "text": "Environmental score"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Temporal** mempertimbangkan faktor yang berubah seiring waktu (exploit code availability, remediation level). **Base** adalah sifat intrinsik, **environmental** disesuaikan dengan konteks organisasi."
@@ -4869,6 +5637,9 @@
        "text": "Prioritize by exploitability, exposure, and business impact"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "Prioritas risiko mempertimbangkan **eksposur, exploitability, dan dampak bisnis**, bukan hanya skor mentah. Ini juga alasan CVSS environmental score dan threat intelligence dipakai."
     },
@@ -4896,6 +5667,9 @@
        "key": "D",
        "text": "Request a documented exception with compensating controls and review date"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Exception** yang terdokumentasi dengan kontrol kompensasi (segmentasi, WAF rule, monitoring) dan tanggal review adalah praktik yang benar. Menyembunyikan temuan melanggar tata kelola."
@@ -4925,6 +5699,9 @@
        "text": "Check that the server reboots"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Rescan/validation** membuktikan perbaikan berhasil dan tidak ada regresi. Verifikasi juga dapat memakai audit konfigurasi atau uji eksploitasi terkontrol."
     },
@@ -4952,6 +5729,9 @@
        "key": "D",
        "text": "Responsible disclosure"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Responsible disclosure** memberi vendor waktu memperbaiki sebelum detail dipublikasikan. Bug bounty adalah program berhadiah, pen test adalah pengujian terkontrak, threat hunting mencari ancaman aktif."
@@ -4981,6 +5761,9 @@
        "text": "Acceptable use policy"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Rules of engagement** menetapkan ruang lingkup, batasan, jadwal, dan kontak darurat pen test sehingga pengujian legal dan aman. SLA mengatur tingkat layanan, bukan aktivitas pengujian."
     },
@@ -5008,6 +5791,9 @@
        "key": "D",
        "text": "Port scan only"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Credentialed scan** masuk ke sistem dan memeriksa patch serta konfigurasi secara akurat. Unauthenticated scan hanya melihat dari luar dan lebih banyak false positive/negative."
@@ -5037,6 +5823,9 @@
        "text": "Scan production once a year"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Shift-left**: memindai image saat build/pipeline sehingga kerentanan tidak pernah mencapai produksi. Pemindaian tahunan terlalu lambat untuk lingkungan yang sering berubah."
     },
@@ -5064,6 +5853,9 @@
        "key": "D",
        "text": "SIEM"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**SIEM** mengumpulkan, menormalkan, dan mengorelasikan log untuk deteksi serta investigasi. NetFlow hanya metadata trafik, WAF melindungi aplikasi web, NAC mengontrol akses perangkat."
@@ -5093,6 +5885,9 @@
        "text": "DLP"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**SOAR** mengotomatiskan playbook respons: enrichment, ticketing, dan tindakan seperti blokir IP. SIEM berfokus pada pengumpulan dan korelasi, bukan orkestrasi tindakan."
     },
@@ -5120,6 +5915,9 @@
        "key": "D",
        "text": "Honeypot"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**NetFlow** memberi metadata aliran (source/destination, port, byte count) dengan overhead rendah. Packet capture menyimpan isi paket dan jauh lebih besar."
@@ -5149,6 +5947,9 @@
        "text": "Increase the alert threshold for every rule"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Alert tuning** mengurangi false positive dengan mengecualikan perilaku yang diketahui aman, tanpa mematikan deteksi lain. Mengabaikan seluruh host berisiko melewatkan serangan nyata."
     },
@@ -5176,6 +5977,9 @@
        "key": "D",
        "text": "NetFlow records"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**EDR** merekam eksekusi proses, command line, dan interaksi API sehingga aktivitas fileless dapat terlihat. Firewall/NetFlow hanya menunjukkan koneksi jaringan."
@@ -5205,6 +6009,9 @@
        "text": "NAC"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**DNS filtering/threat intel** dapat memblokir atau menandai resolusi ke domain jahat (C2, phishing). Ini juga membantu menemukan host yang terinfeksi meski trafiknya terenkripsi."
     },
@@ -5232,6 +6039,9 @@
        "key": "D",
        "text": "SNMPv1"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**SNMPv3** mendukung autentikasi dan enkripsi, sedangkan v1/v2c mengirim community string dalam plaintext. Telnet dan TFTP juga tidak terenkripsi."
@@ -5261,6 +6071,9 @@
        "text": "FIM"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**FIM** memantau perubahan file kritis dengan hash dan memberi alert saat ada modifikasi tak terduga — indikasi persistence atau backdoor."
     },
@@ -5288,6 +6101,9 @@
        "key": "D",
        "text": "Full-disk encryption"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**DNS filtering** memblokir resolusi domain berbahaya untuk seluruh jaringan, termasuk perangkat yang tidak bisa dipasangi agen. Ini lapisan pertahanan tambahan, bukan pengganti endpoint protection."
@@ -5317,6 +6133,9 @@
        "text": "LDAP on port 389"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**LDAPS** membungkus LDAP dalam TLS (port 636) sehingga kredensial dan query tidak dikirim plaintext. LDAP 389 tanpa StartTLS rentan disadap."
     },
@@ -5344,6 +6163,9 @@
        "key": "D",
        "text": "SPF"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**SPF** mendaftarkan IP/server yang diizinkan mengirim email untuk domain. **DKIM** menandatangani pesan, **DMARC** memberi kebijakan berdasarkan hasil SPF/DKIM dan laporan."
@@ -5373,6 +6195,9 @@
        "text": "MX record"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**DMARC** dengan `p=reject` memerintahkan penolakan pesan yang gagal alignment, dan `rua` mengirim laporan agregat. SPF saja tidak memberi kebijakan penanganan atau laporan."
     },
@@ -5400,6 +6225,9 @@
        "key": "D",
        "text": "SNMPv1"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**SSH** menyediakan sesi administratif terenkripsi dan terautentikasi. FTP, HTTP, dan SNMPv1 mengirim data (termasuk kredensial) tanpa enkripsi."
@@ -5429,6 +6257,9 @@
        "text": "FIM"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**UEBA** (User and Entity Behavior Analytics) membangun baseline perilaku dan menandai anomali seperti akses data masif atau login di luar kebiasaan — berguna untuk insider threat."
     },
@@ -5456,6 +6287,9 @@
        "key": "D",
        "text": "AutoPlay"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Credential Guard** mengisolasi secret (NTLM hash, Kerberos TGT) dari LSASS sehingga sulit diambil dengan Mimikatz. AutoPlay dan SMBv1 justru meningkatkan risiko."
@@ -5485,6 +6319,9 @@
        "text": "Endpoint device control policy"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Device control** (bagian dari endpoint protection/Group Policy) dapat membedakan kelas perangkat dan memblokir storage massal tanpa mematikan HID. Ini mengurangi risiko exfiltration dan infeksi via USB."
     },
@@ -5512,6 +6349,9 @@
        "key": "D",
        "text": "Provisioning"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Deprovisioning** harus menonaktifkan/menghapus akun, mencabut token, dan memindahkan data segera saat karyawan keluar. Akun yatim (orphaned account) adalah temuan audit yang serius."
@@ -5541,6 +6381,9 @@
        "text": "RADIUS"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**SSO** memungkinkan satu autentikasi untuk banyak aplikasi melalui trust ke IdP. Risikonya: satu kredensial yang dicuri membuka banyak aplikasi, sehingga MFA dan Conditional Access wajib."
     },
@@ -5568,6 +6411,9 @@
        "key": "D",
        "text": "Both are password hashing algorithms"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**SAML** mengirim assertion XML tentang identitas dan atribut untuk SSO enterprise. **OAuth 2.0** mendelegasikan akses (misalnya aplikasi pihak ketiga ke API) memakai access token; autentikasi di atas OAuth dilakukan oleh **OIDC**."
@@ -5597,6 +6443,9 @@
        "text": "RADIUS"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Kerberos** memakai KDC, TGT, dan service ticket untuk autentikasi mutual dalam domain. RADIUS/TACACS+ untuk AAA jaringan, LDAP untuk query direktori."
     },
@@ -5624,6 +6473,9 @@
        "key": "D",
        "text": "RADIUS typically uses UDP and encrypts only the password; TACACS+ uses TCP and encrypts the entire payload"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**RADIUS** (UDP 1812/1813) umum untuk AAA jaringan dan mengenkripsi password saja; **TACACS+** (TCP 49) memisahkan authentication, authorization, accounting dan mengenkripsi seluruh body — sering dipakai untuk admin perangkat."
@@ -5653,6 +6505,9 @@
        "text": "LDAP"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**LDAP** adalah protokol direktori untuk membaca/mengubah objek seperti user dan group. Aksesnya harus melalui LDAPS/StartTLS agar kredensial tidak terekspos."
     },
@@ -5680,6 +6535,9 @@
        "key": "D",
        "text": "ABAC"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**DAC** (Discretionary Access Control) memberi pemilik resource kebebasan menetapkan izin. **MAC** memakai label klasifikasi dan kebijakan sistem, **RBAC** berbasis peran, **ABAC** berbasis atribut."
@@ -5709,6 +6567,9 @@
        "text": "RBAC"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**MAC** (Mandatory Access Control) memakai label keamanan dan kebijakan yang ditetapkan sistem (misalnya SELinux, Bell-LaPadula). Pengguna tidak dapat menurunkan klasifikasi atau membagikan akses."
     },
@@ -5736,6 +6597,9 @@
        "key": "D",
        "text": "RBAC"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**RBAC** memberikan izin melalui peran (nurse, doctor, billing) sehingga pengelolaan lebih sederhana dan konsisten. **ABAC** akan memakai atribut seperti departemen, waktu, dan lokasi."
@@ -5765,6 +6629,9 @@
        "text": "RBAC"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**ABAC** mengevaluasi atribut subjek, objek, dan lingkungan sehingga sangat fleksibel untuk kebijakan kontekstual. Semakin banyak atribut, semakin kompleks pengujian kebijakannya."
     },
@@ -5792,6 +6659,9 @@
        "key": "D",
        "text": "Disable MFA for the admin account"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**JIT access** memberi hak istimewa sementara setelah persetujuan dan mencabutnya otomatis, mengurangi jendela penyalahgunaan. Hak permanen dan password bersama melanggar least privilege."
@@ -5821,6 +6691,9 @@
        "text": "SMS one-time code"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**FIDO2/passkey** memakai kriptografi kunci publik yang terikat pada origin, sehingga tidak dapat di-phish ke domain palsu. SMS OTP rentan SIM swapping dan real-time phishing."
     },
@@ -5848,6 +6721,9 @@
        "key": "D",
        "text": "Removing MFA to reduce friction"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Risk-based/adaptive authentication** memicu langkah tambahan hanya saat risiko tinggi (perangkat baru, lokasi anomali). Rotasi password berkala justru mendorong password lemah dan tidak menghentikan credential stuffing."
@@ -5877,6 +6753,9 @@
        "text": "Shared administrator account"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Service account** khusus aplikasi, dengan hak minimal dan kredensial terkelola (rotasi otomatis). Shared admin dan akun pribadi menghilangkan akuntabilitas."
     },
@@ -5904,6 +6783,9 @@
        "key": "D",
        "text": "Access review/attestation"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Access review/attestation** memastikan hak akses masih sesuai kebutuhan dan kepatuhan. Temuan umum: hak berlebih (privilege creep) setelah mutasi jabatan."
@@ -5933,6 +6815,9 @@
        "text": "MDM"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**PAM** (Privileged Access Management) menyimpan, memutar, dan mengaudit kredensial istimewa, serta sering menyediakan session recording untuk akun admin."
     },
@@ -5960,6 +6845,9 @@
        "key": "D",
        "text": "Shared department account"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Automated provisioning** (sering via **SCIM**) menyelaraskan akun dengan data HR, mengurangi akun yatim dan kesalahan manual. Proses tahunan terlalu lambat untuk risiko insider."
@@ -5989,6 +6877,9 @@
        "text": "Guardrails/policy as code enforced in the pipeline"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Guardrails** (misalnya OPA/SCP) menolak konfigurasi berbahaya secara otomatis dan konsisten. Review manual tidak dapat diskalakan dan mudah terlewat."
     },
@@ -6016,6 +6907,9 @@
        "key": "D",
        "text": "Guaranteed prevention of all incidents"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Otomasi mempercepat respons, menstandarkan langkah, dan mengurangi pekerjaan berulang. Otomasi tidak menggantikan logging, tidak menjamin pencegahan total, dan tetap memerlukan persetujuan manusia untuk aksi berisiko."
@@ -6045,6 +6939,9 @@
        "text": "Single point of failure and lack of monitoring"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "Otomasi menjadi **single point of failure** bila tidak dipantau; kegagalan harus memicu alert dan ada jalur manual (fallback). Ini juga contoh **technical debt** jika integrasi tidak dipelihara."
     },
@@ -6072,6 +6969,9 @@
        "key": "D",
        "text": "Network latency"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Menyimpan secret di repo (termasuk history Git) membuatnya bocor ke siapa pun yang punya akses. Vault dengan akses berbasis identitas dan rotasi menghilangkan hard-coded credentials."
@@ -6101,6 +7001,9 @@
        "text": "Preparation → Eradication → Containment → Detection → Recovery"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "Urutan NIST: **Preparation, Detection & Analysis, Containment/Eradication/Recovery, Post-incident activity (lessons learned)**. Containment selalu sebelum eradication agar penyebaran berhenti lebih dulu."
     },
@@ -6128,6 +7031,9 @@
        "key": "D",
        "text": "Reimage the host"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Mematikan host menghilangkan isi memori (proses, koneksi, kunci). **Isolasi jaringan** menghentikan penyebaran sambil mempertahankan bukti volatil; urutan volatilitas: memori → cache → disk → arsip."
@@ -6157,6 +7063,9 @@
        "text": "Legal hold"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Recovery** mengembalikan layanan secara terkontrol dan memvalidasi integritas, lalu **lessons learned** memperbarui prosedur dan kontrol. Preparation adalah fase sebelum insiden."
     },
@@ -6184,6 +7093,9 @@
        "key": "D",
        "text": "Root cause analysis"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Chain of custody** mendokumentasikan siapa memegang bukti, kapan, dan di mana, sehingga bukti dapat diterima di pengadilan. Tanpa itu, integritas bukti dipertanyakan."
@@ -6213,6 +7125,9 @@
        "text": "Retention policy"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Legal hold** menghentikan penghapusan data yang relevan dengan litigasi. Menghapus data setelah hold dapat dianggap obstruction of justice."
     },
@@ -6240,6 +7155,9 @@
        "key": "D",
        "text": "Threat hunting"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Root cause analysis** mencari penyebab mendasar (kontrol gagal, proses kurang) agar perbaikan tidak sekadar gejala. Hasilnya masuk ke lessons learned dan perbaikan kontrol."
@@ -6269,6 +7187,9 @@
        "text": "Incident response"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Threat hunting** berangkat dari hipotesis (bukan alert) dan mencari bukti di telemetri. Berbeda dari IR yang merespons insiden yang sudah terdeteksi."
     },
@@ -6296,6 +7217,9 @@
        "key": "D",
        "text": "DNS zone file"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Firewall logs** mencatat 5-tuple (source/dest IP, port, protokol) dan aksi, sehingga dapat mengidentifikasi host asal. DNS log membantu bila hanya domain yang diketahui."
@@ -6325,6 +7249,9 @@
        "text": "NetFlow"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Packet capture/protocol analyzer** (Wireshark, tcpdump) menyimpan isi paket sehingga sesi dapat direkonstruksi. NetFlow hanya metadata, SIEM menampilkan log/alert."
     },
@@ -6352,6 +7279,9 @@
        "key": "D",
        "text": "Firewall log only"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**EDR telemetry** memberi process tree dan command line, sedangkan **event logs** memberi logon/audit. Menggabungkan keduanya menghasilkan timeline yang koheren."
@@ -6381,6 +7311,9 @@
        "text": "Larger local disks"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Log aggregation** mengirim log ke SIEM/arsip terpusat dengan retensi sesuai kebijakan, sehingga bukti tetap tersedia dan tahan terhadap penghapusan lokal oleh penyerang."
     },
@@ -6408,6 +7341,9 @@
        "key": "D",
        "text": "DHCP lease file"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**NetFlow** menyimpan statistik byte/paket per aliran sehingga tren volume per host mudah dianalisis. Packet capture penuh terlalu besar untuk analisis jangka panjang."
@@ -6437,6 +7373,9 @@
        "text": "The number of infected hosts"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "Pemulihan dari **backup teruji** adalah jalur utama; membayar tidak menjamin data kembali dan mendanai kejahatan. Keputusan harus melibatkan manajemen, hukum, dan asuransi."
     },
@@ -6464,6 +7403,9 @@
        "key": "D",
        "text": "Ingress filtering only"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Egress filtering** mencegah host terinfeksi berkomunikasi dengan C2 dan mempersulit exfiltration. Ingress filtering melindungi dari koneksi masuk, tetapi tidak membatasi komunikasi keluar."
@@ -6493,6 +7435,9 @@
        "text": "Increasing the PowerShell execution timeout"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Script block logging** merekam isi skrip, **constrained language mode** membatasi API, dan **EDR** mendeteksi perilaku mencurigakan. Membatasi ke admin saja tidak cukup karena akun admin juga bisa dicuri."
     },
@@ -6520,6 +7465,9 @@
        "key": "D",
        "text": "Cross-site scripting"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Akses ke file sensitif seperti `/etc/shadow` memungkinkan pengguna biasa menaikkan hak (misalnya crack hash lalu `su`). Ini eskalasi privilege lokal akibat permission yang salah."
@@ -6549,6 +7497,9 @@
        "text": "WPS"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**WPS** PIN rentan brute force (Pixie Dust/offline attack) dan harus dimatikan. WPA3, 802.1X, dan PMF justru meningkatkan keamanan."
     },
@@ -6576,6 +7527,9 @@
        "key": "D",
        "text": "Weak password policy"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "Server tidak terinventarisasi adalah **shadow asset**; diperlukan **discovery** rutin dan **NAC/802.1X** agar perangkat tak terdaftar tidak dapat terhubung. Ini juga masalah change management."
@@ -6605,6 +7559,9 @@
        "text": "Somewhere you are"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "Token fisik adalah faktor **possession** (something you have). Password = knowledge, biometrik = inherence, lokasi = location-based (bukan faktor utama dalam MFA klasik)."
     },
@@ -6633,8 +7590,119 @@
        "text": "Eradication"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Containment** membatasi dampak dan menghentikan penyebaran. Eradication menghilangkan akar masalah (malware, backdoor), recovery mengembalikan layanan normal."
+    },
+    {
+     "id": "D4-79",
+     "number": 79,
+     "domain": 4,
+     "objective": "4.6",
+     "type": "Multi-select",
+     "stem": "Which TWO are benefits of single sign-on (SSO)? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Limits the blast radius of a stolen credential"
+      },
+      {
+       "key": "B",
+       "text": "Removes the need for authorization"
+      },
+      {
+       "key": "C",
+       "text": "Fewer credentials for users to manage"
+      },
+      {
+       "key": "D",
+       "text": "Centralized authentication logging"
+      },
+      {
+       "key": "E",
+       "text": "Eliminates the need for MFA"
+      }
+     ],
+     "answers": [
+      "C",
+      "D"
+     ],
+     "answer": "C, D",
+     "explanation": "SSO mengurangi jumlah password dan memusatkan log autentikasi. Namun SSO memperbesar **blast radius** jika kredensial dicuri, tidak menghapus kebutuhan MFA, dan tidak menggantikan otorisasi."
+    },
+    {
+     "id": "D4-80",
+     "number": 80,
+     "domain": 4,
+     "objective": "4.4",
+     "type": "Multi-select",
+     "stem": "Which TWO data sources BEST support detecting data exfiltration? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "NetFlow volume anomalies"
+      },
+      {
+       "key": "B",
+       "text": "DLP alerts"
+      },
+      {
+       "key": "C",
+       "text": "DHCP lease logs"
+      },
+      {
+       "key": "D",
+       "text": "Asset inventory exports"
+      },
+      {
+       "key": "E",
+       "text": "Password policy compliance reports"
+      }
+     ],
+     "answers": [
+      "A",
+      "B"
+     ],
+     "answer": "A, B",
+     "explanation": "**NetFlow** memperlihatkan lonjakan volume keluar per host, dan **DLP** menandai data sensitif yang meninggalkan jaringan. DHCP lease dan inventaris aset tidak menunjukkan isi atau volume transfer."
+    },
+    {
+     "id": "D4-81",
+     "number": 81,
+     "domain": 4,
+     "objective": "4.8",
+     "type": "Multi-select",
+     "stem": "Which TWO actions preserve volatile evidence on a compromised host? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Isolating the host from the network"
+      },
+      {
+       "key": "B",
+       "text": "Powering the host off immediately"
+      },
+      {
+       "key": "C",
+       "text": "Reimaging the disk"
+      },
+      {
+       "key": "D",
+       "text": "Deleting temporary files"
+      },
+      {
+       "key": "E",
+       "text": "Capturing memory before shutdown"
+      }
+     ],
+     "answers": [
+      "A",
+      "E"
+     ],
+     "answer": "A, E",
+     "explanation": "**Capture memori** harus dilakukan sebelum daya hilang, dan **isolasi jaringan** menghentikan penyebaran tanpa menghapus bukti. Mematikan host, reimage, dan menghapus file justru merusak bukti."
     }
    ]
   },
@@ -6668,6 +7736,9 @@
        "text": "A policy describes technical settings; a procedure describes business goals"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Policy** menyatakan maksud dan arah manajemen (apa dan mengapa), sedangkan **procedure** menjelaskan langkah operasional (bagaimana). **Standard** berisi persyaratan spesifik yang wajib, **guideline** bersifat rekomendasi."
     },
@@ -6695,6 +7766,9 @@
        "key": "D",
        "text": "Service level agreement"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**AUP** menetapkan penggunaan yang diizinkan dan larangan, termasuk konsekuensi pelanggaran. SLA mengatur tingkat layanan, BPA mengatur kemitraan bisnis."
@@ -6724,6 +7798,9 @@
        "text": "Data retention policy"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Data retention policy** menetapkan masa simpan berdasarkan kebutuhan bisnis dan regulasi, serta metode penghapusan. Ini juga mendukung e-discovery dan mengurangi risiko penyimpanan berlebih."
     },
@@ -6751,6 +7828,9 @@
        "key": "D",
        "text": "Acceptable use policy"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Change management policy** menetapkan proses persetujuan, pengujian, jadwal, dan backout plan. Tujuannya mencegah perubahan tidak terkontrol yang mengganggu keamanan dan ketersediaan."
@@ -6780,6 +7860,9 @@
        "text": "Standard"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**Exception** adalah penyimpangan resmi dan terdokumentasi dari kebijakan, dengan pemilik risiko, kontrol kompensasi, dan tanggal kedaluwarsa. Tanpa itu, penyimpangan menjadi pelanggaran tak terkelola."
     },
@@ -6807,6 +7890,9 @@
        "key": "D",
        "text": "Governance/security steering committee"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Security steering committee** (dewan tata kelola) menyetujui kebijakan dan menerima risiko residual. Administrator menjalankan kontrol, pen tester menguji, help desk menangani operasional."
@@ -6836,6 +7922,9 @@
        "text": "\"All laptops must use AES-256 full-disk encryption\""
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Standard** bersifat spesifik, terukur, dan wajib (AES-256). Pernyataan komitmen adalah policy, langkah operasional adalah procedure, dan saran adalah guideline."
     },
@@ -6863,6 +7952,9 @@
        "key": "D",
        "text": "Suspend all security controls until integration finishes"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Gap analysis** memetakan perbedaan kontrol, lalu kebijakan diselaraskan melalui proses tata kelola dengan persetujuan manajemen. Membiarkan aturan ganda menciptakan celah dan kebingungan audit."
@@ -6892,6 +7984,9 @@
        "text": "Phishing simulation click rate trending downward over time"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Click rate** dan **reporting rate** pada simulasi phishing menunjukkan perilaku nyata, bukan sekadar kehadiran. Metrik input (jam pelatihan) tidak membuktikan efektivitas."
     },
@@ -6919,6 +8014,9 @@
        "key": "D",
        "text": "Residual risk"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Residual risk** adalah sisa risiko setelah kontrol diterapkan. **Inherent risk** adalah risiko sebelum kontrol; manajemen harus menyetujui residual risk yang tersisa."
@@ -6948,6 +8046,9 @@
        "text": "SLE = $25,000; ALE = $50,000"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**SLE = Asset Value × Exposure Factor = $200,000 × 0.25 = $50,000**. **ALE = SLE × ARO = $50,000 × 0.5 = $25,000** (ARO 0,5 karena sekali per dua tahun)."
     },
@@ -6975,6 +8076,9 @@
        "key": "D",
        "text": "Accept"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Transfer** memindahkan dampak finansial ke pihak lain (asuransi, kontrak). Risiko operasional dan reputasi tetap ada, sehingga kontrol teknis tidak boleh dihapus."
@@ -7004,6 +8108,9 @@
        "text": "Mitigate"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Avoidance** menghilangkan aktivitas yang menimbulkan risiko. Ini berbeda dari mitigation yang mengurangi kemungkinan/dampak, dan acceptance yang menerima risiko."
     },
@@ -7031,6 +8138,9 @@
        "key": "D",
        "text": "Risk acceptance based on cost-benefit analysis"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Risk acceptance** dipilih ketika biaya kontrol lebih besar dari dampak yang diperkirakan, dan keputusan itu harus terdokumentasi. Ini bukan kelalaian selama ada analisis dan persetujuan."
@@ -7060,6 +8170,9 @@
        "text": "Statement of work"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Risk register** adalah catatan hidup berisi risiko, pemilik, skor, dan rencana penanganan. Dokumen ini menjadi dasar pelaporan ke manajemen dan audit."
     },
@@ -7087,6 +8200,9 @@
        "key": "D",
        "text": "ALE-based"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Qualitative** memakai skala subjektif (low/medium/high) dan cepat diterapkan. **Quantitative** memakai nilai moneter seperti SLE/ALE dan membutuhkan data lebih banyak."
@@ -7116,6 +8232,9 @@
        "text": "The cost of implementing security controls"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**Risk appetite** adalah tingkat risiko yang bersedia diambil organisasi; **risk tolerance** adalah variasi yang dapat diterima di sekitar appetite tersebut. RTO berkaitan dengan ketersediaan, bukan selera risiko."
     },
@@ -7143,6 +8262,9 @@
        "key": "D",
        "text": "Meeting the requirement to publish a security report"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**KRI** (Key Risk Indicator) memberi peringatan dini tentang memburuknya risiko sehingga tindakan dapat diambil sebelum menjadi insiden. Ini berbeda dari KPI yang mengukur kinerja."
@@ -7172,6 +8294,9 @@
        "text": "Annual assessment only"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "Lingkungan yang berubah cepat membutuhkan **continuous risk assessment** agar risiko baru (konfigurasi berubah, aset baru) segera terdeteksi. Penilaian tahunan saja akan tertinggal."
     },
@@ -7199,6 +8324,9 @@
        "key": "D",
        "text": "Transferred without notifying management"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Risiko di kuadran likelihood tinggi/impact tinggi menjadi prioritas utama. Keputusan tetap harus melibatkan pemilik risiko, tetapi menunda tanpa alasan kuat tidak dapat diterima."
@@ -7228,6 +8356,9 @@
        "text": "Vendor due diligence"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Due diligence** menilai risiko vendor sebelum kontrak melalui kuesioner, sertifikasi, dan laporan audit. Hasilnya menentukan apakah kontrol tambahan atau klausul kontrak diperlukan."
     },
@@ -7255,6 +8386,9 @@
        "key": "D",
        "text": "Right-to-audit"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Right-to-audit** memberi hak untuk mengaudit atau meminta bukti kepatuhan vendor. NDA mengatur kerahasiaan, SLA mengatur tingkat layanan, indemnification mengatur ganti rugi."
@@ -7284,6 +8418,9 @@
        "text": "SOW"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**MOU** (Memorandum of Understanding) menyatakan niat dan pemahaman bersama, umumnya tidak mengikat secara hukum. **MOA** lebih formal dan spesifik; **BPA** mengatur kemitraan bisnis; **SOW** merinci pekerjaan."
     },
@@ -7311,6 +8448,9 @@
        "key": "D",
        "text": "Shadow IT"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "**Vendor lock-in** membuat organisasi sulit berpindah penyedia, sehingga posisi negosiasi dan ketahanan melemah. Mitigasi: standar data terbuka, exit plan, dan multi-vendor untuk fungsi kritis."
@@ -7340,6 +8480,9 @@
        "text": "Loss of data sovereignty only"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Subcontractor/fourth-party** memperluas rantai pasok tanpa penilaian, sehingga kontrol dan kepatuhan tidak diketahui. Kontrak harus mewajibkan persetujuan dan pengungkapan subkontraktor."
     },
@@ -7367,6 +8510,9 @@
        "key": "D",
        "text": "Vendor's self-assessment completed in one day"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**SOC 2 Type II** menilai efektivitas kontrol selama periode tertentu oleh auditor independen. Self-assessment dan materi pemasaran tidak membuktikan operasi kontrol sehari-hari."
@@ -7396,6 +8542,9 @@
        "text": "Acceptable use policy"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "Kewajiban notifikasi insiden harus tertulis dalam **kontrak/SLA** (sering sebagai security addendum) agar dapat ditegakkan. AUP mengatur pengguna internal, bukan vendor."
     },
@@ -7423,6 +8572,9 @@
        "key": "D",
        "text": "Ignore the issue because the product is popular"
       }
+     ],
+     "answers": [
+      "B"
      ],
      "answer": "B",
      "explanation": "Risiko harus didokumentasikan dan diputuskan oleh pemilik risiko; kontrol kompensasi (segmentasi, monitoring, enkripsi) atau vendor alternatif dapat dipertimbangkan. Jaminan lisan bukan bukti."
@@ -7452,6 +8604,9 @@
        "text": "NDA"
       }
      ],
+     "answers": [
+      "C"
+     ],
      "answer": "C",
      "explanation": "**DPA** mengatur pemrosesan data pribadi antara controller dan processor, termasuk tujuan, keamanan, dan subprocessor. NDA hanya mengatur kerahasiaan informasi."
     },
@@ -7479,6 +8634,9 @@
        "key": "D",
        "text": "Data processor"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Controller** menentukan tujuan dan cara pemrosesan; **processor** memproses atas nama controller; **data subject** adalah individu yang datanya diproses. Kewajiban utama kepatuhan berada pada controller."
@@ -7508,6 +8666,9 @@
        "text": "HIPAA"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**HIPAA** mengatur perlindungan **PHI** (protected health information) di sektor kesehatan AS. PCI DSS untuk data kartu pembayaran, SOX untuk pelaporan keuangan, FERPA untuk data pendidikan."
     },
@@ -7535,6 +8696,9 @@
        "key": "D",
        "text": "HIPAA"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**PCI DSS** menetapkan persyaratan untuk organisasi yang menangani data kartu pembayaran. ISO 27001 adalah standar sistem manajemen keamanan informasi, bukan khusus kartu."
@@ -7564,6 +8728,9 @@
        "text": "Risk assessment"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "**SOC 2 Type I** menilai desain kontrol pada satu titik waktu; **Type II** menilai efektivitas operasi selama periode. Pen test menguji eksploitabilitas, bukan kepatuhan kontrol."
     },
@@ -7591,6 +8758,9 @@
        "key": "D",
        "text": "PCI DSS"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**NIST CSF** mengorganisasi praktik keamanan ke dalam fungsi Identify, Protect, Detect, Respond, Recover (dan Govern pada versi 2.0). Regulasi seperti HIPAA/PCI bersifat wajib untuk cakupan tertentu."
@@ -7620,6 +8790,9 @@
        "text": "Incident report"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Attestation** adalah pernyataan resmi bahwa kontrol memenuhi persyaratan, sering didukung audit. Ini berbeda dari acknowledgment yang hanya menandakan penerimaan dokumen."
     },
@@ -7647,6 +8820,9 @@
        "key": "D",
        "text": "Reduced need for audits"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "Konsekuensi ketidakpatuhan mencakup **denda, sanksi, kerusakan reputasi, kehilangan lisensi, dan dampak kontrak**. Kepatuhan bukan jaminan keamanan, tetapi pelanggaran membawa risiko hukum dan bisnis."
@@ -7676,6 +8852,9 @@
        "text": "Data minimization"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Data subject rights** (akses, koreksi, penghapusan, portabilitas) mengharuskan organisasi memiliki proses untuk menemukan dan menghapus data pribadi. Ini memerlukan inventaris data yang baik."
     },
@@ -7703,6 +8882,9 @@
        "key": "D",
        "text": "An audit is always performed by employees; an assessment by regulators"
       }
+     ],
+     "answers": [
+      "C"
      ],
      "answer": "C",
      "explanation": "**Audit** bersifat formal, independen, dan berbasis bukti terhadap kriteria (misalnya ISO 27001, SOC 2). **Assessment** bisa internal dan lebih fleksibel untuk mengukur maturity atau kesiapan."
@@ -7732,6 +8914,9 @@
        "text": "Wait for the external audit to confirm"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "Temuan audit harus dicatat dengan bukti, ditindaklanjuti pemilik yang jelas, dan diverifikasi ulang. Menghapus temuan adalah pelanggaran integritas audit."
     },
@@ -7759,6 +8944,9 @@
        "key": "D",
        "text": "Internal audit/readiness assessment"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Internal audit/readiness assessment** menemukan kekurangan sebelum auditor eksternal datang, memberi waktu perbaikan. Pen test menguji keamanan teknis, bukan kesiapan bukti kepatuhan."
@@ -7788,6 +8976,9 @@
        "text": "Increased reporting rate and decreased click rate"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Reporting rate naik** dan **click rate turun** menunjukkan pengguna semakin waspada dan mau melaporkan. Mengukur jumlah email terkirim tidak menunjukkan perubahan perilaku."
     },
@@ -7815,6 +9006,9 @@
        "key": "D",
        "text": "Tailgating"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Tailgating** (piggybacking) adalah mengikuti orang berwenang masuk tanpa otorisasi. Mitigasi: access control vestibule, pelatihan, dan kebijakan menantang orang tak dikenal."
@@ -7844,6 +9038,9 @@
        "text": "Physical security awareness"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "BEC mengeksploitasi urgensi dan otoritas; kontrol kuncinya adalah **verifikasi out-of-band** sebelum mengubah data pembayaran. Password kuat tidak mencegah transfer yang salah."
     },
@@ -7871,6 +9068,9 @@
        "key": "D",
        "text": "Gamification"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Gamification** meningkatkan partisipasi melalui elemen permainan. Simulasi phishing melatih deteksi, role-based training menyesuaikan materi dengan pekerjaan."
@@ -7900,6 +9100,9 @@
        "text": "Least privilege"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**Reporting culture** memungkinkan deteksi dini dan respons cepat. Program awareness harus mempermudah pelaporan (tombol report) dan memberi umpan balik positif, bukan menghukum kesalahan."
     },
@@ -7927,6 +9130,9 @@
        "key": "D",
        "text": "Clean desk and clear screen policy"
       }
+     ],
+     "answers": [
+      "D"
      ],
      "answer": "D",
      "explanation": "**Clean desk/clear screen** mencegah dokumen dan layar terbuka ditinggal tanpa pengawasan. Ini kontrol operasional sederhana yang sering diuji dalam audit fisik."
@@ -7956,6 +9162,9 @@
        "text": "Cable management standards"
       }
      ],
+     "answers": [
+      "A"
+     ],
      "answer": "A",
      "explanation": "Pekerja remote menghadapi risiko jaringan tidak tepercaya (evil twin, sniffing), sehingga perlu VPN, verifikasi jaringan, dan kebijakan perangkat. Topik fisik seperti rack server tidak relevan bagi mereka."
     },
@@ -7983,6 +9192,9 @@
        "key": "D",
        "text": "Fire drill training"
       }
+     ],
+     "answers": [
+      "A"
      ],
      "answer": "A",
      "explanation": "**Scenario-based training** melatih karyawan mengenali tanda-tanda dan melapor melalui kanal yang jelas (termasuk anonim). Sekadar menandatangani kebijakan tidak mengubah kemampuan mendeteksi."
@@ -8012,6 +9224,9 @@
        "text": "Encouraging reporting and simplifying the report process"
       }
      ],
+     "answers": [
+      "D"
+     ],
      "answer": "D",
      "explanation": "**Reporting rate** penting karena laporan pengguna mempercepat respons terhadap serangan nyata. Program harus mempermudah pelaporan dan memberi umpan balik, bukan menghukum."
     },
@@ -8040,8 +9255,83 @@
        "text": "NDA"
       }
      ],
+     "answers": [
+      "B"
+     ],
      "answer": "B",
      "explanation": "**SLA** menetapkan tingkat layanan terukur (uptime, waktu respons, sanksi). MOU menyatakan niat, NDA kerahasiaan, AUP penggunaan yang dapat diterima."
+    },
+    {
+     "id": "D5-51",
+     "number": 51,
+     "domain": 5,
+     "objective": "5.2",
+     "type": "Multi-select",
+     "stem": "Which TWO inputs are used in quantitative risk analysis? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Red/amber/green risk ratings"
+      },
+      {
+       "key": "B",
+       "text": "Delphi expert consensus"
+      },
+      {
+       "key": "C",
+       "text": "Risk matrix colour bands"
+      },
+      {
+       "key": "D",
+       "text": "Single loss expectancy (SLE)"
+      },
+      {
+       "key": "E",
+       "text": "Annualized rate of occurrence (ARO)"
+      }
+     ],
+     "answers": [
+      "D",
+      "E"
+     ],
+     "answer": "D, E",
+     "explanation": "Analisis **kuantitatif** memakai angka moneter seperti **SLE** dan **ARO** (ALE = SLE × ARO). Skala RAG, Delphi, dan matriks warna adalah teknik kualitatif."
+    },
+    {
+     "id": "D5-52",
+     "number": 52,
+     "domain": 5,
+     "objective": "5.4",
+     "type": "Multi-select",
+     "stem": "Which TWO are GDPR obligations for an organization processing EU personal data? (Select TWO.)",
+     "options": [
+      {
+       "key": "A",
+       "text": "Retaining personal data indefinitely for audit purposes"
+      },
+      {
+       "key": "B",
+       "text": "Publishing the source code of internal applications"
+      },
+      {
+       "key": "C",
+       "text": "Responding to data subject access requests"
+      },
+      {
+       "key": "D",
+       "text": "Notifying the supervisory authority of qualifying breaches within 72 hours"
+      },
+      {
+       "key": "E",
+       "text": "Encrypting all data specifically with AES-256"
+      }
+     ],
+     "answers": [
+      "C",
+      "D"
+     ],
+     "answer": "C, D",
+     "explanation": "GDPR memberi **hak subjek data** (akses, koreksi, penghapusan) dan mewajibkan **notifikasi pelanggaran** ke otoritas dalam 72 jam bila memenuhi kriteria. GDPR tidak menetapkan algoritma tertentu dan melarang penyimpanan tanpa batas."
     }
    ]
   }

@@ -471,3 +471,31 @@ Domain ini menguji pemahaman Anda tentang **kontrol keamanan**, **konsep fundame
 
 **Jawaban:** B
 **Pembahasan:** **SOP** merinci langkah operasional, peran, dan verifikasi sehingga perubahan konsisten dan dapat diaudit. Kebijakan AUP mengatur perilaku pengguna; BIA dan risk register bukan instruksi teknis.
+
+## Soal 37
+**Objektif:** 1.1
+**Tipe:** Multi-select
+**Soal:** Which TWO of the following are managerial (administrative) controls? (Select TWO.)
+
+- A. Acceptable use policy
+- B. Security guard stationed in the lobby
+- C. Annual risk assessment
+- D. Motion sensor that triggers an alarm
+- E. Web application firewall
+
+**Jawaban:** A, C
+**Pembahasan:** Kebijakan AUP dan risk assessment adalah kontrol **managerial** karena berbentuk aturan dan proses tata kelola. Penjaga dan sensor gerak bersifat physical, WAF bersifat technical.
+
+## Soal 38
+**Objektif:** 1.4
+**Tipe:** Multi-select
+**Soal:** Which TWO statements about cryptographic hashing are correct? (Select TWO.)
+
+- A. It is reversible with the correct private key
+- B. It produces an output of fixed length
+- C. It provides confidentiality without any encryption
+- D. It requires both parties to share a secret key
+- E. It is a one-way function
+
+**Jawaban:** B, E
+**Pembahasan:** Hash bersifat **satu arah** dan menghasilkan panjang output tetap (misalnya SHA-256 selalu 256 bit). Hash tidak dapat dibalik, tidak memberi kerahasiaan, dan tidak memerlukan kunci bersama.

@@ -1016,3 +1016,45 @@ Domain terbesar dalam ujian. Mencakup **hardening**, **manajemen aset**, **vulne
 **Jawaban:** C
 **Pembahasan:** **Containment** membatasi dampak dan menghentikan penyebaran. Eradication menghilangkan akar masalah (malware, backdoor), recovery mengembalikan layanan normal.
 
+## Soal 79
+**Objektif:** 4.6
+**Tipe:** Multi-select
+**Soal:** Which TWO are benefits of single sign-on (SSO)? (Select TWO.)
+
+- A. Limits the blast radius of a stolen credential
+- B. Removes the need for authorization
+- C. Fewer credentials for users to manage
+- D. Centralized authentication logging
+- E. Eliminates the need for MFA
+
+**Jawaban:** C, D
+**Pembahasan:** SSO mengurangi jumlah password dan memusatkan log autentikasi. Namun SSO memperbesar **blast radius** jika kredensial dicuri, tidak menghapus kebutuhan MFA, dan tidak menggantikan otorisasi.
+
+## Soal 80
+**Objektif:** 4.4
+**Tipe:** Multi-select
+**Soal:** Which TWO data sources BEST support detecting data exfiltration? (Select TWO.)
+
+- A. NetFlow volume anomalies
+- B. DLP alerts
+- C. DHCP lease logs
+- D. Asset inventory exports
+- E. Password policy compliance reports
+
+**Jawaban:** A, B
+**Pembahasan:** **NetFlow** memperlihatkan lonjakan volume keluar per host, dan **DLP** menandai data sensitif yang meninggalkan jaringan. DHCP lease dan inventaris aset tidak menunjukkan isi atau volume transfer.
+
+## Soal 81
+**Objektif:** 4.8
+**Tipe:** Multi-select
+**Soal:** Which TWO actions preserve volatile evidence on a compromised host? (Select TWO.)
+
+- A. Isolating the host from the network
+- B. Powering the host off immediately
+- C. Reimaging the disk
+- D. Deleting temporary files
+- E. Capturing memory before shutdown
+
+**Jawaban:** A, E
+**Pembahasan:** **Capture memori** harus dilakukan sebelum daya hilang, dan **isolasi jaringan** menghentikan penyebaran tanpa menghapus bukti. Mematikan host, reimage, dan menghapus file justru merusak bukti.
+
