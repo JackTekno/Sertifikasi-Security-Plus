@@ -29,7 +29,7 @@
 | Waktu | **90 menit** |
 | Skor | **100–900**, lulus **750** |
 | Tipe soal | pilihan ganda satu jawaban, sesekali **multi-select** (pilih dua/tiga), dan **3–5 PBQ** (simulasi) |
-| Opsi jawaban | **4 opsi** untuk pilihan tunggal, **5 opsi** untuk multi-select |
+| Opsi jawaban | **4 opsi** untuk pilihan tunggal (mesin mendukung hingga A–F), **5 opsi** untuk multi-select |
 | Esai | **tidak ada** |
 | PBQ | muncul di awal ujian, berbentuk drag-and-drop/konfigurasi/analisis, dan dapat diberi nilai parsial |
 
@@ -52,21 +52,35 @@ Total **300 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/
 
 ## Fitur `quiz.html`
 
-- **Ujian Simulasi** — 90 soal, 90 menit, komposisi domain sesuai bobot resmi, skor 100–900 dengan ambang 750. Sebelum selesai, muncul ringkasan soal kosong dan yang ditandai.
-- **Latihan per Domain** — 20 soal acak dari satu domain, pembahasan langsung muncul.
+- **Ujian Simulasi** — 90 soal, 90 menit, komposisi domain sesuai bobot resmi, skor 100–900 dengan ambang 750. Jawaban bisa diubah sampai submit; timer habis = auto-submit.
+- **Latihan per Domain** — 20 soal acak dari satu domain.
 - **Latihan Cepat** — 25 soal acak lintas domain tanpa timer.
 - **Ulangi yang Salah** — soal yang pernah salah disimpan di browser dan hilang otomatis setelah dijawab benar.
 - **Latihan per Objektif** — fokus ke sub-objektif tertentu, misalnya `4.6` IAM atau `3.3` Data Protection.
 - **Tab PBQ** — 12 PBQ dengan kotak jawaban (tersimpan otomatis) dan tombol buka jawaban model.
 - **Tab Statistik** — cakupan bank, akurasi, penguasaan per domain, grafik 10 sesi terakhir, streak hari, objektif terlemah (dengan tombol *Latih*), dan status PBQ.
-- **Multi-select** — soal "pilih dua/tiga" memakai tombol *Periksa jawaban*; penilaian harus tepat semua.
-- **Penanda di peta soal** — benar hijau, salah merah, belum dijawab putus-putus, ragu-ragu kuning; saat ujian benar/salah disembunyikan sampai selesai.
+- **Tab Panduan** — penjelasan jenis soal, aturan penilaian, dan cara skor dihitung.
+- **Multi-select** — pilih dua/tiga opsi, dinilai **all-or-nothing**; tidak ada nilai parsial.
+- **Tanpa bocoran** — benar/salah tidak ditampilkan selama sesi; peta soal hanya menunjukkan status (biru belum, hijau terjawab, kuning ragu-ragu).
+- **Wajib hapus tanda ragu-ragu** sebelum bisa submit; soal kosong tetap boleh disubmit dengan peringatan.
 - **Peta jawaban & hasil per objektif** — setelah selesai, klik nomor di peta untuk membuka pembahasan soal tersebut; objektif terlemah diurutkan paling atas.
-- **Live score** — jumlah benar/salah langsung terlihat selama latihan (tidak saat ujian).
 - **Penilaian PBQ mandiri** — tandai *Paham* / *Belum paham* per PBQ, tercatat di statistik.
-- **Tema terang/gelap**, navigasi grid soal, tanda ragu-ragu, shortcut keyboard (`1`–`5`, `←`/`→`, `F`, `Enter`).
+- **Tema terang/gelap**, navigasi grid soal, shortcut keyboard (`1`–`6`, `←`/`→`, `F`).
 
 > Skor 100–900 adalah simulasi sederhana (persentase benar dipetakan ke skala), bukan penskoran resmi CompTIA. Anggap ≥750 sebagai indikasi siap, bukan jaminan.
+
+## Aturan penilaian
+
+| Jenis | Cara dinilai |
+|---|---|
+| Pilihan ganda | 1 poin bila tepat; salah/kosong 0 |
+| Multi-select | **all-or-nothing** — semua pilihan benar dan tidak ada yang berlebih |
+| PBQ | Di ujian asli dinilai **parsial per komponen**; di aplikasi ini dinilai mandiri (Paham/Belum) |
+| Esai | Tidak ada di SY0-701; bila ada, dinilai manual dengan rubrik |
+
+Skor simulasi: `100 + 8 × persentase benar` (100–900). Lulus ≥750, setara ±81% benar. Ujian asli memakai *scaled score* dengan bobot soal yang tidak dipublikasikan.
+
+**Aturan sesi:** benar/salah tidak ditampilkan sampai selesai; jawaban bisa diubah; soal bertanda ragu-ragu harus dihapus sebelum submit; timer habis → auto-submit.
 
 ## Rencana belajar 4 minggu
 

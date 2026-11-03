@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Rebalance answer positions in bank-soal/*.md.
 
 The authored bank placed the correct option first far too often (72% "A"), which
@@ -23,8 +23,8 @@ FILES = [
     "05-security-program-management.md",
 ]
 BLOCK = re.compile(r"(?ms)^## Soal (\d+)\s*$(.*?)(?=^## Soal \d+\s*$|\Z)")
-OPT = re.compile(r"^- ([A-E])\. (.+)$", re.MULTILINE)
-ANS = re.compile(r"\*\*Jawaban:\*\*\s*([A-E](?:\s*,\s*[A-E])*)")
+OPT = re.compile(r"^- ([A-F])\. (.+)$", re.MULTILINE)
+ANS = re.compile(r"\*\*Jawaban:\*\*\s*([A-F](?:\s*,\s*[A-F])*)")
 
 
 def main() -> None:
@@ -64,12 +64,12 @@ def main() -> None:
                 midx += 1
                 new_texts = texts[shift:] + texts[:shift]
                 shifted = sorted(
-                    "ABCDE"[("ABCDE".index(a) - shift) % n] for a in answer.split(", ")
+                    "ABCDEF"[("ABCDEF".index(a) - shift) % n] for a in answer.split(", ")
                 )
                 new_answer = ", ".join(shifted)
             else:
-                ai = "ABCDE".index(answer)
-                target = "ABCDE".index(letters[idx])
+                ai = "ABCDEF".index(answer)
+                target = "ABCDEF".index(letters[idx])
                 idx += 1
                 if n == 4:
                     rotate = (ai - target) % 4
@@ -78,9 +78,9 @@ def main() -> None:
                     # keep 5-option single-answer questions as-is (none in this bank)
                     new_texts = texts
                     target = ai
-                new_answer = "ABCDE"[target]
-            new_opts = "\n".join(f"- {'ABCDE'[i]}. {t}" for i, t in enumerate(new_texts))
-            old_opts = "\n".join(f"- {'ABCDE'[i]}. {t}" for i, t in enumerate(texts))
+                new_answer = "ABCDEF"[target]
+            new_opts = "\n".join(f"- {'ABCDEF'[i]}. {t}" for i, t in enumerate(new_texts))
+            old_opts = "\n".join(f"- {'ABCDEF'[i]}. {t}" for i, t in enumerate(texts))
             if old_opts not in body:
                 raise SystemExit(f"{path.name}: option block mismatch")
             new_body = body.replace(old_opts, new_opts, 1)

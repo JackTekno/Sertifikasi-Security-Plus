@@ -56,21 +56,18 @@ class El {
 }
 
 const els = new Map();
+const modes = ["exam", "domain", "quick", "wrong"].map(m => { const e = new El("button"); e.dataset.mode = m; return e; });
+const tabs = ["practice", "pbq", "stats", "guide"].map(t => { const e = new El("button"); e.dataset.tab = t; return e; });
+
 const document = {
   documentElement: { dataset: { theme: "dark" } },
   getElementById: id => {
     if (!els.has(id)) els.set(id, new El("div", id));
     return els.get(id);
   },
-  querySelectorAll: sel => {
-    if (sel === ".mode") return modes;
-    if (sel === ".tab") return tabs;
-    return [];
-  },
+  querySelectorAll: sel => (sel === ".mode" ? modes : sel === ".tab" ? tabs : []),
   addEventListener() {},
 };
-const modes = ["exam", "domain", "quick", "wrong"].map(m => { const e = new El("button"); e.dataset.mode = m; return e; });
-const tabs = ["practice", "pbq", "stats"].map(t => { const e = new El("button"); e.dataset.tab = t; return e; });
 
 globalThis.document = document;
 globalThis.window = { scrollTo() {} };
@@ -100,80 +97,64 @@ const total = bank.domains.reduce((s, d) => s + d.questions.length, 0);
 const multiCount = bank.domains.reduce((s, d) => s + d.questions.filter(q => q.answers.length > 1).length, 0);
 
 assert($("bankCount").textContent === String(total), "bank count rendered = " + total);
-assert(globalThis.localStorage.store["sp701_pbq_v1"] === undefined, "pbq notes empty at start");
 assert($("pbqList").innerHTML.includes("PBQ 1"), "PBQ cards rendered");
-assert($("pbqList").innerHTML.includes("Lihat jawaban model"), "PBQ reveal buttons rendered");
+assert($("pbqList").innerHTML.includes("Paham"), "PBQ self-assessment rendered");
 
-// theme toggle
+// theme
 document.getElementById("themeBtn").click();
 assert(document.documentElement.dataset.theme === "light", "theme toggles to light");
 
 // tabs
 tabs.find(t => t.dataset.tab === "stats").click();
 assert($("statsBody").innerHTML.includes("Penguasaan per domain"), "stats tab renders");
+tabs.find(t => t.dataset.tab === "guide").click();
+assert(html.includes("Multi-select (checkbox)") && html.includes("Cara skor dihitung"), "guide tab content present");
 tabs.find(t => t.dataset.tab === "practice").click();
-
-// objective select built
 assert($("objSelect").innerHTML.includes("1.1"), "objective select populated");
 
-// practice session
+// start quick session
 modes.find(m => m.dataset.mode === "quick").click();
 assert(!$("quiz").className.includes("hide"), "quick mode opens quiz");
 assert($("counter").textContent === "1 / 25", "quick mode has 25 questions");
 assert($("opts").children.length >= 4, "options rendered");
 
-const answerCurrent = () => {
-  const q = null;
-  const check = $("checkBtn");
-  const checkVisible = !check.classList.contains("hide");
-  const opts = $("opts").children;
-  if (checkVisible) {
-    opts[0] && opts[0].click();
-    opts[1] && opts[1].click();
-    check.click();
-  } else if (opts.length) {
-    opts[0].click();
-  }
-};
-
-answerCurrent();
-assert($("fb").classList.contains("show"), "feedback shown after answering");
+// answering shows no correctness and can be changed
+const opts = $("opts").children;
+opts[0].click();
+assert(opts[0].classList.contains("sel"), "first option selected");
+assert(!$("fb").classList.contains("show"), "no feedback during session");
+assert($("grid").children[0].classList.contains("done"), "answered question marked on grid");
+assert($("liveScore").textContent.includes("Terjawab"), "live answered counter shown");
+opts[1].click();
+assert($("opts").children[1].classList.contains("sel"), "answer can be changed");
+assert(!$("opts").children[0].classList.contains("sel"), "old answer deselected");
 assert(!$("opts").innerHTML.includes("undefined"), "no undefined in options");
-if ($("fb").innerHTML.includes("Belum tepat")) {
-  assert($("fb").innerHTML.includes("Jawaban benar"), "wrong answer shows correct answer");
-}
-assert($("fb").innerHTML.includes("<strong>"), "feedback renders bold markdown");
-assert(!$("fb").innerHTML.includes("**"), "feedback has no raw markdown stars");
-const firstDot = $("grid").children[0];
-assert(firstDot.classList.contains("ok") || firstDot.classList.contains("no"), "grid marks answered question as correct/wrong");
-assert($("liveScore").textContent.includes("✓"), "live score chip updates");
 
-// finish the 25-question session
-for (let i = 0; i < 40; i++) {
-  if (!$("modal").classList.contains("hide")) { $("modalSubmit").click(); break; }
-  if (!$("quiz").classList.contains("hide")) {
-    const opts = $("opts").children;
-    const check = $("checkBtn");
-    if (!check.classList.contains("hide")) {
-      opts[0] && opts[0].click();
-      opts[1] && opts[1].click();
-      check.click();
-    } else if (opts.length && !opts[0].disabled && !$("opts").innerHTML.includes('class="opt sel"')) {
-      opts[0].click();
-    }
-    $("nextBtn").click();
-  } else break;
-}
-assert($("result").className.includes("hide") === false, "result screen shown");
+// flag blocks submit
+$("flagBtn").click();
+assert($("grid").children[0].classList.contains("flag"), "flagged question marked yellow");
+$("grid").children[24].click();
+$("nextBtn").click();
+assert(!$("modal").classList.contains("hide"), "finish modal opens");
+assert($("modalSubmit").classList.contains("hide"), "submit blocked while flagged");
+assert(!$("modalClear").classList.contains("hide"), "clear-flags button shown");
+$("modalClear").click();
+assert(!$("grid").children[0].classList.contains("flag"), "flags cleared");
+assert(!$("modalSubmit").classList.contains("hide"), "submit allowed after clearing flags");
+$("modalSubmit").click();
+
+assert(!$("result").className.includes("hide"), "result screen shown");
 const ok = +$("kOk").textContent, bad = +$("kBad").textContent, skip = +$("kSkip").textContent;
 assert(ok + bad + skip === 25, "result counts add up to 25");
 const scaled = +$("scoreNum").textContent;
 assert(scaled >= 100 && scaled <= 900, "scaled score within 100-900 (" + scaled + ")");
-assert($("review").innerHTML.includes("Pembahasan") || $("review").innerHTML.includes("Tidak ada soal"), "review rendered");
+assert($("review").innerHTML.includes("Pembahasan semua soal"), "review shows all questions");
+assert($("review").innerHTML.includes("<strong>"), "review renders bold markdown");
+assert($("review").innerHTML.includes('id="rev-0"'), "review items have ids for answer map");
 assert($("resultMap").children.length === 25, "result map has 25 dots");
 assert($("resultMap").children.some(d => d.classList.contains("ok") || d.classList.contains("no")), "result map shows correctness");
 
-// multi-select flow via objective drill (1.1 contains a multi-select item)
+// multi-select flow via objective drill
 $("homeBtn").click();
 $("objSelect").value = "1.1";
 $("objStart").click();
@@ -181,13 +162,12 @@ let sawMulti = false;
 for (let i = 0; i < 10; i++) {
   if ($("hint").textContent.includes("Pilih")) {
     sawMulti = true;
-    const opts = $("opts").children;
-    opts[0].click();
-    opts[1].click();
-    assert(!$("checkBtn").classList.contains("hide"), "multi-select shows check button");
-    $("checkBtn").click();
-    assert($("fb").classList.contains("show"), "multi-select feedback shown");
-    assert($("fb").innerHTML.includes("Jawaban benar") || $("fb").innerHTML.includes("Benar"), "multi-select verdict rendered");
+    const o = $("opts").children;
+    o[0].click();
+    o[1].click();
+    assert(o[0].classList.contains("sel") && o[1].classList.contains("sel"), "multi-select toggles two options");
+    assert(!$("fb").classList.contains("show"), "multi-select hides feedback during session");
+    assert($("liveScore").textContent.includes("Terjawab"), "multi-select updates answered count");
     break;
   }
   $("nextBtn").click();
@@ -196,7 +176,6 @@ assert(sawMulti, "found a multi-select question in objective 1.1");
 $("quitBtn").click();
 
 // exam mode: 90 questions, finish without answering
-$("homeBtn").click();
 modes.find(m => m.dataset.mode === "exam").click();
 assert($("counter").textContent === "1 / 90", "exam mode has 90 questions");
 for (let i = 0; i < 100; i++) {
@@ -210,7 +189,7 @@ assert(eskip === 90, "unanswered exam counts as skipped");
 
 // persistence
 const wrong = JSON.parse(globalThis.localStorage.store["sp701_wrong_v1"] || "[]");
-assert(Array.isArray(wrong) && wrong.length > 0, "wrong answers persisted (" + wrong.length + ")");
+assert(Array.isArray(wrong), "wrong list stored");
 const res = JSON.parse(globalThis.localStorage.store["sp701_results_v1"] || "{}");
 assert(Object.keys(res).length > 0, "per-question results persisted (" + Object.keys(res).length + ")");
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Parse bank soal Markdown -> dist/questions.json (single source of truth)."""
 from __future__ import annotations
 
@@ -20,8 +20,8 @@ DOMAINS = [
 ]
 
 BLOCK_RE = re.compile(r"^## Soal (\d+)\s*$", re.MULTILINE)
-OPT_RE = re.compile(r"^- ([A-E])\. (.+)$", re.MULTILINE)
-ANS_RE = re.compile(r"\*\*Jawaban:\*\*\s*([A-E](?:\s*,\s*[A-E])*)")
+OPT_RE = re.compile(r"^- ([A-F])\. (.+)$", re.MULTILINE)
+ANS_RE = re.compile(r"\*\*Jawaban:\*\*\s*([A-F](?:\s*,\s*[A-F])*)")
 
 
 def parse_file(path: Path, domain_id: int) -> list[dict]:
@@ -38,7 +38,7 @@ def parse_file(path: Path, domain_id: int) -> list[dict]:
 
         objective = re.search(r"\*\*Objektif:\*\*\s*([0-9.]+)", block)
         qtype = re.search(r"\*\*Tipe:\*\*\s*(.+)", block)
-        stem_m = re.search(r"\*\*Soal:\*\*\s*(.+?)(?=\n- [A-E]\.)", block, re.DOTALL)
+        stem_m = re.search(r"\*\*Soal:\*\*\s*(.+?)(?=\n- [A-F]\.)", block, re.DOTALL)
         answer = ANS_RE.search(block)
         expl = re.search(r"\*\*Pembahasan:\*\*\s*(.+)", block, re.DOTALL)
         options = [{"key": k, "text": t.strip()} for k, t in OPT_RE.findall(block)]

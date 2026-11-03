@@ -138,12 +138,11 @@ tr:last-child td{border-bottom:0}
 .nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
 .nav .right{display:flex;gap:10px;margin-left:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px;margin-top:18px}
-.dot{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--muted);
+.dot{aspect-ratio:1;border-radius:8px;border:1px solid rgba(56,189,248,.3);background:rgba(56,189,248,.1);color:var(--accent);
   font-size:12px;cursor:pointer;display:grid;place-items:center}
 .dot.cur{outline:2px solid var(--accent);color:var(--txt)}
-.dot.done{background:rgba(56,189,248,.18);color:var(--accent);border-color:rgba(56,189,248,.35)}
-.dot.flag{border-color:rgba(251,191,36,.65);color:var(--warn)}
-.dot.done.flag{background:rgba(251,191,36,.12)}
+.dot.done{background:rgba(52,211,153,.18);color:var(--ok);border-color:rgba(52,211,153,.55)}
+.dot.flag{background:rgba(251,191,36,.18);color:var(--warn);border-color:rgba(251,191,36,.65)}
 .dot.ok{background:rgba(52,211,153,.2);border-color:rgba(52,211,153,.6);color:var(--ok)}
 .dot.no{background:rgba(251,113,133,.18);border-color:rgba(251,113,133,.6);color:var(--bad)}
 .dot.skip{border-style:dashed;opacity:.55}
@@ -154,6 +153,7 @@ tr:last-child td{border-bottom:0}
 .legend i.no{background:rgba(251,113,133,.35);border-color:var(--bad)}
 .legend i.skip{background:transparent;border-style:dashed}
 .legend i.flag{border-color:var(--warn)}
+.legend i.blue{background:rgba(56,189,248,.3);border-color:var(--accent)}
 .mark{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;font-size:11px;flex:0 0 auto}
 .mark.ok{background:rgba(52,211,153,.2);color:var(--ok)}
 .mark.no{background:rgba(251,113,133,.2);color:var(--bad)}
@@ -262,6 +262,7 @@ tr:last-child td{border-bottom:0}
     <button class="tab active" data-tab="practice">Latihan</button>
     <button class="tab" data-tab="pbq">PBQ</button>
     <button class="tab" data-tab="stats">Statistik</button>
+    <button class="tab" data-tab="guide">Panduan</button>
   </nav>
 
   <!-- PRACTICE -->
@@ -344,6 +345,45 @@ tr:last-child td{border-bottom:0}
     <div id="statsBody"></div>
   </section>
 
+  <!-- GUIDE -->
+  <section id="tab-guide" class="hide">
+    <div class="hero">
+      <h1>Jenis soal & <span class="hl">penilaian</span></h1>
+      <p>Ringkasan format SY0-701 dan aturan penilaian yang dipakai simulasi ini.</p>
+    </div>
+    <div class="panel">
+      <h3>1. Pilihan ganda satu jawaban</h3>
+      <p>Umumnya empat opsi (A–D). Satu jawaban benar, bernilai penuh. Jawaban bisa diubah sebelum sesi diselesaikan. Mesin simulasi mendukung sampai enam opsi (A–F), jadi soal 5–6 opsi tetap tampil benar. Di ujian asli, sebagian besar soal berbentuk ini.</p>
+    </div>
+    <div class="panel">
+      <h3>2. Multi-select (checkbox)</h3>
+      <p>Lima opsi (A–E), pilih dua atau tiga jawaban. Penilaian bersifat <b>all-or-nothing</b>: satu pilihan salah atau ada yang kurang berarti 0 poin. Tidak ada nilai parsial untuk multi-select.</p>
+    </div>
+    <div class="panel">
+      <h3>3. Performance-based question (PBQ)</h3>
+      <p>Simulasi: menempatkan perangkat, menyusun aturan firewall, membaca log, konfigurasi SSID, atau memilih algoritma. Di ujian asli PBQ muncul di awal dan <b>dapat bernilai parsial</b> per komponen. CompTIA tidak mempublikasikan bobot pastinya.</p>
+    </div>
+    <div class="panel">
+      <h3>4. Essay?</h3>
+      <p><b>Tidak ada soal esai</b> di SY0-701. Jika suatu ujian memakai esai, penilaiannya manual memakai rubrik (bukan otomatis), dan biasanya tidak ada satu jawaban benar tunggal.</p>
+    </div>
+    <div class="panel">
+      <h3>Cara skor dihitung</h3>
+      <p>Simulasi: <b>skor = 100 + 8 × persentase benar</b> (maksimal 900). Lulus bila ≥ <b>750</b>, setara ±81% benar. Ujian asli memakai <i>scaled score</i> 100–900 dengan komposisi bobot yang tidak dipublikasikan, jadi angka ini hanya pendekatan.</p>
+      <p>Ujian asli: maksimal 90 soal, 90 menit. Saat waktu habis, jawaban otomatis dikumpulkan.</p>
+    </div>
+    <div class="panel">
+      <h3>Aturan simulasi ini</h3>
+      <ul>
+        <li>Benar/salah <b>tidak ditampilkan</b> selama sesi berlangsung; semua pembahasan muncul setelah selesai.</li>
+        <li>Jawaban <b>bisa diubah</b> kapan saja sebelum submit.</li>
+        <li>Soal yang ditandai <b>ragu-ragu harus dihapus tandanya</b> sebelum bisa submit.</li>
+        <li>Timer habis → <b>auto-submit</b>, termasuk jawaban kosong.</li>
+        <li>Peta soal: biru = belum dijawab, hijau = sudah dijawab, kuning = ragu-ragu.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- QUIZ -->
   <section id="quiz" class="hide">
     <div class="quizhead">
@@ -367,7 +407,6 @@ tr:last-child td{border-bottom:0}
       <h2 class="stem" id="stem"></h2>
       <p class="hint" id="hint"></p>
       <div class="opts" id="opts"></div>
-      <div class="checkrow"><button class="btn primary hide" id="checkBtn">Periksa jawaban</button></div>
       <div class="fb" id="fb"></div>
       <div class="nav">
         <button class="btn" id="prevBtn">← Sebelumnya</button>
@@ -380,13 +419,12 @@ tr:last-child td{border-bottom:0}
 
     <div class="grid" id="grid"></div>
     <div class="legend">
-      <span><i class="ok"></i>Benar</span>
-      <span><i class="no"></i>Salah</span>
-      <span><i class="skip"></i>Belum dijawab</span>
+      <span><i class="blue"></i>Belum dijawab</span>
+      <span><i class="ok"></i>Sudah dijawab</span>
       <span><i class="flag"></i>Ragu-ragu</span>
-      <span id="gridNote" class="note">Saat ujian, tanda benar/salah baru muncul setelah selesai.</span>
+      <span id="gridNote" class="note">Benar/salah baru terlihat setelah sesi selesai.</span>
     </div>
-    <p class="note" style="margin-top:14px">Shortcut: <b>1–5</b> pilih/toggle jawaban · <b>←</b>/<b>→</b> navigasi · <b>F</b> ragu-ragu · <b>Enter</b> periksa/lanjut.</p>
+    <p class="note" style="margin-top:14px">Shortcut: <b>1–6</b> pilih/toggle jawaban · <b>←</b>/<b>→</b> navigasi · <b>F</b> ragu-ragu.</p>
   </section>
 
   <!-- RESULT -->
@@ -448,7 +486,10 @@ tr:last-child td{border-bottom:0}
     <p id="modalText"></p>
     <div class="nav">
       <button class="btn" id="modalBack">Kembali</button>
-      <div class="right"><button class="btn primary" id="modalSubmit">Selesai</button></div>
+      <div class="right">
+        <button class="btn warn hide" id="modalClear">Hapus semua tanda</button>
+        <button class="btn primary" id="modalSubmit">Selesai</button>
+      </div>
     </div>
   </div>
 </div>
@@ -497,13 +538,13 @@ const isCorrect = (q) => {
 /* ---------- state ---------- */
 const S = {
   mode: null, domain: null, list: [], idx: 0, sel: {}, flags: new Set(),
-  start: 0, remain: 0, timer: null, finished: false, locked: new Set(), checked: new Set()
+  start: 0, remain: 0, timer: null, finished: false, autoSubmit: false
 };
 
 /* ---------- tabs ---------- */
 function showTab(name) {
   $("topbar").classList.remove("hide");
-  ["practice", "pbq", "stats"].forEach(t => $("tab-" + t).classList.toggle("hide", t !== name));
+  ["practice", "pbq", "stats", "guide"].forEach(t => $("tab-" + t).classList.toggle("hide", t !== name));
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
   if (name === "stats") renderStats();
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -694,12 +735,12 @@ function renderStats() {
 function startSession(mode, list, domain) {
   if (!list.length) return;
   S.mode = mode; S.domain = domain || null; S.list = list; S.idx = 0;
-  S.sel = {}; S.flags = new Set(); S.locked = new Set(); S.checked = new Set();
-  S.finished = false; S.start = Date.now(); S.remain = mode === "exam" ? 90 * 60 : 0;
+  S.sel = {}; S.flags = new Set();
+  S.finished = false; S.autoSubmit = false; S.start = Date.now(); S.remain = mode === "exam" ? 90 * 60 : 0;
 
   $("tabbar").classList.add("hide");
   $("topbar").classList.add("hide");
-  ["practice", "pbq", "stats"].forEach(t => $("tab-" + t).classList.add("hide"));
+  ["practice", "pbq", "stats", "guide"].forEach(t => $("tab-" + t).classList.add("hide"));
   $("result").classList.add("hide");
   $("quiz").classList.remove("hide");
   $("modeLabel").textContent = mode === "exam" ? "Ujian simulasi · 90 menit" :
@@ -725,7 +766,7 @@ function tickTimer() {
   const t = $("timer");
   t.textContent = "⏱ " + fmtTime(S.remain);
   t.classList.toggle("low", S.remain <= 300);
-  if (S.remain <= 0 && !S.finished) { clearInterval(S.timer); finish(); }
+  if (S.remain <= 0 && !S.finished) { clearInterval(S.timer); S.autoSubmit = true; finish(); }
 }
 
 function pickExam() {
@@ -747,70 +788,46 @@ function buildGrid() {
 }
 
 function paintGrid() {
-  const practice = S.mode !== "exam";
-  let good = 0, bad = 0;
+  let answeredCount = 0;
   $("grid").querySelectorAll(".dot").forEach((b, i) => {
     const q = S.list[i];
     const answered = hasAnswer(q);
-    const checked = practice && S.checked.has(q.id) && answered;
-    const ok = checked && isCorrect(q);
+    const flagged = S.flags.has(q.id);
     b.classList.toggle("cur", i === S.idx);
     b.classList.toggle("done", answered);
-    b.classList.toggle("flag", S.flags.has(q.id));
-    b.classList.toggle("ok", ok);
-    b.classList.toggle("no", checked && !ok);
-    b.classList.toggle("skip", !answered);
-    if (checked && ok) good++;
-    if (checked && !ok) bad++;
+    b.classList.toggle("flag", flagged);
+    b.classList.remove("ok", "no", "skip");
+    if (answered) answeredCount++;
   });
-  const ls = $("liveScore");
-  if (practice) {
-    ls.classList.remove("hide");
-    ls.textContent = "✓ " + good + " · ✗ " + bad;
-  } else {
-    ls.classList.add("hide");
-  }
-  $("gridNote").textContent = practice
-    ? "Hijau = benar, merah = salah, putus-putus = belum dijawab."
-    : "Saat ujian, tanda benar/salah baru muncul setelah selesai.";
+  $("liveScore").classList.remove("hide");
+  $("liveScore").textContent = "Terjawab " + answeredCount + " / " + S.list.length;
+  $("gridNote").textContent = "Biru = belum dijawab · hijau = sudah dijawab · kuning = ragu-ragu. Benar/salah baru terlihat setelah selesai.";
 }
 
 function render() {
   const q = S.list[S.idx];
-  const practice = S.mode !== "exam";
   const sel = S.sel[q.id] || [];
   const multi = q.a.length > 1;
-  const locked = S.locked.has(q.id);
 
   $("qDomain").textContent = "D" + q.d + " · " + domName(q.d);
   $("qObjective").textContent = "Objektif " + q.o;
   $("qType").textContent = q.t;
   $("stem").textContent = q.q;
-  $("hint").textContent = multi ? "Pilih " + q.a.length + " jawaban, lalu tekan Periksa jawaban." : "";
+  $("hint").textContent = (multi
+    ? "Pilih " + q.a.length + " jawaban. "
+    : "") + "Jawaban bisa diubah sebelum sesi diselesaikan.";
 
   $("opts").className = "opts" + (multi ? " multi" : "");
   $("opts").innerHTML = q.opts.map(o => {
     const on = sel.includes(o.k);
-    return `<button class="opt${on ? " sel" : ""}" data-k="${o.k}" ${locked ? "disabled" : ""}>
+    return `<button class="opt${on ? " sel" : ""}" data-k="${o.k}">
        <span class="k">${o.k}</span><span>${escapeHtml(o.v)}</span></button>`;
   }).join("");
   $("opts").querySelectorAll(".opt").forEach(b =>
     b.addEventListener("click", () => choose(b.dataset.k)));
 
-  $("checkBtn").classList.toggle("hide", !(multi && practice && !locked));
-  $("checkBtn").disabled = sel.length === 0;
-
-  const fb = $("fb");
-  fb.className = "fb";
-  fb.innerHTML = "";
-  if (practice && S.checked.has(q.id)) {
-    const ok = isCorrect(q);
-    fb.classList.add("show", ok ? "ok" : "bad");
-    fb.innerHTML = `<div class="verdict">${ok ? "✅ Benar" : "❌ Belum tepat"}</div>
-      ${ok ? "" : `<div class="ans">Jawaban Anda: <b>${sel.join(", ") || "kosong"}</b> · Jawaban benar: <b>${q.a.join(", ")}</b></div>`}
-      <p>${md(q.e)}</p>`;
-    markOptions(q, sel);
-  }
+  $("fb").className = "fb";
+  $("fb").innerHTML = "";
 
   $("pbar").style.width = ((S.idx + 1) / S.list.length * 100) + "%";
   $("counter").textContent = (S.idx + 1) + " / " + S.list.length;
@@ -821,36 +838,19 @@ function render() {
   paintGrid();
 }
 
-function markOptions(q, sel) {
-  $("opts").querySelectorAll(".opt").forEach(b => {
-    const k = b.dataset.k;
-    b.disabled = true;
-    if (q.a.includes(k)) b.classList.add("correct");
-    else if (sel.includes(k)) b.classList.add("wrong");
-    else b.classList.add("dim");
-  });
-}
-
 function choose(k) {
   const q = S.list[S.idx];
-  if (S.locked.has(q.id)) return;
   const multi = q.a.length > 1;
+  const cur = (S.sel[q.id] || []).slice();
   if (multi) {
-    const cur = (S.sel[q.id] || []).slice();
     const i = cur.indexOf(k);
     if (i >= 0) cur.splice(i, 1); else cur.push(k);
     S.sel[q.id] = cur;
-    if (S.mode === "exam") { paintGrid(); }
-    renderOptions();
-    return;
+  } else {
+    S.sel[q.id] = [k];
   }
-  S.sel[q.id] = [k];
-  if (S.mode === "exam") { renderOptions(); paintGrid(); return; }
-  S.locked.add(q.id);
-  S.checked.add(q.id);
-  recordResult(q.id, isCorrect(q));
-  updateWrongList(q);
-  render();
+  renderOptions();
+  paintGrid();
 }
 
 function renderOptions() {
@@ -859,17 +859,6 @@ function renderOptions() {
   $("opts").querySelectorAll(".opt").forEach(b => {
     b.classList.toggle("sel", sel.includes(b.dataset.k));
   });
-  $("checkBtn").disabled = sel.length === 0;
-}
-
-function checkMulti() {
-  const q = S.list[S.idx];
-  if (S.mode === "exam") return;
-  S.locked.add(q.id);
-  S.checked.add(q.id);
-  recordResult(q.id, isCorrect(q));
-  updateWrongList(q);
-  render();
 }
 
 function updateWrongList(q) {
@@ -889,10 +878,20 @@ function move(d) {
 
 function askFinish() {
   const unanswered = S.list.filter(q => !hasAnswer(q)).length;
-  const flagged = S.list.filter(q => S.flags.has(q.id)).length;
-  $("modalText").textContent = unanswered || flagged
-    ? `Masih ada ${unanswered} soal kosong dan ${flagged} soal ditandai. Anda bisa kembali memeriksanya sebelum menyelesaikan sesi.`
-    : "Semua soal sudah dijawab. Selesaikan sesi dan lihat hasilnya?";
+  const flagged = S.flags.size;
+  const submit = $("modalSubmit");
+  const clear = $("modalClear");
+  if (flagged) {
+    $("modalText").textContent = "Masih ada " + flagged + " soal ditandai ragu-ragu. Hapus semua tanda tersebut sebelum menyelesaikan sesi.";
+    submit.classList.add("hide");
+    clear.classList.remove("hide");
+  } else {
+    $("modalText").textContent = unanswered
+      ? "Masih ada " + unanswered + " soal kosong. Soal kosong dihitung salah. Selesaikan sesi sekarang?"
+      : "Semua soal sudah dijawab. Selesaikan sesi dan lihat hasilnya?";
+    submit.classList.remove("hide");
+    clear.classList.add("hide");
+  }
   $("modal").classList.remove("hide");
 }
 
@@ -916,10 +915,8 @@ function finish() {
     perDom[q.d].total++;
     if (!hasAnswer(q)) { skip++; continue; }
     const good = isCorrect(q);
-    if (S.mode === "exam") {
-      recordResult(q.id, good);
-      updateWrongList(q);
-    }
+    recordResult(q.id, good);
+    updateWrongList(q);
     if (good) { ok++; perDom[q.d].ok++; } else bad++;
   }
   const pct = Math.round(ok / total * 100);
@@ -930,7 +927,7 @@ function finish() {
   $("scoreNum").textContent = scaled;
   $("scoreRing").style.setProperty("--deg", (scaled / 900 * 360) + "deg");
   $("resTitle").textContent = pass ? "Lulus ambang batas 🎉" : "Belum mencapai ambang batas";
-  $("resSub").textContent = `${ok} dari ${total} soal benar (${pct}%) · ${S.mode === "exam" ? "ujian simulasi" : "latihan"}`;
+  $("resSub").textContent = `${ok} dari ${total} soal benar (${pct}%) · ${S.mode === "exam" ? "ujian simulasi" : "latihan"}${S.autoSubmit ? " · waktu habis, jawaban dikumpulkan otomatis" : ""}`;
   $("resMode").textContent = S.mode === "exam" ? "Ujian simulasi" : "Latihan";
   const pill = $("resPill");
   pill.className = "pill " + (pass ? "pass" : "fail");
@@ -951,7 +948,7 @@ function finish() {
   $("resultMap").innerHTML = S.list.map((q, i) => {
     const answered = hasAnswer(q);
     const cls = !answered ? "skip" : isCorrect(q) ? "ok" : "no";
-    return `<button class="dot ${cls}${S.flags.has(q.id) ? " flag" : ""}" data-i="${i}" title="Soal ${i + 1}">${i + 1}</button>`;
+    return `<button class="dot ${cls}" data-i="${i}" title="Soal ${i + 1}">${i + 1}</button>`;
   }).join("");
   $("resultMap").querySelectorAll(".dot").forEach(b => b.addEventListener("click", () => {
     const el = $("rev-" + b.dataset.i);
@@ -1027,7 +1024,6 @@ $("objStart").addEventListener("click", () => {
 
 $("prevBtn").addEventListener("click", () => move(-1));
 $("nextBtn").addEventListener("click", () => move(1));
-$("checkBtn").addEventListener("click", checkMulti);
 $("flagBtn").addEventListener("click", () => {
   const q = S.list[S.idx];
   if (S.flags.has(q.id)) S.flags.delete(q.id); else S.flags.add(q.id);
@@ -1069,6 +1065,12 @@ $("retryWrongBtn").addEventListener("click", () => {
 });
 $("modalBack").addEventListener("click", closeModal);
 $("modalSubmit").addEventListener("click", finish);
+$("modalClear").addEventListener("click", () => {
+  S.flags.clear();
+  paintGrid();
+  render();
+  askFinish();
+});
 
 document.addEventListener("keydown", (e) => {
   if (!$("modal").classList.contains("hide")) {
@@ -1078,15 +1080,12 @@ document.addEventListener("keydown", (e) => {
   if ($("quiz").classList.contains("hide")) return;
   const q = S.list[S.idx];
   if (!q) return;
-  if (["1", "2", "3", "4", "5"].includes(e.key)) {
+  if (["1", "2", "3", "4", "5", "6"].includes(e.key)) {
     const opt = q.opts[+e.key - 1];
-    if (opt && !S.locked.has(q.id)) { e.preventDefault(); choose(opt.k); }
+    if (opt) { e.preventDefault(); choose(opt.k); }
   } else if (e.key === "ArrowRight") { e.preventDefault(); move(1); }
   else if (e.key === "ArrowLeft") { e.preventDefault(); move(-1); }
   else if (e.key.toLowerCase() === "f") { e.preventDefault(); $("flagBtn").click(); }
-  else if (e.key === "Enter") {
-    if (!$("checkBtn").classList.contains("hide") && !$("checkBtn").disabled) { e.preventDefault(); checkMulti(); }
-  }
 });
 
 /* ---------- PBQ ---------- */
