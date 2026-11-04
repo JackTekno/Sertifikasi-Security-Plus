@@ -57,6 +57,8 @@ Total **300 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/
 - **Latihan Cepat** — 25 soal acak lintas domain tanpa timer.
 - **Ulangi yang Salah** — soal yang pernah salah disimpan di browser dan hilang otomatis setelah dijawab benar.
 - **Latihan per Objektif** — fokus ke sub-objektif tertentu, misalnya `4.6` IAM atau `3.3` Data Protection.
+- **Review terjadwal (spaced repetition)** — soal yang dijawab salah dijadwalkan ulang besok, lalu 3, 7, 21, dan 45 hari bila terus benar. Tombol **Mulai review** di beranda menampilkan soal yang jatuh tempo.
+- **Target harian** — default 25 soal (bisa diubah 5–100), lengkap dengan progress bar dan jumlah soal jatuh tempo.
 - **Tab PBQ** — 12 PBQ dengan kotak jawaban (tersimpan otomatis) dan tombol buka jawaban model.
 - **Tab Statistik** — cakupan bank, akurasi, penguasaan per domain, grafik 10 sesi terakhir, streak hari, objektif terlemah (dengan tombol *Latih*), dan status PBQ.
 - **Tab Panduan** — penjelasan jenis soal, aturan penilaian, dan cara skor dihitung.
@@ -95,7 +97,7 @@ Ada dua mode, terdeteksi otomatis:
 
 Ukuran data di localStorage kecil: 30 sesi × ±2 KB ≈ **60 KB** dari kuota ±5 MB. Tab *Statistik* menampilkan ukuran aktual, dan tombol **💾 di header** membuka **Backup & restore**:
 
-- **Ekspor backup** → file `security-plus-history-YYYY-MM-DD.json` berisi riwayat, statistik, daftar soal salah, dan status PBQ.
+- **Ekspor backup** → file `security-plus-history-YYYY-MM-DD.json` berisi riwayat, statistik, daftar soal salah, status PBQ, jadwal review, dan target harian.
 - **Impor file** di perangkat lain → sesi digabung berdasarkan timestamp (tidak dobel), lalu statistik dihitung ulang. Jadi progres dari beberapa perangkat bisa digabung.
 - Waktu backup terakhir diingat; jika sudah 7 hari belum backup, hasil sesi menampilkan pengingat.
 

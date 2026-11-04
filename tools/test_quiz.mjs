@@ -166,6 +166,16 @@ assert($("review").innerHTML.includes("Pembahasan semua soal"), "history review 
 const histCount = JSON.parse(globalThis.localStorage.store["sp701_history_v1"]).length;
 assert(histCount === 1, "opening history does not add a session (" + histCount + ")");
 
+// spaced repetition + daily target
+const srs = JSON.parse(globalThis.localStorage.store["sp701_srs_v1"] || "{}");
+const srsIds = Object.keys(srs);
+assert(srsIds.length >= 1, "SRS entries created (" + srsIds.length + ")");
+assert(srs[srsIds[0]].due > Date.now(), "SRS due date scheduled in the future");
+const daily = JSON.parse(globalThis.localStorage.store["sp701_daily_v1"] || "{}");
+assert(daily.count >= 1, "daily counter increments (" + daily.count + ")");
+assert(html.includes("Mulai review"), "SRS review controls present");
+assert($("dailyCount").textContent === String(daily.count), "daily counter rendered on home");
+
 // multi-select flow via objective drill
 $("homeBtn").click();
 $("objSelect").value = "1.1";

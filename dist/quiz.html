@@ -329,6 +329,19 @@ tr:last-child td{border-bottom:0}
       </div>
     </div>
 
+    <div class="panel">
+      <h3>Target & review hari ini</h3>
+      <p><b id="dailyCount">0</b> dari <span id="dailyTarget">25</span> soal · <b id="dueCount">0</b> soal jatuh tempo untuk diulang.</p>
+      <div class="meter" style="margin-bottom:12px"><i id="dailyBar" style="width:0%"></i></div>
+      <div class="objrow">
+        <button class="btn primary" id="srsStart">Mulai review</button>
+        <label class="note" style="display:flex;gap:8px;align-items:center">Target harian
+          <input id="dailyTargetInput" type="number" min="5" max="100" step="5" value="25"
+                 style="width:80px;background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:8px">
+        </label>
+      </div>
+    </div>
+
     <div class="hist" id="histBox">
       <h3>Riwayat latihan</h3>
       <div id="histBody" class="note">Belum ada riwayat. Selesaikan satu sesi untuk melihat statistik.</div>
@@ -536,6 +549,10 @@ const LS_PBQ = "sp701_pbq_v1";
 const LS_PBQ_STATUS = "sp701_pbq_status_v1";
 const LS_THEME = "sp701_theme";
 const LS_LAST_BACKUP = "sp701_last_backup";
+const LS_SRS = "sp701_srs_v1";
+const LS_DAILY = "sp701_daily_v1";
+const LS_TARGET = "sp701_daily_target";
+const SRS_LADDER = [1, 3, 7, 21, 45];
 
 /* ---------- helpers ---------- */
 const $ = (id) => document.getElementById(id);
@@ -601,6 +618,53 @@ function recordResult(id, ok) {
   if (ok) cur.r += 1; else cur.w += 1;
   r[id] = cur;
   saveJSON(LS_RESULTS, r);
+}
+
+/* ---------- spaced repetition + daily target ---------- */
+function todayKey() {
+  return new Date().toLocaleDateString("sv-SE");
+}
+function dailyData() {
+  const d = loadJSON(LS_DAILY, { date: "", count: 0 });
+  if (d.date !== todayKey()) return { date: todayKey(), count: 0 };
+  return d;
+}
+function addDaily(n) {
+  if (!n) return;
+  const d = dailyData();
+  d.count += n;
+  saveJSON(LS_DAILY, d);
+}
+function dailyTarget() {
+  const n = +loadJSON(LS_TARGET, 25);
+  return Number.isFinite(n) && n >= 5 ? n : 25;
+}
+function srsMap() { return loadJSON(LS_SRS, {}); }
+function srsApply(map, id, ok) {
+  const cur = map[id] || { reps: 0, lapses: 0 };
+  const now = Date.now();
+  if (ok) cur.reps = Math.min((cur.reps || 0) + 1, 5);
+  else { cur.reps = 0; cur.lapses = (cur.lapses || 0) + 1; }
+  const days = ok ? SRS_LADDER[Math.min(cur.reps, 5) - 1] : 1;
+  cur.due = now + days * 86400000;
+  cur.last = now;
+  map[id] = cur;
+}
+function dueQuestions() {
+  const s = srsMap();
+  const now = Date.now();
+  return BANK.filter(q => s[q.id] && s[q.id].due <= now)
+    .sort((a, b) => s[a.id].due - s[b.id].due);
+}
+function refreshSrs() {
+  const d = dailyData();
+  const target = dailyTarget();
+  const pct = Math.min(100, Math.round(d.count / target * 100));
+  if ($("dailyCount")) $("dailyCount").textContent = d.count;
+  if ($("dailyTarget")) $("dailyTarget").textContent = target;
+  if ($("dailyBar")) $("dailyBar").style.width = pct + "%";
+  if ($("dueCount")) $("dueCount").textContent = dueQuestions().length;
+  if ($("dailyTargetInput")) $("dailyTargetInput").value = target;
 }
 
 /* ---------- home ---------- */
@@ -701,6 +765,10 @@ function renderStats() {
   const avgTime = timed.length ? Math.round(timed.reduce((s, h) => s + h.secs, 0) / timed.length) : 0;
   const pbqStatus = loadJSON(LS_PBQ_STATUS, {});
   const pbqDone = Object.values(pbqStatus).filter(v => v === "ok").length;
+  const srsAll = srsMap();
+  const nowTs = Date.now();
+  const dueNow = Object.values(srsAll).filter(v => v.due <= nowTs).length;
+  const dueWeek = Object.values(srsAll).filter(v => v.due > nowTs && v.due <= nowTs + 7 * 86400000).length;
 
   const chart = hist.slice(-10).map(h => {
     const px = Math.max(6, Math.round(h.scaled / 900 * 110));
@@ -766,6 +834,16 @@ function renderStats() {
       <div class="meter"><i style="width:${(pbqDone / PBQ.length * 100).toFixed(1)}%"></i></div>
     </div>
     <div class="panel">
+      <h3>Jadwal review (spaced repetition)</h3>
+      <p>Soal yang salah diulang besok, lalu 3, 7, 21, dan 45 hari bila terus benar.</p>
+      <div class="grid2">
+        <div class="kpi warn"><div class="v">${dueNow}</div><div class="l">Jatuh tempo</div></div>
+        <div class="kpi"><div class="v">${dueWeek}</div><div class="l">7 hari ke depan</div></div>
+        <div class="kpi"><div class="v">${Object.keys(srsAll).length}</div><div class="l">Soal terjadwal</div></div>
+        <div class="kpi"><div class="v">${dailyData().count}/${dailyTarget()}</div><div class="l">Target hari ini</div></div>
+      </div>
+    </div>
+    <div class="panel">
       <h3>Data & cadangan</h3>
       <p>Penyimpanan: <b>${SERVER_MODE ? "SQLite server (" + SERVER_DB + ")" : "Browser (localStorage)"}</b>
          · ukuran data <b>${(storageBytes() / 1024).toFixed(1)} KB</b> dari kuota ±5 MB · backup terakhir <b>${lastBackupLabel()}</b>.</p>
@@ -790,9 +868,9 @@ function renderStats() {
 
   $("resetStats").addEventListener("click", () => {
     if (!confirm("Hapus semua progres belajar?")) return;
-    [LS_WRONG, LS_HIST, LS_RESULTS, LS_PBQ_STATUS, LS_LAST_BACKUP].forEach(k => { try { localStorage.removeItem(k); } catch {} });
+    [LS_WRONG, LS_HIST, LS_RESULTS, LS_PBQ_STATUS, LS_LAST_BACKUP, LS_SRS, LS_DAILY].forEach(k => { try { localStorage.removeItem(k); } catch {} });
     if (SERVER_MODE) fetch("/api/history", { method: "DELETE" }).catch(() => {});
-    refreshHome(); renderStats();
+    refreshHome(); refreshSrs(); renderStats();
   });
 
   $("exportBtn").addEventListener("click", exportData);
@@ -818,6 +896,7 @@ function startSession(mode, list, domain) {
   $("quiz").classList.remove("hide");
   $("modeLabel").textContent = mode === "exam" ? "Ujian simulasi · 90 menit" :
     mode === "domain" ? "Latihan per domain" : mode === "objective" ? "Latihan per objektif" :
+    mode === "srs" ? "Review terjadwal" :
     mode === "wrong" ? "Ulangi yang salah" : "Latihan cepat";
 
   clearInterval(S.timer);
@@ -983,6 +1062,7 @@ function finish() {
   const total = S.list.length;
   let ok = 0, bad = 0, skip = 0;
   const perDom = {};
+  const srs = S.fromHistory ? null : srsMap();
   for (const q of S.list) {
     perDom[q.d] = perDom[q.d] || { ok: 0, total: 0 };
     perDom[q.d].total++;
@@ -992,7 +1072,12 @@ function finish() {
       recordResult(q.id, good);
       updateWrongList(q);
     }
+    if (srs) srsApply(srs, q.id, good);
     if (good) { ok++; perDom[q.d].ok++; } else bad++;
+  }
+  if (srs) {
+    saveJSON(LS_SRS, srs);
+    addDaily(ok + bad);
   }
   const pct = Math.round(ok / total * 100);
   const scaled = 100 + Math.round(pct * 8);
@@ -1081,6 +1166,7 @@ function finish() {
   $("retryWrongBtn").classList.toggle("hide", !miss.length);
   const lastB = +(localStorage.getItem(LS_LAST_BACKUP) || 0);
   $("backupHint").classList.toggle("hide", !!(lastB && Date.now() - lastB < 7 * 86400000));
+  refreshSrs();
   refreshHome();
 }
 
@@ -1105,6 +1191,21 @@ $("objStart").addEventListener("click", () => {
   const o = $("objSelect").value;
   const pool = shuffle(BANK.filter(q => q.o === o));
   if (pool.length) startSession("objective", pool.slice(0, Math.min(20, pool.length)));
+});
+
+$("srsStart").addEventListener("click", () => {
+  const due = dueQuestions().slice(0, 30);
+  if (!due.length) {
+    alert("Tidak ada soal yang jatuh tempo. Kerjakan latihan dulu, soal yang salah akan dijadwalkan ulang.");
+    return;
+  }
+  startSession("srs", due);
+});
+
+$("dailyTargetInput").addEventListener("change", () => {
+  const v = Math.min(100, Math.max(5, +$("dailyTargetInput").value || 25));
+  saveJSON(LS_TARGET, v);
+  refreshSrs();
 });
 
 $("prevBtn").addEventListener("click", () => move(-1));
@@ -1132,6 +1233,10 @@ $("homeBtn").addEventListener("click", goHome);
 $("homeBtnTop").addEventListener("click", goHome);
 $("againBtn").addEventListener("click", () => {
   if (S.mode === "exam") return startSession("exam", pickExam());
+  if (S.mode === "srs") {
+    const due = dueQuestions().slice(0, 30);
+    if (due.length) return startSession("srs", due);
+  }
   if (S.mode === "domain" && S.domain) {
     const pool = shuffle(BANK.filter(q => q.d === S.domain));
     return startSession("domain", pool.slice(0, Math.min(20, pool.length)), S.domain);
@@ -1255,7 +1360,10 @@ function exportData() {
     results: results(),
     wrong: wrongIds(),
     pbq: loadJSON(LS_PBQ, {}),
-    pbqStatus: loadJSON(LS_PBQ_STATUS, {})
+    pbqStatus: loadJSON(LS_PBQ_STATUS, {}),
+    srs: srsMap(),
+    daily: dailyData(),
+    target: dailyTarget()
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
@@ -1325,6 +1433,18 @@ async function importData(file) {
     rebuildStats(merged, d);
     saveJSON(LS_PBQ, { ...loadJSON(LS_PBQ, {}), ...(d.pbq || {}) });
     saveJSON(LS_PBQ_STATUS, { ...loadJSON(LS_PBQ_STATUS, {}), ...(d.pbqStatus || {}) });
+    const srs = srsMap();
+    Object.entries(d.srs || {}).forEach(([id, v]) => {
+      if (!srs[id] || (v.last || 0) > (srs[id].last || 0)) srs[id] = v;
+    });
+    saveJSON(LS_SRS, srs);
+    const day = dailyData();
+    if (d.daily && d.daily.date === day.date) {
+      day.count = Math.max(day.count, +d.daily.count || 0);
+      saveJSON(LS_DAILY, day);
+    }
+    if (d.target) saveJSON(LS_TARGET, +d.target);
+    refreshSrs();
     refreshHome();
     if (!$("tab-stats").classList.contains("hide")) renderStats();
     alert("Backup digabungkan. Total sesi: " + merged.length + ".");
@@ -1372,6 +1492,7 @@ async function initStorage() {
 applyTheme(localStorage.getItem(LS_THEME) || "dark");
 try { buildObjectiveSelect(); } catch (e) { console.error(e); }
 refreshHome();
+refreshSrs();
 renderPBQ();
 initStorage();
 </script>
