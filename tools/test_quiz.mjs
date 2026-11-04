@@ -122,14 +122,19 @@ assert($("opts").children.length >= 4, "options rendered");
 
 // answering shows no correctness and can be changed
 const opts = $("opts").children;
+const firstIsMulti = !$("qPick").classList.contains("hide");
 opts[0].click();
 assert(opts[0].classList.contains("sel"), "first option selected");
 assert(!$("fb").classList.contains("show"), "no feedback during session");
 assert($("grid").children[0].classList.contains("done"), "answered question marked on grid");
 assert($("liveScore").textContent.includes("Terjawab"), "live answered counter shown");
 opts[1].click();
-assert($("opts").children[1].classList.contains("sel"), "answer can be changed");
-assert(!$("opts").children[0].classList.contains("sel"), "old answer deselected");
+assert($("opts").children[1].classList.contains("sel"), "second option selected");
+if (firstIsMulti) {
+  assert($("opts").children[0].classList.contains("sel"), "multi-select keeps both selections");
+} else {
+  assert(!$("opts").children[0].classList.contains("sel"), "old answer deselected on change");
+}
 assert(!$("opts").innerHTML.includes("undefined"), "no undefined in options");
 
 // flag blocks submit
