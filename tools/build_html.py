@@ -217,6 +217,14 @@ tr:last-child td{border-bottom:0}
 .btn:hover{border-color:var(--accent)}
 .btn.primary{background:linear-gradient(135deg,var(--accent),#6366f1);color:#05121f;font-weight:700;border:0}
 .btn.primary:hover{filter:brightness(1.07)}
+html[data-theme="light"] .btn.primary{
+  background:#0b63b8;
+  color:#fff;
+  box-shadow:0 6px 16px rgba(11,99,184,.22);
+}
+html[data-theme="light"] .btn.primary:hover{background:#0a57a3;filter:none}
+html[data-theme="light"] .qnav .flagbtn{border-color:#d97706;color:#9a3412;background:#fffbeb}
+html[data-theme="light"] .qnav .flagbtn.flag-on{background:#f59e0b;color:#2a1d00;border-color:#f59e0b}
 .btn.ghost{background:transparent}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn.warn{border-color:rgba(251,191,36,.45);color:var(--warn)}
