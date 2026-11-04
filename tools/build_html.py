@@ -235,7 +235,7 @@ tr:last-child td{border-bottom:0}
 .badge.ghost{background:transparent;color:var(--muted);border-color:var(--line)}
 .badge.gold{background:rgba(251,191,36,.12);color:var(--warn);border-color:rgba(251,191,36,.3)}
 .stem{font-size:clamp(17px,2.2vw,20px);line-height:1.55;margin:0 0 8px;font-weight:600}
-.hint{color:var(--muted);font-size:12.5px;margin:0 0 16px}
+
 .opts{display:grid;gap:10px}
 .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--card2);
   border:1px solid var(--line);border-radius:13px;padding:13px 15px;cursor:pointer;color:inherit;
@@ -552,9 +552,9 @@ tr:last-child td{border-bottom:0}
         <span class="badge" id="qDomain">Domain</span>
         <span class="badge ghost" id="qObjective">Objektif</span>
         <span class="badge ghost" id="qType">Tipe</span>
+        <span class="badge gold hide" id="qPick">Pilih 2</span>
       </div>
       <h2 class="stem" id="stem"></h2>
-      <p class="hint" id="hint"></p>
       <div class="opts" id="opts"></div>
       <div class="fb" id="fb"></div>
       <div class="qnav">
@@ -1092,10 +1092,10 @@ function render() {
   $("qDomain").textContent = "D" + q.d + " · " + domName(q.d);
   $("qObjective").textContent = "Objektif " + q.o;
   $("qType").textContent = q.t;
+  const pick = $("qPick");
+  pick.classList.toggle("hide", !multi);
+  pick.textContent = multi ? "Pilih " + q.a.length + " jawaban" : "";
   $("stem").textContent = q.q;
-  $("hint").textContent = (multi
-    ? "Pilih " + q.a.length + " jawaban. "
-    : "") + "Jawaban bisa diubah sebelum sesi diselesaikan.";
 
   $("opts").className = "opts" + (multi ? " multi" : "");
   $("opts").innerHTML = q.opts.map(o => {

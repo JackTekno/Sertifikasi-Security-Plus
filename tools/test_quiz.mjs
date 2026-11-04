@@ -182,7 +182,7 @@ $("objSelect").value = "1.1";
 $("objStart").click();
 let sawMulti = false;
 for (let i = 0; i < 10; i++) {
-  if ($("hint").textContent.includes("Pilih")) {
+  if (!$("qPick").classList.contains("hide")) {
     sawMulti = true;
     const o = $("opts").children;
     o[0].click();
