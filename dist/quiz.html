@@ -529,7 +529,7 @@ html[data-theme="light"] .qnav .flagbtn.flag-on{background:#f59e0b;color:#2a1d00
 <div class="modal hide" id="backupModal">
   <div class="modal-card">
     <h3>Backup & restore</h3>
-    <p>Progres (riwayat, statistik, status PBQ) disimpan di browser ini. Ekspor ke file JSON untuk pindah ke perangkat lain, lalu impor di sana.</p>
+    <p>File backup memuat riwayat lengkap: daftar soal, jawaban yang Anda pilih, kunci, dan pembahasan. Di laptop lain, impor file ini lalu klik <b>Pembahasan</b> pada riwayat.</p>
     <p class="note">Terakhir backup: <b id="lastBackup">belum pernah</b> · ukuran data: <b id="backupSize">0 KB</b></p>
     <div class="nav">
       <button class="btn" id="backupClose">Tutup</button>
@@ -688,7 +688,7 @@ function refreshHome() {
   }
   const best = Math.max(...hist.map(h => h.scaled));
   const avg = Math.round(hist.reduce((s, h) => s + h.scaled, 0) / hist.length);
-  const rows = hist.slice(-6).reverse().map(h => {
+  const rows = hist.slice().reverse().map(h => {
     const d = new Date(h.ts);
     const when = d.toLocaleDateString("id-ID", { day: "2-digit", month: "short" }) + " " +
                  d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
@@ -704,6 +704,7 @@ function refreshHome() {
       <span class="chip">Rata-rata: <b>${avg}</b></span>
       <span class="chip">Soal pernah salah: <b>${w}</b></span>
     </div>
+    <p class="note" style="margin:0 0 10px">Klik <b>Pembahasan</b> untuk membuka jawaban Anda, kunci, dan penjelasan tiap soal. Maksimal 30 sesi terakhir disimpan.</p>
     <table><thead><tr><th>Waktu</th><th>Mode</th><th>Jumlah</th><th>Skor</th><th>Status</th><th>Aksi</th></tr></thead>
     <tbody>${rows}</tbody></table>`;
   $("histBody").querySelectorAll(".history-open").forEach(b => b.addEventListener("click", () => {
@@ -1364,6 +1365,7 @@ function exportData() {
   const payload = {
     version: 1,
     exportedAt: new Date().toISOString(),
+    meta: { exam: "SY0-701", questions: BANK.length, detail: "history+answers+explanations" },
     history: loadJSON(LS_HIST, []),
     results: results(),
     wrong: wrongIds(),
@@ -1455,7 +1457,7 @@ async function importData(file) {
     refreshSrs();
     refreshHome();
     if (!$("tab-stats").classList.contains("hide")) renderStats();
-    alert("Backup digabungkan. Total sesi: " + merged.length + ".");
+    alert("Backup digabungkan. Total sesi: " + merged.length + " (yang punya detail pembahasan: " + merged.filter(h => h.ids).length + ").");
     closeBackup();
   } catch {
     alert("File backup tidak valid.");
