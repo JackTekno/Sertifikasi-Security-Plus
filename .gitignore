@@ -3,3 +3,4 @@ __pycache__/
 .dsh-office-*/
 dist/.edgeprofile/
 data/
+AGENTS.md
