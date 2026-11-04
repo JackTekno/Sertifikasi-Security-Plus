@@ -633,6 +633,8 @@ const PBQ = __PBQ__;
 const DOMAINS = __DOMAINS__;
 const EXAM_PLAN = __PLAN__;
 const PASS_SCALED = 750;
+let SERVER_MODE = false;
+let SERVER_DB = "";
 const LS_WRONG = "sp701_wrong_v1";
 const LS_HIST = "sp701_history_v1";
 const LS_RESULTS = "sp701_results_v1";
@@ -869,8 +871,19 @@ function renderStats() {
       <div class="meter"><i style="width:${(pbqDone / PBQ.length * 100).toFixed(1)}%"></i></div>
     </div>
     <div class="panel">
+      <h3>Data & cadangan</h3>
+      <p>Penyimpanan: <b>${SERVER_MODE ? "SQLite server (" + SERVER_DB + ")" : "Browser (localStorage)"}</b>
+         · ukuran data <b>${(storageBytes() / 1024).toFixed(1)} KB</b> dari kuota ±5 MB.</p>
+      <p>Ekspor ke file JSON untuk backup/pindah perangkat, atau impor kembali kapan saja.</p>
+      <div class="objrow">
+        <button class="btn" id="exportBtn">Ekspor JSON</button>
+        <label class="btn" for="importFile" style="cursor:pointer">Impor JSON</label>
+        <input id="importFile" type="file" accept="application/json" class="hide">
+      </div>
+    </div>
+    <div class="panel">
       <h3>Reset progres</h3>
-      <p>Menghapus riwayat sesi, daftar soal salah, statistik per soal, dan status PBQ di browser ini.</p>
+      <p>Menghapus riwayat sesi, daftar soal salah, statistik per soal, dan status PBQ.</p>
       <button class="btn" id="resetStats">Hapus semua progres</button>
     </div>`;
 
@@ -881,9 +894,33 @@ function renderStats() {
   }));
 
   $("resetStats").addEventListener("click", () => {
-    if (!confirm("Hapus semua progres belajar di browser ini?")) return;
+    if (!confirm("Hapus semua progres belajar?")) return;
     [LS_WRONG, LS_HIST, LS_RESULTS, LS_PBQ_STATUS].forEach(k => { try { localStorage.removeItem(k); } catch {} });
+    if (SERVER_MODE) fetch("/api/history", { method: "DELETE" }).catch(() => {});
     refreshHome(); renderStats();
+  });
+
+  $("exportBtn").addEventListener("click", exportData);
+  $("importFile").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const d = JSON.parse(reader.result);
+        if (!Array.isArray(d.history)) throw new Error("invalid");
+        if (!confirm("Ganti data saat ini dengan isi file backup?")) return;
+        saveJSON(LS_HIST, d.history);
+        saveJSON(LS_RESULTS, d.results || {});
+        saveJSON(LS_WRONG, d.wrong || []);
+        saveJSON(LS_PBQ, d.pbq || {});
+        saveJSON(LS_PBQ_STATUS, d.pbqStatus || {});
+        refreshHome(); renderStats();
+      } catch {
+        alert("File backup tidak valid.");
+      }
+    };
+    reader.readAsText(file);
   });
 }
 
@@ -1152,12 +1189,14 @@ function finish() {
 
   if (!S.fromHistory) {
     const hist = loadJSON(LS_HIST, []);
-    hist.push({
+    const rec = {
       ts: Date.now(), mode: S.mode === "exam" ? "Simulasi" : "Latihan",
       total, ok, comp: pct, scaled, secs, auto: S.autoSubmit,
       ids: S.list.map(q => q.id), sel: S.sel
-    });
+    };
+    hist.push(rec);
     saveJSON(LS_HIST, hist.slice(-30));
+    pushServerSession(rec);
   }
 
   $("retryWrongBtn").classList.toggle("hide", !miss.length);
@@ -1299,11 +1338,77 @@ function paintPbqStatus() {
   });
 }
 
+/* ---------- storage / backup ---------- */
+function storageBytes() {
+  let n = 0;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith("sp701_")) continue;
+      n += k.length + (localStorage.getItem(k) || "").length;
+    }
+  } catch {}
+  return n;
+}
+
+function exportData() {
+  const payload = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    history: loadJSON(LS_HIST, []),
+    results: results(),
+    wrong: wrongIds(),
+    pbq: loadJSON(LS_PBQ, {}),
+    pbqStatus: loadJSON(LS_PBQ_STATUS, {})
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "security-plus-history-" + new Date().toISOString().slice(0, 10) + ".json";
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function pushServerSession(rec) {
+  if (!SERVER_MODE) return;
+  fetch("/api/history", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(rec)
+  }).catch(() => {});
+}
+
+async function initStorage() {
+  if (typeof location === "undefined" || location.protocol === "file:") return;
+  try {
+    const health = await fetch("/api/health", { cache: "no-store" });
+    if (!health.ok) return;
+    const info = await health.json();
+    SERVER_MODE = true;
+    SERVER_DB = info.db || "data/history.db";
+
+    const res = await fetch("/api/history", { cache: "no-store" });
+    const data = await res.json();
+    const server = Array.isArray(data.sessions) ? data.sessions : [];
+    const local = loadJSON(LS_HIST, []);
+    const map = new Map();
+    [...server, ...local].forEach(h => { if (h && h.ts) map.set(h.ts, h); });
+    const merged = [...map.values()].sort((a, b) => a.ts - b.ts).slice(-30);
+    saveJSON(LS_HIST, merged);
+
+    const serverTs = new Set(server.map(h => h.ts));
+    merged.filter(h => !serverTs.has(h.ts)).forEach(pushServerSession);
+    refreshHome();
+    if (!$("tab-stats").classList.contains("hide")) renderStats();
+  } catch {}
+}
+
 /* ---------- boot ---------- */
 applyTheme(localStorage.getItem(LS_THEME) || "dark");
 try { buildObjectiveSelect(); } catch (e) { console.error(e); }
 refreshHome();
 renderPBQ();
+initStorage();
 </script>
 </body>
 </html>

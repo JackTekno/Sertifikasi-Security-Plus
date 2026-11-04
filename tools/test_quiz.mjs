@@ -107,6 +107,8 @@ assert(document.documentElement.dataset.theme === "light", "theme toggles to lig
 // tabs
 tabs.find(t => t.dataset.tab === "stats").click();
 assert($("statsBody").innerHTML.includes("Penguasaan per domain"), "stats tab renders");
+assert($("statsBody").innerHTML.includes("Ekspor JSON"), "backup controls rendered");
+assert($("statsBody").innerHTML.includes("Penyimpanan"), "storage mode shown");
 tabs.find(t => t.dataset.tab === "guide").click();
 assert(html.includes("Multi-select (checkbox)") && html.includes("Cara skor dihitung"), "guide tab content present");
 tabs.find(t => t.dataset.tab === "practice").click();

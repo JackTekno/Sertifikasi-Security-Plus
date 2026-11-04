@@ -66,6 +66,8 @@ Total **300 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/
 - **Peta jawaban & hasil per objektif** — setelah selesai, klik nomor di peta untuk membuka pembahasan soal tersebut; objektif terlemah diurutkan paling atas.
 - **Penilaian PBQ mandiri** — tandai *Paham* / *Belum paham* per PBQ, tercatat di statistik.
 - **Riwayat bisa dibuka lagi** — setiap sesi baru menyimpan daftar soal dan jawaban, jadi tombol *Pembahasan* di riwayat membuka ulang hasil lengkap (skor, peta jawaban, pembahasan). Sesi lama tanpa data detail ditandai “tanpa detail”.
+- **Backup & pindah perangkat** — ekspor seluruh progres ke JSON, impor kembali kapan saja; ukuran data ditampilkan di tab Statistik.
+- **Mode server SQLite opsional** — `python tools/server.py` menyimpan riwayat ke `data/history.db`.
 - **Navigasi tengah** — tombol *Sebelumnya* di kiri, *Ragu-ragu* di tengah (kuning saat aktif), *Lanjut* di kanan.
 - **Tema terang/gelap**, navigasi grid soal, shortcut keyboard (`1`–`6`, `←`/`→`, `F`).
 
@@ -83,6 +85,17 @@ Total **300 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/
 Skor simulasi: `100 + 8 × persentase benar` (100–900). Lulus ≥750, setara ±81% benar. Ujian asli memakai *scaled score* dengan bobot soal yang tidak dipublikasikan.
 
 **Aturan sesi:** benar/salah tidak ditampilkan sampai selesai; jawaban bisa diubah; soal bertanda ragu-ragu harus dihapus sebelum submit; timer habis → auto-submit.
+
+## Penyimpanan data
+
+Ada dua mode, terdeteksi otomatis:
+
+1. **Buka `quiz.html` langsung (default).** Riwayat disimpan di **localStorage browser**. Tidak perlu server, tidak perlu instalasi — cukup klik dua kali. Browser tidak mengizinkan halaman `file://` menulis file database sendiri, jadi ini satu-satunya cara yang tetap “tinggal buka”.
+2. **Server SQLite (opsional).** Jalankan `python tools/server.py`, lalu buka `http://127.0.0.1:8000`. Halaman mendeteksi `/api/health` dan menyimpan riwayat ke **`data/history.db`** (SQLite). Data tetap ada walau cache browser dibersihkan, dan bisa dibackup sebagai file.
+
+Ukuran data di localStorage kecil: 30 sesi × ±2 KB ≈ **60 KB** dari kuota ±5 MB. Tab *Statistik* menampilkan ukuran aktual serta tombol **Ekspor JSON / Impor JSON** untuk backup atau pindah perangkat.
+
+> Jika orang lain meng-clone repo dan hanya membuka `dist/quiz.html`, aplikasi tetap berjalan penuh; riwayat tersimpan di browser masing-masing. Untuk riwayat yang tersentral di file, jalankan server SQLite.
 
 ## Rencana belajar 4 minggu
 
@@ -132,9 +145,20 @@ tools/
   build_html.py               membuat quiz.html (termasuk PBQ + statistik)
   build_md.py                 menggabungkan semua soal + pembahasan
   build_docx.py               membuat DOCX (soal, kunci, PBQ)
+  server.py                   server lokal + SQLite (opsional, untuk riwayat)
   test_quiz.mjs               smoke test logika kuis (Node, tanpa browser)
 dist/                         hasil build (jangan diedit manual)
+data/history.db               database SQLite (dibuat server, tidak di-commit)
 ```
+
+### Menjalankan mode server (opsional)
+
+```powershell
+python tools/server.py
+# buka http://127.0.0.1:8000
+```
+
+Riwayat disimpan di `data/history.db`. Tanpa server, semua fitur tetap jalan dan riwayat memakai localStorage browser.
 
 ### Build ulang
 
