@@ -389,6 +389,7 @@ tr:last-child td{border-bottom:0}
     </div>
     <div class="tools">
       <span class="chip"><b id="bankCount">0</b> soal</span>
+      <button class="btn ghost" id="backupBtn" title="Backup & restore progres">💾</button>
       <button class="btn ghost" id="themeBtn" title="Ganti tema">🌙</button>
     </div>
   </div>
@@ -600,6 +601,11 @@ tr:last-child td{border-bottom:0}
       </div>
       <div class="domres" id="domres"></div>
       <div class="review" id="review"></div>
+      <div class="panel hide" id="backupHint" style="margin-top:18px">
+        <h3>Simpan backup progres</h3>
+        <p>Progres ini hanya ada di browser saat ini. Simpan file backup agar bisa dibuka di komputer atau HP lain.</p>
+        <button class="btn" id="backupHintBtn">Backup sekarang</button>
+      </div>
       <div class="nav" style="margin-top:24px">
         <button class="btn" id="homeBtn">← Beranda</button>
         <div class="right">
@@ -627,6 +633,22 @@ tr:last-child td{border-bottom:0}
   </div>
 </div>
 
+<div class="modal hide" id="backupModal">
+  <div class="modal-card">
+    <h3>Backup & restore</h3>
+    <p>Progres (riwayat, statistik, status PBQ) disimpan di browser ini. Ekspor ke file JSON untuk pindah ke perangkat lain, lalu impor di sana.</p>
+    <p class="note">Terakhir backup: <b id="lastBackup">belum pernah</b> · ukuran data: <b id="backupSize">0 KB</b></p>
+    <div class="nav">
+      <button class="btn" id="backupClose">Tutup</button>
+      <div class="right">
+        <button class="btn" id="backupImportBtn">Impor file</button>
+        <button class="btn primary" id="backupExportBtn">Ekspor backup</button>
+      </div>
+    </div>
+    <input type="file" id="backupFile" accept="application/json" class="hide">
+  </div>
+</div>
+
 <script>
 const BANK = __QUESTIONS__;
 const PBQ = __PBQ__;
@@ -641,6 +663,7 @@ const LS_RESULTS = "sp701_results_v1";
 const LS_PBQ = "sp701_pbq_v1";
 const LS_PBQ_STATUS = "sp701_pbq_status_v1";
 const LS_THEME = "sp701_theme";
+const LS_LAST_BACKUP = "sp701_last_backup";
 
 /* ---------- helpers ---------- */
 const $ = (id) => document.getElementById(id);
@@ -873,7 +896,7 @@ function renderStats() {
     <div class="panel">
       <h3>Data & cadangan</h3>
       <p>Penyimpanan: <b>${SERVER_MODE ? "SQLite server (" + SERVER_DB + ")" : "Browser (localStorage)"}</b>
-         · ukuran data <b>${(storageBytes() / 1024).toFixed(1)} KB</b> dari kuota ±5 MB.</p>
+         · ukuran data <b>${(storageBytes() / 1024).toFixed(1)} KB</b> dari kuota ±5 MB · backup terakhir <b>${lastBackupLabel()}</b>.</p>
       <p>Ekspor ke file JSON untuk backup/pindah perangkat, atau impor kembali kapan saja.</p>
       <div class="objrow">
         <button class="btn" id="exportBtn">Ekspor JSON</button>
@@ -895,7 +918,7 @@ function renderStats() {
 
   $("resetStats").addEventListener("click", () => {
     if (!confirm("Hapus semua progres belajar?")) return;
-    [LS_WRONG, LS_HIST, LS_RESULTS, LS_PBQ_STATUS].forEach(k => { try { localStorage.removeItem(k); } catch {} });
+    [LS_WRONG, LS_HIST, LS_RESULTS, LS_PBQ_STATUS, LS_LAST_BACKUP].forEach(k => { try { localStorage.removeItem(k); } catch {} });
     if (SERVER_MODE) fetch("/api/history", { method: "DELETE" }).catch(() => {});
     refreshHome(); renderStats();
   });
@@ -903,24 +926,8 @@ function renderStats() {
   $("exportBtn").addEventListener("click", exportData);
   $("importFile").addEventListener("change", (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const d = JSON.parse(reader.result);
-        if (!Array.isArray(d.history)) throw new Error("invalid");
-        if (!confirm("Ganti data saat ini dengan isi file backup?")) return;
-        saveJSON(LS_HIST, d.history);
-        saveJSON(LS_RESULTS, d.results || {});
-        saveJSON(LS_WRONG, d.wrong || []);
-        saveJSON(LS_PBQ, d.pbq || {});
-        saveJSON(LS_PBQ_STATUS, d.pbqStatus || {});
-        refreshHome(); renderStats();
-      } catch {
-        alert("File backup tidak valid.");
-      }
-    };
-    reader.readAsText(file);
+    if (file) importData(file);
+    e.target.value = "";
   });
 }
 
@@ -1200,6 +1207,8 @@ function finish() {
   }
 
   $("retryWrongBtn").classList.toggle("hide", !miss.length);
+  const lastB = +(localStorage.getItem(LS_LAST_BACKUP) || 0);
+  $("backupHint").classList.toggle("hide", !!(lastB && Date.now() - lastB < 7 * 86400000));
   refreshHome();
 }
 
@@ -1276,7 +1285,22 @@ $("modalClear").addEventListener("click", () => {
   askFinish();
 });
 
+$("backupBtn").addEventListener("click", openBackup);
+$("backupClose").addEventListener("click", closeBackup);
+$("backupExportBtn").addEventListener("click", exportData);
+$("backupImportBtn").addEventListener("click", () => $("backupFile").click());
+$("backupFile").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) importData(file);
+  e.target.value = "";
+});
+$("backupHintBtn").addEventListener("click", openBackup);
+
 document.addEventListener("keydown", (e) => {
+  if (!$("backupModal").classList.contains("hide")) {
+    if (e.key === "Escape") closeBackup();
+    return;
+  }
   if (!$("modal").classList.contains("hide")) {
     if (e.key === "Escape") closeModal();
     return;
@@ -1367,6 +1391,75 @@ function exportData() {
   a.download = "security-plus-history-" + new Date().toISOString().slice(0, 10) + ".json";
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  try { localStorage.setItem(LS_LAST_BACKUP, String(Date.now())); } catch {}
+  updateBackupMeta();
+}
+
+function lastBackupLabel() {
+  const ts = +(localStorage.getItem(LS_LAST_BACKUP) || 0);
+  return ts ? new Date(ts).toLocaleDateString("id-ID") : "belum pernah";
+}
+
+function updateBackupMeta() {
+  const last = $("lastBackup");
+  if (last) last.textContent = lastBackupLabel() === "belum pernah" ? "belum pernah" : new Date(+(localStorage.getItem(LS_LAST_BACKUP) || 0)).toLocaleString("id-ID");
+  const size = $("backupSize");
+  if (size) size.textContent = (storageBytes() / 1024).toFixed(1) + " KB";
+}
+
+function openBackup() {
+  updateBackupMeta();
+  $("backupModal").classList.remove("hide");
+}
+function closeBackup() { $("backupModal").classList.add("hide"); }
+
+function mergeSessions(a, b) {
+  const map = new Map();
+  [...a, ...b].forEach(h => { if (h && h.ts) map.set(h.ts, h); });
+  return [...map.values()].sort((x, y) => x.ts - y.ts).slice(-30);
+}
+
+function rebuildStats(hist, imported) {
+  const covered = new Set();
+  hist.forEach(h => (h.ids || []).forEach(id => covered.add(id)));
+  const res = {};
+  Object.entries(results()).forEach(([id, v]) => { if (!covered.has(id)) res[id] = v; });
+  Object.entries((imported && imported.results) || {}).forEach(([id, v]) => {
+    if (!covered.has(id) && !res[id]) res[id] = v;
+  });
+  const wrong = new Set(wrongIds().filter(id => !covered.has(id)));
+  ((imported && imported.wrong) || []).forEach(id => { if (!covered.has(id)) wrong.add(id); });
+  hist.forEach(h => (h.ids || []).forEach(id => {
+    const q = BANK.find(x => x.id === id);
+    if (!q) return;
+    const sel = (h.sel || {})[id] || [];
+    if (!sel.length) return;
+    const ok = sel.slice().sort().join(",") === q.a.slice().sort().join(",");
+    res[id] = res[id] || { r: 0, w: 0 };
+    if (ok) { res[id].r++; wrong.delete(id); } else { res[id].w++; wrong.add(id); }
+  }));
+  saveJSON(LS_RESULTS, res);
+  saveJSON(LS_WRONG, [...wrong]);
+}
+
+async function importData(file) {
+  try {
+    const text = await file.text();
+    const d = JSON.parse(text);
+    if (!Array.isArray(d.history)) throw new Error("format");
+    if (!confirm("Gabungkan backup ini dengan progres sekarang?")) return;
+    const merged = mergeSessions(loadJSON(LS_HIST, []), d.history);
+    saveJSON(LS_HIST, merged);
+    rebuildStats(merged, d);
+    saveJSON(LS_PBQ, { ...loadJSON(LS_PBQ, {}), ...(d.pbq || {}) });
+    saveJSON(LS_PBQ_STATUS, { ...loadJSON(LS_PBQ_STATUS, {}), ...(d.pbqStatus || {}) });
+    refreshHome();
+    if (!$("tab-stats").classList.contains("hide")) renderStats();
+    alert("Backup digabungkan. Total sesi: " + merged.length + ".");
+    closeBackup();
+  } catch {
+    alert("File backup tidak valid.");
+  }
 }
 
 function pushServerSession(rec) {

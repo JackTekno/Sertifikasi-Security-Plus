@@ -93,7 +93,13 @@ Ada dua mode, terdeteksi otomatis:
 1. **Buka `quiz.html` langsung (default).** Riwayat disimpan di **localStorage browser**. Tidak perlu server, tidak perlu instalasi — cukup klik dua kali. Browser tidak mengizinkan halaman `file://` menulis file database sendiri, jadi ini satu-satunya cara yang tetap “tinggal buka”.
 2. **Server SQLite (opsional).** Jalankan `python tools/server.py`, lalu buka `http://127.0.0.1:8000`. Halaman mendeteksi `/api/health` dan menyimpan riwayat ke **`data/history.db`** (SQLite). Data tetap ada walau cache browser dibersihkan, dan bisa dibackup sebagai file.
 
-Ukuran data di localStorage kecil: 30 sesi × ±2 KB ≈ **60 KB** dari kuota ±5 MB. Tab *Statistik* menampilkan ukuran aktual serta tombol **Ekspor JSON / Impor JSON** untuk backup atau pindah perangkat.
+Ukuran data di localStorage kecil: 30 sesi × ±2 KB ≈ **60 KB** dari kuota ±5 MB. Tab *Statistik* menampilkan ukuran aktual, dan tombol **💾 di header** membuka **Backup & restore**:
+
+- **Ekspor backup** → file `security-plus-history-YYYY-MM-DD.json` berisi riwayat, statistik, daftar soal salah, dan status PBQ.
+- **Impor file** di perangkat lain → sesi digabung berdasarkan timestamp (tidak dobel), lalu statistik dihitung ulang. Jadi progres dari beberapa perangkat bisa digabung.
+- Waktu backup terakhir diingat; jika sudah 7 hari belum backup, hasil sesi menampilkan pengingat.
+
+> Tidak ada penulisan file otomatis saat hanya membuka HTML: browser memblokir halaman `file://` menulis file. Backup/impor JSON adalah cara paling praktis tanpa server.
 
 > Jika orang lain meng-clone repo dan hanya membuka `dist/quiz.html`, aplikasi tetap berjalan penuh; riwayat tersimpan di browser masing-masing. Untuk riwayat yang tersentral di file, jalankan server SQLite.
 
