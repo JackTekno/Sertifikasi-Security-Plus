@@ -65,6 +65,8 @@ Total **300 MCQ + 12 PBQ**. Kunci jawaban pilihan tunggal disebar merata di A/B/
 - **Wajib hapus tanda ragu-ragu** sebelum bisa submit; soal kosong tetap boleh disubmit dengan peringatan.
 - **Peta jawaban & hasil per objektif** — setelah selesai, klik nomor di peta untuk membuka pembahasan soal tersebut; objektif terlemah diurutkan paling atas.
 - **Penilaian PBQ mandiri** — tandai *Paham* / *Belum paham* per PBQ, tercatat di statistik.
+- **Riwayat bisa dibuka lagi** — setiap sesi baru menyimpan daftar soal dan jawaban, jadi tombol *Pembahasan* di riwayat membuka ulang hasil lengkap (skor, peta jawaban, pembahasan). Sesi lama tanpa data detail ditandai “tanpa detail”.
+- **Navigasi tengah** — tombol *Sebelumnya* di kiri, *Ragu-ragu* di tengah (kuning saat aktif), *Lanjut* di kanan.
 - **Tema terang/gelap**, navigasi grid soal, shortcut keyboard (`1`–`6`, `←`/`→`, `F`).
 
 > Skor 100–900 adalah simulasi sederhana (persentase benar dipetakan ke skala), bukan penskoran resmi CompTIA. Anggap ≥750 sebagai indikasi siap, bukan jaminan.

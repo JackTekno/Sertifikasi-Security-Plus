@@ -153,6 +153,16 @@ assert($("review").innerHTML.includes("<strong>"), "review renders bold markdown
 assert($("review").innerHTML.includes('id="rev-0"'), "review items have ids for answer map");
 assert($("resultMap").children.length === 25, "result map has 25 dots");
 assert($("resultMap").children.some(d => d.classList.contains("ok") || d.classList.contains("no")), "result map shows correctness");
+assert(html.includes('class="qnav"') && html.includes("flagbtn"), "question nav uses centered flag layout");
+
+// history detail can be reopened
+const openBtns = $("histBody").querySelectorAll(".history-open");
+assert(openBtns.length === 1, "history entry has review button");
+openBtns[0].click();
+assert(!$("result").className.includes("hide"), "history review opens result screen");
+assert($("review").innerHTML.includes("Pembahasan semua soal"), "history review shows explanations");
+const histCount = JSON.parse(globalThis.localStorage.store["sp701_history_v1"]).length;
+assert(histCount === 1, "opening history does not add a session (" + histCount + ")");
 
 // multi-select flow via objective drill
 $("homeBtn").click();

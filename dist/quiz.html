@@ -72,7 +72,8 @@ select{background:var(--card2);color:var(--txt);border:1px solid var(--line);
 .dombtn{background:var(--card2);border:1px solid var(--line);color:var(--txt);
   padding:8px 12px;border-radius:10px;cursor:pointer;font-size:13px;text-align:left}
 .dombtn:hover{border-color:var(--accent)}
-.hist{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.hist{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;overflow-x:auto}
+.hist table{min-width:640px}
 .hist h3{margin:0 0 8px;font-size:15px}
 table{width:100%;border-collapse:collapse;font-size:13px}
 td,th{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);color:var(--muted)}
@@ -137,6 +138,12 @@ tr:last-child td{border-bottom:0}
 .fb code,.pbq code{background:var(--bg2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.9em}
 .nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
 .nav .right{display:flex;gap:10px;margin-left:auto}
+.qnav{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:22px}
+.qnav #prevBtn{justify-self:start}
+.qnav #nextBtn{justify-self:end}
+.qnav .flagbtn{justify-self:center;border-color:rgba(251,191,36,.5);color:var(--warn);background:rgba(251,191,36,.07)}
+.qnav .flagbtn.flag-on{background:var(--warn);color:#2a1d00;border-color:var(--warn);font-weight:700}
+@media (max-width:560px){.qnav{grid-template-columns:1fr 1fr 1fr}.qnav .btn{padding:9px 8px;font-size:12px}}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px;margin-top:18px}
 .dot{aspect-ratio:1;border-radius:8px;border:1px solid rgba(56,189,248,.3);background:rgba(56,189,248,.1);color:var(--accent);
   font-size:12px;cursor:pointer;display:grid;place-items:center}
@@ -408,12 +415,10 @@ tr:last-child td{border-bottom:0}
       <p class="hint" id="hint"></p>
       <div class="opts" id="opts"></div>
       <div class="fb" id="fb"></div>
-      <div class="nav">
+      <div class="qnav">
         <button class="btn" id="prevBtn">← Sebelumnya</button>
-        <div class="right">
-          <button class="btn warn" id="flagBtn">⚑ Ragu-ragu</button>
-          <button class="btn primary" id="nextBtn">Berikutnya →</button>
-        </div>
+        <button class="btn flagbtn" id="flagBtn">⚑ Ragu-ragu</button>
+        <button class="btn primary" id="nextBtn">Berikutnya →</button>
       </div>
     </div>
 
@@ -538,7 +543,8 @@ const isCorrect = (q) => {
 /* ---------- state ---------- */
 const S = {
   mode: null, domain: null, list: [], idx: 0, sel: {}, flags: new Set(),
-  start: 0, remain: 0, timer: null, finished: false, autoSubmit: false
+  start: 0, remain: 0, timer: null, finished: false, autoSubmit: false,
+  fromHistory: false, durationOverride: null
 };
 
 /* ---------- tabs ---------- */
@@ -591,7 +597,8 @@ function refreshHome() {
                  d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
     return `<tr><td>${when}</td><td>${h.mode}</td><td>${h.total} soal</td>
             <td><b>${h.scaled}</b></td>
-            <td><span class="pill ${h.scaled >= PASS_SCALED ? "pass" : "fail"}">${h.scaled >= PASS_SCALED ? "LULUS" : "BELUM"}</span></td></tr>`;
+            <td><span class="pill ${h.scaled >= PASS_SCALED ? "pass" : "fail"}">${h.scaled >= PASS_SCALED ? "LULUS" : "BELUM"}</span></td>
+            <td>${h.ids ? `<button class="btn history-open" data-ts="${h.ts}">Pembahasan</button>` : '<span class="note">tanpa detail</span>'}</td></tr>`;
   }).join("");
   $("histBody").innerHTML = `
     <div class="stats" style="margin:0 0 12px">
@@ -600,8 +607,29 @@ function refreshHome() {
       <span class="chip">Rata-rata: <b>${avg}</b></span>
       <span class="chip">Soal pernah salah: <b>${w}</b></span>
     </div>
-    <table><thead><tr><th>Waktu</th><th>Mode</th><th>Jumlah</th><th>Skor</th><th>Status</th></tr></thead>
+    <table><thead><tr><th>Waktu</th><th>Mode</th><th>Jumlah</th><th>Skor</th><th>Status</th><th>Aksi</th></tr></thead>
     <tbody>${rows}</tbody></table>`;
+  $("histBody").querySelectorAll(".history-open").forEach(b => b.addEventListener("click", () => {
+    openHistory(+b.dataset.ts);
+  }));
+}
+
+function openHistory(ts) {
+  const h = loadJSON(LS_HIST, []).find(x => x.ts === ts);
+  if (!h || !h.ids) return;
+  const list = h.ids.map(id => BANK.find(q => q.id === id)).filter(Boolean);
+  if (!list.length) return;
+  S.mode = h.mode === "Simulasi" ? "exam" : "quick";
+  S.domain = null; S.list = list; S.sel = h.sel || {};
+  S.flags = new Set(); S.finished = false; S.autoSubmit = !!h.auto;
+  S.fromHistory = true; S.durationOverride = h.secs != null ? h.secs : 0;
+  S.start = Date.now() - (h.secs || 0) * 1000;
+  $("tabbar").classList.add("hide");
+  $("topbar").classList.add("hide");
+  ["practice", "pbq", "stats", "guide"].forEach(t => $("tab-" + t).classList.add("hide"));
+  $("quiz").classList.add("hide");
+  finish();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function buildObjectiveSelect() {
@@ -736,7 +764,8 @@ function startSession(mode, list, domain) {
   if (!list.length) return;
   S.mode = mode; S.domain = domain || null; S.list = list; S.idx = 0;
   S.sel = {}; S.flags = new Set();
-  S.finished = false; S.autoSubmit = false; S.start = Date.now(); S.remain = mode === "exam" ? 90 * 60 : 0;
+  S.finished = false; S.autoSubmit = false; S.fromHistory = false; S.durationOverride = null;
+  S.start = Date.now(); S.remain = mode === "exam" ? 90 * 60 : 0;
 
   $("tabbar").classList.add("hide");
   $("topbar").classList.add("hide");
@@ -915,14 +944,16 @@ function finish() {
     perDom[q.d].total++;
     if (!hasAnswer(q)) { skip++; continue; }
     const good = isCorrect(q);
-    recordResult(q.id, good);
-    updateWrongList(q);
+    if (!S.fromHistory) {
+      recordResult(q.id, good);
+      updateWrongList(q);
+    }
     if (good) { ok++; perDom[q.d].ok++; } else bad++;
   }
   const pct = Math.round(ok / total * 100);
   const scaled = 100 + Math.round(pct * 8);
   const pass = scaled >= PASS_SCALED;
-  const secs = Math.round((Date.now() - S.start) / 1000);
+  const secs = S.durationOverride != null ? S.durationOverride : Math.round((Date.now() - S.start) / 1000);
 
   $("scoreNum").textContent = scaled;
   $("scoreRing").style.setProperty("--deg", (scaled / 900 * 360) + "deg");
@@ -991,9 +1022,15 @@ function finish() {
       </div></details>`;
     }).join("");
 
-  const hist = loadJSON(LS_HIST, []);
-  hist.push({ ts: Date.now(), mode: S.mode === "exam" ? "Simulasi" : "Latihan", total, ok, comp: pct, scaled, secs });
-  saveJSON(LS_HIST, hist.slice(-50));
+  if (!S.fromHistory) {
+    const hist = loadJSON(LS_HIST, []);
+    hist.push({
+      ts: Date.now(), mode: S.mode === "exam" ? "Simulasi" : "Latihan",
+      total, ok, comp: pct, scaled, secs, auto: S.autoSubmit,
+      ids: S.list.map(q => q.id), sel: S.sel
+    });
+    saveJSON(LS_HIST, hist.slice(-30));
+  }
 
   $("retryWrongBtn").classList.toggle("hide", !miss.length);
   refreshHome();
