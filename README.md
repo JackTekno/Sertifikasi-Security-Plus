@@ -101,7 +101,7 @@ Ukuran data di localStorage kecil: 30 sesi × ±2 KB ≈ **60 KB** dari kuota ±
 - **Impor file** di perangkat lain → sesi digabung berdasarkan timestamp (tidak dobel), lalu statistik dihitung ulang. Jadi progres dari beberapa perangkat bisa digabung.
 - Waktu backup terakhir diingat; jika sudah 7 hari belum backup, hasil sesi menampilkan pengingat.
 
-**Pindah laptop:** ekspor di laptop lama → buka repo/aplikasi di laptop baru → **💾 → Impor file** → buka **Riwayat latihan → Pembahasan**. File backup memuat daftar soal, jawaban yang dipilih, kunci, dan penjelasan, jadi sesi lama tetap bisa dibedah di perangkat baru. Riwayat menampilkan semua sesi tersimpan (maksimal 30).
+**Pindah laptop:** ekspor di laptop lama → buka repo/aplikasi di laptop baru → **💾 → Impor file** → buka **Riwayat latihan → Pembahasan**. File backup memuat daftar soal dan jawaban yang dipilih; kunci dan penjelasan ditampilkan dari bank soal di aplikasi yang sama, jadi sesi lama tetap bisa dibedah. Riwayat menampilkan semua sesi tersimpan (maksimal 30).
 
 > Tidak ada penulisan file otomatis saat hanya membuka HTML: browser memblokir halaman `file://` menulis file. Backup/impor JSON adalah cara paling praktis tanpa server.
 
